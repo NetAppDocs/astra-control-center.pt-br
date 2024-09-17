@@ -1,0 +1,24 @@
+---
+sidebar: sidebar 
+permalink: support/troubleshooting-acc.html 
+keywords: how to get help with astra control, astra control knowledgebase 
+summary: 'O NetApp é compatível com o Astra Control de várias maneiras. Amplas opções gratuitas de suporte autônomo estão disponíveis 24 horas por dia, 7 dias por semana, como artigos da base de conhecimento (KB) e um canal Slack. Sua conta Astra Control inclui suporte técnico remoto por meio de tíquetes na Web.' 
+---
+= Solução de problemas
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/support/
+
+
+[role="lead"]
+Aprenda a contornar alguns problemas comuns que você pode encontrar.
+
+https://kb.netapp.com/Cloud/Astra/Control["Base de Conhecimento da NetApp para Astra Control"^]
+
+[discrete]
+== Encontre mais informações
+
+* https://kb.netapp.com/Advice_and_Troubleshooting/Miscellaneous/How_to_upload_a_file_to_NetApp["Como carregar um arquivo para o NetApp (login necessário)"^]
+* https://kb.netapp.com/Advice_and_Troubleshooting/Data_Storage_Software/ONTAP_OS/How_to_manually_upload_AutoSupport_messages_to_NetApp_in_ONTAP_9["Como fazer upload manual de um arquivo para o NetApp (login necessário)"^]
+

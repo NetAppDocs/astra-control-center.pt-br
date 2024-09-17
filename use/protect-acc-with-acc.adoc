@@ -1,0 +1,390 @@
+---
+sidebar: sidebar 
+permalink: use/protect-acc-with-acc.html 
+keywords: backup astra control center, restore astra control center 
+summary: Você pode fazer backup e restaurar o Astra Control Center usando uma instância secundária do Astra Control Center ou com replicação Astra se o storage subjacente estiver usando o ONTAP. 
+---
+= Proteger o Astra Control Center usando o Astra Control Center
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/use/
+
+
+[role="lead"]
+Para garantir mais resiliência contra erros fatais no cluster do Kubernetes onde o Astra Control Center está sendo executado, proteja a própria aplicação Astra Control Center. Você pode fazer backup e restaurar o Astra Control Center usando uma instância secundária do Astra Control Center ou usar a replicação Astra se o storage subjacente estiver usando o ONTAP.
+
+Nesses cenários, uma segunda instância do Astra Control Center é implantada e configurada em um domínio de falha diferente e executada em um segundo cluster Kubernetes diferente da instância primária do Astra Control Center. A segunda instância do Astra Control é usada para fazer backup e potencialmente restaurar a instância primária do Astra Control Center. Uma instância restaurada ou replicada do Astra Control Center continuará fornecendo gerenciamento de dados de aplicações para as aplicações de cluster de aplicações e restaurará a acessibilidade a backups e snapshots dessas aplicações.
+
+.Antes de começar
+Antes de configurar cenários de proteção para o Astra Control Center, certifique-se de que você tenha o seguinte:
+
+* *Um cluster Kubernetes executando a instância primária do Astra Control Center*: Esse cluster hospeda a instância primária do Astra Control Center que gerencia clusters de aplicações.
+* *Um segundo cluster Kubernetes do mesmo tipo de distribuição Kubernetes que o primário que está executando a instância secundária Astra Control Center*: Esse cluster hospeda a instância Astra Control Center que gerencia a instância primária Astra Control Center.
+* *Um terceiro cluster do Kubernetes com o mesmo tipo de distribuição do Kubernetes que o primário*: Esse cluster hospedará a instância restaurada ou replicada do Astra Control Center. Ele precisa ter o mesmo namespace Astra Control Center disponível que está implantado atualmente no primário. Por exemplo, se o Astra Control Center for implantado em namespace `netapp-acc` no cluster de origem, o namespace `netapp-acc` precisará estar disponível e não usado por nenhuma aplicação no cluster do Kubernetes de destino.
+* *Buckets compatíveis com S3*: Cada instância do Astra Control Center tem um bucket de armazenamento de objetos compatível com S3 acessível.
+* *Um balanceador de carga configurado*: O balanceador de carga fornece um endereço IP para o Astra e deve ter conetividade de rede com os clusters de aplicativos e os buckets do S3.
+* *Os clusters atendem aos requisitos do Astra Control Center*: Cada cluster usado na proteção do Astra Control Center atende https://docs.netapp.com/us-en/astra-control-center/get-started/requirements.html#kubernetes-cluster-general-requirement["Requisitos gerais do Astra Control Center"^]ao .
+
+
+.Sobre esta tarefa
+Esses procedimentos descrevem as etapas necessárias para restaurar o Astra Control Center para um novo cluster usando <<Etapa 1 opção: Faça backup e restauração do Astra Control Center,backup e restauração>>ou <<Etapa 1 opção: Proteger o Astra Control Center usando a replicação,replicação>>. As etapas são baseadas no exemplo de configuração descrito aqui:
+
+image:backup-or-replicate-acc-w-acc-example-flow.png["Uma imagem de fluxo de trabalho de proteção que mostra três clusters Kubernetes e Astra Control Center em dois dos três em um cenário de exemplo de replicação ou backup do Astra Control Center."]
+
+Neste exemplo de configuração, é apresentado o seguinte:
+
+* *Um cluster Kubernetes executando a instância primária do Astra Control Center*:
++
+** Cluster OpenShift: `ocp-cluster-1`
+** Instância principal do Astra Control Center: `ocp-cluster-1.company.com`
+** Esse cluster gerencia os clusters de aplicações.
+
+
+* *O segundo cluster do Kubernetes do mesmo tipo de distribuição do Kubernetes que o primário que está executando a instância secundária Astra Control Center*:
++
+** Cluster OpenShift: `ocp-cluster-2`
+** Instância secundária Astra Control Center: `ocp-cluster-2.company.com`
+** Esse cluster será usado para fazer backup da instância primária do Astra Control Center ou configurar a replicação para um cluster diferente (neste exemplo, o `ocp-cluster-3` cluster).
+
+
+* *Um terceiro cluster do Kubernetes do mesmo tipo de distribuição do Kubernetes que o primário que será usado para operações de restauração*:
++
+** Cluster OpenShift: `ocp-cluster-3`
+** Terceira instância do Astra Control Center: `ocp-cluster-3.company.com`
+** Esse cluster será usado para restauração ou failover de replicação do Astra Control Center.
+
+
+
+
+
+NOTE: Idealmente, o cluster de aplicativos deve estar situado fora dos três clusters do Astra Control Center, conforme descrito pelos clusters kureau e rancher na imagem acima.
+
+Não representado no diagrama:
+
+* Todos os clusters têm back-ends ONTAP com Astra Trident ou Astra Control Provisioner instalado.
+* Nesta configuração, os clusters OpenShift estão usando o MetalLB como balanceador de carga.
+* O controlador instantâneo e o VolumeSnapshotClass também são instalados em todos os clusters, conforme descrito no link:../get-started/prep-for-cluster-management.html["pré-requisitos"].
+
+
+
+
+== Etapa 1 opção: Faça backup e restauração do Astra Control Center
+
+Este procedimento descreve as etapas necessárias para restaurar o Astra Control Center para um novo cluster usando backup e restauração.
+
+Neste exemplo, o Astra Control Center é sempre instalado sob `netapp-acc` o namespace e o operador é instalado sob `netapp-acc-operator` o namespace.
+
+
+NOTE: Embora não seja descrito, o operador Astra Control Center também pode ser implantado no mesmo namespace que o Astra CR.
+
+.Antes de começar
+* Você instalou o Astra Control Center primário em um cluster.
+* Você instalou o Astra Control Center secundário em um cluster diferente.
+
+
+.Passos
+. Gerencie o cluster de aplicação e destino primário Astra Control Center a partir da instância secundária Astra Control Center (em execução `ocp-cluster-2` no cluster):
++
+.. Faça login na instância secundária do Astra Control Center.
+.. link:../get-started/add-cluster.html["Adicione o cluster primário Astra Control Center"] (`ocp-cluster-1`).
+.. link:../get-started/add-cluster.html["Adicione o terceiro cluster de destino"] (`ocp-cluster-3`) que será usado para a restauração.
+
+
+. Gerencie o Astra Control Center e o operador Astra Control Center no Astra Control Center secundário:
++
+.. Na página aplicativos, selecione *Definir*.
+.. Na janela *Definir aplicativo*, insira o novo nome da aplicação (`netapp-acc`).
+.. Escolha o cluster que está executando o Astra Control Center primário (`ocp-cluster-1`) na lista suspensa *Cluster*.
+.. Escolha `netapp-acc` o namespace para Astra Control Center na lista suspensa *namespace*.
+.. Na página recursos de cluster, marque *incluir recursos adicionais com escopo de cluster*.
+.. Selecione *Adicionar regra de inclusão*.
+.. Selecione estas entradas e selecione *Adicionar*:
++
+*** Seletor de etiquetas: <label name>
+*** Grupo: Apipextensions.k8s.io
+*** Versão: V1
+*** Tipo: CustomResourceDefinição
+
+
+.. Confirme as informações da aplicação.
+.. Selecione *Definir*.
++
+Depois de selecionar *define*, repita o processo de definir aplicativo para o operador  `netapp-acc-operator`) e selecione o `netapp-acc-operator` namespace no assistente Definir aplicativo.
+
+
+
+. Faça backup do Astra Control Center e do operador:
++
+.. No Astra Control Center secundário, navegue até a página aplicações selecionando a guia aplicações.
+.. link:../use/protect-apps.html#create-a-backup["Faça backup"] A aplicação Astra Control Center (`netapp-acc`).
+.. link:../use/protect-apps.html#create-a-backup["Faça backup"] o operador (`netapp-acc-operator`).
+
+
+. Depois de fazer backup do Astra Control Center e do operador, simule um cenário de recuperação de desastres (DR) a link:../use/uninstall_acc.html["Desinstalação do Astra Control Center"] partir do cluster primário.
++
+
+NOTE: Você restaurará o Astra Control Center para um novo cluster (o terceiro cluster Kubernetes descrito neste procedimento) e usará o mesmo DNS que o cluster primário para o Astra Control Center recém-instalado.
+
+. Usando o Astra Control Center secundário, link:../use/restore-apps.html["restaurar"] a instância principal da aplicação Astra Control Center a partir do seu backup:
++
+.. Selecione *aplicações* e, em seguida, selecione o nome da aplicação Astra Control Center.
+.. No menu Opções na coluna ações, selecione *Restaurar*.
+.. Escolha *Restaurar para novos namespaces* como o tipo de restauração.
+.. Introduza o nome da restauração (`netapp-acc`).
+.. Escolha o terceiro cluster de (`ocp-cluster-3`destino ).
+.. Atualize o namespace de destino para que ele seja o mesmo namespace do original.
+.. Na página Restaurar origem, selecione a cópia de segurança da aplicação que será utilizada como fonte de restauro.
+.. Selecione *Restaurar usando classes de armazenamento originais*.
+.. Selecione *Restaurar todos os recursos*.
+.. Revise as informações de restauração e selecione *Restaurar* para iniciar o processo de restauração que restaura o Astra Control Center ao cluster de destino (`ocp-cluster-3`). A restauração é concluída quando o aplicativo entra `available` no estado.
+
+
+. Configurar o Astra Control Center no cluster de destino:
++
+.. Abra um terminal e conete usando kubeconfig ao cluster de destino (`ocp-cluster-3`) que contém o Astra Control Center restaurado.
+.. Confirme se a `ADDRESS` coluna na configuração do Astra Control Center faz referência ao nome DNS do sistema primário:
++
+[listing]
+----
+kubectl get acc -n netapp-acc
+----
++
+Resposta:
+
++
+[listing]
+----
+NAME  UUID                                 VERSION    ADDRESS                             READY
+astra 89f4fd47-0cf0-4c7a-a44e-43353dc96ba8 24.02.0-69 ocp-cluster-1.company.com           True
+----
+.. Se o `ADDRESS` campo na resposta acima não tiver o FQDN da instância primária do Astra Control Center, atualize a configuração para fazer referência ao Astra Control Center DNS:
++
+[listing]
+----
+kubectl edit acc -n netapp-acc
+----
++
+... Altere `astraAddress` o em `spec:` para FQDN (`ocp-cluster-1.company.com`neste exemplo) da instância primária do Astra Control Center.
+... Salve a configuração.
+... Confirme se o endereço foi atualizado:
++
+[listing]
+----
+kubectl get acc -n netapp-acc
+----
+
+
+.. Vá para a <<Etapa 2: Restaure o Operador do Centro de Controle Astra,Restaure o Operador do Centro de Controle Astra>> seção deste documento para concluir o processo de restauração.
+
+
+
+
+
+
+== Etapa 1 opção: Proteger o Astra Control Center usando a replicação
+
+Este procedimento descreve as etapas necessárias para configurar link:../use/replicate_snapmirror.html["Replicação do Astra Control Center"] para proteger a instância primária do Astra Control Center.
+
+Neste exemplo, o Astra Control Center é sempre instalado sob `netapp-acc` o namespace e o operador é instalado sob `netapp-acc-operator` o namespace.
+
+.Antes de começar
+* Você instalou o Astra Control Center primário em um cluster.
+* Você instalou o Astra Control Center secundário em um cluster diferente.
+
+
+.Passos
+. Gerencie o cluster de destino e a aplicação Astra Control Center primário a partir da instância secundária Astra Control Center:
++
+.. Faça login na instância secundária do Astra Control Center.
+.. link:../get-started/add-cluster.html["Adicione o cluster primário Astra Control Center"] (`ocp-cluster-1`).
+.. link:../get-started/add-cluster.html["Adicione o terceiro cluster de destino"] (`ocp-cluster-3`) que será usado para a replicação.
+
+
+. Gerencie o Astra Control Center e o operador Astra Control Center no Astra Control Center secundário:
++
+.. Selecione *clusters* e selecione o cluster que contém o Astra Control Center primário (`ocp-cluster-1`).
+.. Selecione a guia *namespaces*.
+..  `netapp-acc`Selecione e `netapp-acc-operator` namespaces.
+.. Selecione o menu ações e selecione *Definir como aplicações*.
+.. Selecione *Exibir em aplicativos* para ver os aplicativos definidos.
+
+
+. Configurar backends para replicação:
++
+
+NOTE: A replicação requer que o cluster primário do Centro de Controle Astra e o cluster de (`ocp-cluster-3`destino ) usem diferentes back-ends de storage ONTAP com peering. Depois que cada back-end é peered e adicionado ao Astra Control, o back-end aparece na guia *descoberto* da página backends.
+
++
+.. link:../get-started/add-storage-backend.html["Adicione um back-end com peered"] Para Astra Control Center no cluster primário.
+.. link:../get-started/add-storage-backend.html["Adicione um back-end com peered"] Para Astra Control Center no cluster de destino.
+
+
+. Configurar replicação:
++
+.. No ecrã aplicações, selecione a `netapp-acc` aplicação.
+.. Selecione *Configurar política de replicação*.
+..  `ocp-cluster-3`Selecione como o cluster de destino.
+.. Selecione a classe de armazenamento.
+..  `netapp-acc`Insira como namespace de destino.
+.. Altere a frequência de replicação, se desejado.
+.. Selecione *seguinte*.
+.. Confirme se a configuração está correta e selecione *Guardar*.
++
+A relação de replicação passa de `Establishing` para `Established`. Quando ativa, essa replicação ocorrerá a cada cinco minutos até que a configuração de replicação seja excluída.
+
+
+
+. Faça failover da replicação para o outro cluster se o sistema primário estiver corrompido ou não estiver mais acessível:
++
+
+NOTE: Certifique-se de que o cluster de destino não tenha o Astra Control Center instalado para garantir um failover bem-sucedido.
+
++
+.. Selecione o ícone de elipses verticais e selecione *failover*.
++
+image:acc-to-acc-replication-example.png["Uma imagem que mostra a opção 'failover' na relação de replicação"]
+
+.. Confirme os detalhes e selecione *failover* para iniciar o processo de failover.
++
+O status da relação de replicação muda para `Failing over` e depois `Failed over` quando concluído.
+
+
+
+. Conclua a configuração de failover:
++
+.. Abra um terminal e conete-se usando o kubeconfig do terceiro cluster (`ocp-cluster-3`). Agora, esse cluster tem o Astra Control Center instalado.
+.. Determine o FQDN do Centro de Controle Astra no terceiro (`ocp-cluster-3`cluster ).
+.. Atualize a configuração para fazer referência ao Astra Control Center DNS:
++
+[listing]
+----
+kubectl edit acc -n netapp-acc
+----
++
+... Altere `astraAddress` o em `spec:` com o FQDN (`ocp-cluster-3.company.com`) do terceiro cluster de destino.
+... Salve a configuração.
+... Confirme se o endereço foi atualizado:
++
+[listing]
+----
+kubectl get acc -n netapp-acc
+----
+
+
+.. [[missing-traefik-crd]]Confirme que todos os CRDs traefik necessários estão presentes:
++
+[listing]
+----
+kubectl get crds | grep traefik
+----
++
+CRDS traefik necessário:
+
++
+[listing]
+----
+ingressroutes.traefik.containo.us
+ingressroutes.traefik.io
+ingressroutetcps.traefik.containo.us
+ingressroutetcps.traefik.io
+ingressrouteudps.traefik.containo.us
+ingressrouteudps.traefik.io
+middlewares.traefik.containo.us
+middlewares.traefik.io
+middlewaretcps.traefik.containo.us
+middlewaretcps.traefik.io
+serverstransports.traefik.containo.us
+serverstransports.traefik.io
+tlsoptions.traefik.containo.us
+tlsoptions.traefik.io
+tIsstores.traefik.containo.us
+tIsstores.traefik.io
+traefikservices.traefik.containo.us
+traefikservices.traefik.io
+----
+.. Se algumas das CRDs acima estiverem ausentes:
++
+... Vá para https://doc.traefik.io/traefik/reference/dynamic-configuration/kubernetes-crd/["documentação traefik"^].
+... Copie a área "Definições" em um arquivo.
+... Aplicar alterações:
++
+[listing]
+----
+kubectl apply -f <file name>
+----
+... Reiniciar traefik:
++
+[listing]
+----
+kubectl get pods -n netapp-acc | grep -e "traefik" | awk '{print $1}' | xargs kubectl delete pod -n netapp-acc
+----
+
+
+.. Vá para a <<Etapa 2: Restaure o Operador do Centro de Controle Astra,Restaure o Operador do Centro de Controle Astra>> seção deste documento para concluir o processo de restauração.
+
+
+
+
+
+
+== Etapa 2: Restaure o Operador do Centro de Controle Astra
+
+Usando o Astra Control Center secundário, restaure o operador principal do Astra Control Center a partir do backup. O namespace de destino deve ser o mesmo que o namespace de origem. No caso em que o Astra Control Center foi excluído do cluster de origem principal, ainda haverá backups para executar as mesmas etapas de restauração.
+
+.Passos
+. Selecione *aplicativos* e, em seguida, selecione o nome do aplicativo operador (`netapp-acc-operator`).
+. No menu Opções na coluna ações, selecione *Restaurar*
+. Escolha *Restaurar para novos namespaces* como o tipo de restauração.
+. Escolha o terceiro cluster de (`ocp-cluster-3`destino ).
+. Altere o namespace para ser o mesmo que o namespace associado ao cluster de origem primária (`netapp-acc-operator`).
+. Selecione o backup que foi feito anteriormente como a origem de restauração.
+. Selecione *Restaurar usando classes de armazenamento originais*.
+. Selecione *Restaurar todos os recursos*.
+. Revise os detalhes e clique em *Restaurar* para iniciar o processo de restauração.
++
+A página aplicativos mostra o operador do Astra Control Center sendo restaurado para o terceiro cluster de destino (`ocp-cluster-3`). Quando o processo estiver concluído, o estado será exibido como `Available`. Dentro de dez minutos, o endereço DNS deve ser resolvido na página.
+
+
+
+.Resultado
+O Astra Control Center, seus clusters registrados e aplicações gerenciadas com seus snapshots e backups agora estão disponíveis no terceiro cluster de destino (`ocp-cluster-3`). Quaisquer políticas de proteção que você tenha no original também estão presentes na nova instância. Você pode continuar fazendo backups e snapshots programados ou sob demanda.
+
+
+
+== Solução de problemas
+
+Determine a integridade do sistema e se os processos de proteção foram bem-sucedidos.
+
+* *Os pods não estão em execução*: Confirme se todos os pods estão ativos e em execução:
++
+[listing]
+----
+kubectl get pods -n netapp-acc
+----
++
+Se alguns pods estiverem `CrashLookBackOff` no estado, reinicie-os e eles devem fazer a transição para `Running` o estado.
+
+* *Confirmar status do sistema*: Confirme se o sistema Astra Control Center está `ready` no estado:
++
+[listing]
+----
+kubectl get acc -n netapp-acc
+----
++
+Resposta:
+
++
+[listing]
+----
+NAME  UUID                                 VERSION    ADDRESS                             READY
+astra 89f4fd47-0cf0-4c7a-a44e-43353dc96ba8 24.02.0-69 ocp-cluster-1.company.com           True
+----
+* *Confirmar status de implantação*: Mostrar informações de implantação do Astra Control Center para confirmar que `Deployment State` é `Deployed`.
++
+[listing]
+----
+kubectl describe acc astra -n netapp-acc
+----
+* *A IU do Astra Control Center restaurada retorna um erro 404*: Se isso acontecer quando você selecionou `AccTraefik` como uma opção de entrada, verifique a <<missing-traefik-crd,CRDs traefik>> para garantir que todos estão instalados.
+

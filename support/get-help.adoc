@@ -1,0 +1,113 @@
+---
+sidebar: sidebar 
+permalink: support/get-help.html 
+keywords: how to get help with astra control, how to get support with astra control, astra control knowledgebase, netapp technical support, discord, phone, web, ticket, contact support, support ticket, support bundle 
+summary: 'O NetApp é compatível com o Astra Control de várias maneiras. Amplas opções gratuitas de suporte autônomo estão disponíveis 24 horas por dia, 7 dias por semana, como artigos da base de conhecimento (KB) e um canal discord. Sua conta Astra Control inclui suporte técnico remoto por meio de tíquetes na Web.' 
+---
+= Obtenha ajuda
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/support/
+
+
+[role="lead"]
+O NetApp é compatível com o Astra Control de várias maneiras. Amplas opções gratuitas de suporte autônomo estão disponíveis 24 horas por dia, 7 dias por semana, como artigos da base de conhecimento (KB) e um canal discord. Sua conta Astra Control inclui suporte técnico remoto por meio de tíquetes na Web.
+
+
+IMPORTANT: Se você tiver uma licença de avaliação para o Astra Control Center, poderá obter suporte técnico. No entanto, a criação de casos através do site de suporte da NetApp (NSS) não está disponível. Você pode entrar em Contato com o suporte através da opção de feedback ou usar o canal discord para autoatendimento.
+
+Você deve primeiro link:../get-started/add-license.html["Ative o suporte para o seu número de série NetApp"] para usar essas opções de suporte que não são de autoatendimento. É necessária uma conta SSO do site de suporte da NetApp (NSS) para chat e emissão de bilhetes na Web, juntamente com o gerenciamento de casos.
+
+
+
+== Opções de auto-suporte
+
+Você pode acessar as opções de suporte na IU do Astra Control Center selecionando a guia *Support* no menu principal.
+
+Estas opções estão disponíveis gratuitamente, 24x7:
+
+* https://kb.netapp.com/Cloud/Astra/Control["*Use a base de conhecimento* (login necessário)"^]: Procure artigos, perguntas frequentes ou informações sobre Break Fix relacionadas ao Astra Control.
+* *Consulte a documentação do produto*: Este é o site de documentação que você está visualizando no momento.
+* https://discord.gg/NetApp["*Obter ajuda via discord*"^]: Vá para Astra na categoria Pub para se conetar com colegas e especialistas.
+* * Criar um caso de suporte*: Gere pacotes de suporte para fornecer ao suporte NetApp para solução de problemas.
+* *Dê feedback sobre o Astra Control*: Envie um e-mail para NetApp.com para nos informar seus pensamentos, ideias ou preocupações.
+
+
+
+
+== Habilite o upload diário do pacote de suporte programado para o suporte da NetApp
+
+Durante a instalação do Astra Control Center, se você especificar `enrolled: true` para o `autoSupport` arquivo de recurso personalizado (CR) do Astra Control Center (`astra_control_center.yaml`, os pacotes de suporte diários serão automaticamente carregados para o https://mysupport.netapp.com/site/["Site de suporte da NetApp"^].
+
+
+
+== Gerar pacote de suporte para fornecer ao suporte da NetApp
+
+O Astra Control Center permite que o usuário administrativo gere pacotes, que incluem informações úteis para o suporte da NetApp, incluindo logs, eventos para todos os componentes da implantação do Astra, métricas e informações de topologia sobre clusters e aplicações em gerenciamento. Se você estiver conetado à Internet, poderá fazer o upload de pacotes de suporte para o site de suporte da NetApp (NSS) diretamente a partir da IU do Centro de Controle Astra.
+
+
+NOTE: O tempo gasto pelo Astra Control Center para gerar o pacote depende do tamanho da instalação do Astra Control Center, bem como dos parâmetros do pacote de suporte solicitado. O tempo de duração especificado ao solicitar um pacote de suporte determina o tempo necessário para que o pacote seja gerado (por exemplo, um período de tempo mais curto resulta em geração de pacotes mais rápida).
+
+.Antes de começar
+Determine se uma conexão proxy será necessária para carregar pacotes para o NSS. Se for necessária uma conexão proxy, verifique se o Astra Control Center foi configurado para usar um servidor proxy.
+
+. Selecione *Contas* > *conexões*.
+. Verifique as configurações de proxy em *Configurações de conexão*.
+
+
+.Passos
+. Crie um caso no portal do NSS usando o número de série da licença listado na página *suporte* da IU do Astra Control Center.
+. Execute as etapas a seguir para gerar o pacote de suporte usando a IU do Astra Control Center:
++
+.. Na página *suporte*, no bloco Pacote suporte, selecione *gerar*.
+.. Na janela *Generate a Support Bundle* (gerar um pacote de suporte), selecione o período de tempo.
++
+Você pode escolher entre prazos rápidos ou personalizados.
+
++
+
+NOTE: Você pode escolher um intervalo de datas personalizado, bem como especificar um período de tempo personalizado durante o intervalo de datas.
+
+.. Depois de fazer as seleções, selecione *Confirm*.
+.. Marque a caixa de seleção *carregar o pacote para o site de suporte da NetApp quando gerado*.
+.. Selecione *Generate Bundle*.
++
+Quando o pacote de suporte estiver pronto, uma notificação aparece na página *Contas* > *notificação* na área Alertas, na página *atividade* e também na lista de notificações (acessível selecionando o ícone no lado superior direito da interface do usuário).
+
++
+Se a geração falhar, um ícone será exibido na página gerar pacote. Selecione o ícone para ver a mensagem.
+
+
+
+
+
+
+TIP: O ícone de notificações no canto superior direito da interface do usuário fornece informações sobre eventos relacionados ao pacote de suporte, como quando o pacote é criado com êxito, quando a criação do pacote falha, quando o pacote não pôde ser carregado, quando o pacote não pôde ser baixado, e assim por diante.
+
+
+
+=== Se você tiver uma instalação com ar-gapped
+
+Se você tiver uma instalação com conexão via rede, execute as seguintes etapas após a geração do pacote suporte. Quando o pacote está disponível para download, o ícone Download aparece ao lado de *Generate* na seção *Support Bundles* da página *Support*.
+
+.Passos
+. Selecione o ícone Transferir para transferir o pacote localmente.
+. Carregue manualmente o pacote para o NSS.
++
+Você pode usar um dos seguintes métodos para fazer isso:
+
++
+**  https://upload.netapp.com/sg["Carregamento de ficheiro autenticado NetApp (necessário iniciar sessão)"^]Use .
+** Fixe o pacote ao estojo diretamente no NSS.
+** Use o Digital Advisor.
+
+
+
+
+[discrete]
+== Encontre mais informações
+
+* https://kb.netapp.com/Advice_and_Troubleshooting/Miscellaneous/How_to_upload_a_file_to_NetApp["Como carregar um arquivo para o NetApp (login necessário)"^]
+* https://kb.netapp.com/Advice_and_Troubleshooting/Data_Storage_Software/ONTAP_OS/How_to_manually_upload_AutoSupport_messages_to_NetApp_in_ONTAP_9["Como fazer upload manual de um arquivo para o NetApp (login necessário)"^]
+

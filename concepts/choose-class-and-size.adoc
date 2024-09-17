@@ -1,0 +1,34 @@
+---
+sidebar: sidebar 
+permalink: concepts/choose-class-and-size.html 
+keywords: service level, storage class, storage classes, pv size, persistent volume size, volume size, bandwidth, performance, persistent, volume, kubernetes, containers 
+summary: Astra Control Center é compatível com vários back-ends de storage. Você deve entender como a classe de storage e o tamanho do volume persistente podem ajudar você a atingir seus objetivos de performance. 
+---
+= Classes de armazenamento e tamanho de volume persistente
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/concepts/
+
+
+[role="lead"]
+O Centro de Controle Astra é compatível com NetApp ONTAP e Longhorn como back-ends de armazenamento.
+
+
+
+== Visão geral
+
+O Astra Control Center é compatível com o seguinte:
+
+* * Classes de storage com suporte de armazenamento ONTAP*: Se você estiver usando um back-end do ONTAP, o Centro de Controle Astra oferece a capacidade de importar o back-end do ONTAP para relatar informações de monitoramento.
+* * Classes de armazenamento baseadas em CSI apoiadas pela Longhorn*: Você pode usar Longhorn com o driver Longhorn Container Storage Interface (CSI).
+
+
+
+NOTE: As classes de storage devem estar https://docs.netapp.com/us-en/trident/trident-use/create-stor-class.html["configurado"^] usando o Astra Control Provisioner.
+
+
+
+== Classes de armazenamento
+
+Quando você adiciona um cluster ao Astra Control Center, será solicitado que você selecione uma classe de storage configurada anteriormente nesse cluster como a classe de storage padrão. Essa classe de armazenamento será usada quando nenhuma classe de armazenamento for especificada em uma reivindicação de volume persistente (PVC). A classe de armazenamento padrão pode ser alterada a qualquer momento no Astra Control Center e qualquer classe de armazenamento pode ser usada a qualquer momento especificando o nome da classe de armazenamento dentro do gráfico PVC ou Helm. Certifique-se de que você tenha apenas uma única classe de storage padrão definida para o cluster do Kubernetes.

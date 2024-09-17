@@ -1,0 +1,221 @@
+---
+sidebar: sidebar 
+permalink: use/monitor-protect.html 
+keywords: proxy, connections, fluent bit, accounts, protect, security 
+summary: Você pode configurar várias configurações opcionais para aprimorar sua experiência com o Astra Control Center. Se a rede em que você está executando o Astra Control Center exigir um proxy para conexão com a Internet, configure esse servidor proxy no Astra Control Center. Você pode configurar várias configurações opcionais para aprimorar sua experiência com o Astra Control Center. Para monitorar e obter informações sobre sua infraestrutura completa, configure Prometheus ou adicione uma conexão Fluentd. 
+---
+= Monitore a infraestrutura com conexões Prometheus ou Fluentd
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/use/
+
+
+[role="lead"]
+Você pode configurar várias configurações opcionais para aprimorar sua experiência com o Astra Control Center. Para monitorar e obter informações sobre sua infraestrutura completa, configure Prometheus ou adicione uma conexão Fluentd.
+
+Se a rede em que você está executando o Astra Control Center exigir um proxy para conexão à Internet (para carregar pacotes de suporte para o site de suporte da NetApp), você deverá configurar um servidor proxy no Astra Control Center.
+
+* <<Conete-se ao Prometheus>>
+* <<Ligar ao Fluentd>>
+
+
+
+
+== Adicione um servidor proxy para conexões ao site de suporte da NetApp
+
+Se a rede em que você está executando o Astra Control Center exigir um proxy para conexão à Internet (para carregar pacotes de suporte para o site de suporte da NetApp), você deverá configurar um servidor proxy no Astra Control Center.
+
+
+IMPORTANT: O Astra Control Center não valida os detalhes inseridos para o servidor proxy. Certifique-se de que introduz os valores corretos.
+
+.Passos
+. Faça login no Astra Control Center usando uma conta com privilégio *admin*/*owner*.
+. Selecione *conta* > *conexões*.
+. Selecione *Connect* na lista suspensa para adicionar um servidor proxy.
++
+image:proxy-connect.png["Esta imagem mostra a opção conetar para ativar a conexão proxy."]
+
+. Introduza o nome do servidor proxy ou o endereço IP e o número da porta proxy.
+. Se o servidor proxy exigir autenticação, marque a caixa de seleção e insira o nome de usuário e a senha.
+. Selecione *Connect*.
+
+
+.Resultado
+Se as informações do proxy que você inseriu foram salvas, a seção *Proxy HTTP* da página *Account* > *Connections* indica que ela está conetada e exibe o nome do servidor.
+
+image:proxy-new.png["Esta imagem mostra que o servidor proxy foi conetado com êxito."]
+
+
+
+=== Edite as configurações do servidor proxy
+
+Você pode editar as configurações do servidor proxy.
+
+.Passos
+. Faça login no Astra Control Center usando uma conta com privilégio *admin*/*owner*.
+. Selecione *conta* > *conexões*.
+. Selecione *Editar* na lista suspensa para editar a conexão.
+. Edite os detalhes do servidor e as informações de autenticação.
+. Selecione *Guardar*.
+
+
+
+
+=== Desative a conexão do servidor proxy
+
+Você pode desativar a conexão do servidor proxy. Você será avisado antes de desativar que a possível interrupção de outras conexões pode ocorrer.
+
+.Passos
+. Faça login no Astra Control Center usando uma conta com privilégio *admin*/*owner*.
+. Selecione *conta* > *conexões*.
+. Selecione *Disconnect* na lista pendente para desativar a ligação.
+. Na caixa de diálogo que se abre, confirme a operação.
+
+
+
+
+== Conete-se ao Prometheus
+
+Você pode monitorar os dados do Astra Control Center com Prometheus. Você pode configurar o Prometheus para reunir métricas do endpoint de métricas do cluster do Kubernetes e usar o Prometheus também para visualizar os dados das métricas.
+
+Para obter detalhes sobre como usar Prometheus, consulte sua documentação em https://prometheus.io/docs/prometheus/latest/getting_started/["Começando com Prometheus"].
+
+.O que você vai precisar
+Certifique-se de ter baixado e instalado o pacote Prometheus no cluster Astra Control Center ou em um cluster diferente que possa se comunicar com o cluster Astra Control Center.
+
+Siga as instruções na documentação oficial para https://prometheus.io/docs/prometheus/latest/installation/["Instale Prometheus"].
+
+Prometeu precisa ser capaz de se comunicar com o cluster do Kubernetes do Astra Control Center. Se Prometheus não estiver instalado no cluster Astra Control Center, você precisará garantir que eles possam se comunicar com o serviço de métricas em execução no cluster Astra Control Center.
+
+
+
+=== Configure Prometheus
+
+O Astra Control Center expõe um serviço de métricas na porta TCP 9090 no cluster Kubernetes. Você precisa configurar Prometheus para coletar métricas deste serviço.
+
+.Passos
+. Faça login no servidor Prometheus.
+. Adicione a entrada do cluster ao `prometheus.yml` arquivo. No `yml` arquivo, adicione uma entrada semelhante à seguinte para o cluster no `scrape_configs section`:
++
+[listing]
+----
+job_name: '<Add your cluster name here. You can abbreviate. It just needs to be a unique name>'
+  metrics_path: /accounts/<replace with your account ID>/metrics
+  authorization:
+     credentials: <replace with your API token>
+  tls_config:
+     insecure_skip_verify: true
+  static_configs:
+    - targets: ['<replace with your astraAddress. If using FQDN, the prometheus server has to be able to resolve it>']
+----
++
+
+NOTE: Se você definir `tls_config insecure_skip_verify` como `true`, o protocolo de criptografia TLS não será necessário.
+
+. Reinicie o serviço Prometheus:
++
+[listing]
+----
+sudo systemctl restart prometheus
+----
+
+
+
+
+=== Acesse Prometheus
+
+Acesse a URL Prometheus.
+
+.Passos
+. Em um navegador, insira o URL Prometheus com a porta 9090.
+. Verifique a sua ligação selecionando *Status* > *Targets*.
+
+
+
+
+=== Ver dados em Prometheus
+
+Você pode usar Prometheus para visualizar os dados do Astra Control Center.
+
+.Passos
+. Em um navegador, insira o URL Prometheus.
+. No menu Prometheus, selecione *Graph*.
+. Para usar o Metrics Explorer, selecione o ícone ao lado de *execute*.
+.  `scrape_samples_scraped`Selecione e selecione *Executar*.
+. Para ver a raspagem de amostra ao longo do tempo, selecione *Gráfico*.
++
+
+NOTE: Se vários dados de cluster foram coletados, as métricas de cada cluster aparecem em uma cor diferente.
+
+
+
+
+
+== Ligar ao Fluentd
+
+Você pode enviar logs (eventos do Kubernetes) de um sistema monitorado pelo Astra Control Center para o seu ponto de extremidade do Fluentd. A ligação Fluentd está desativada por predefinição.
+
+
+NOTE: As conexões Fluentd não são compatíveis com clusters gerenciados com workflows declarativos do Kubernetes. Só é possível conectar o Fluentd a clusters gerenciados com workflows não nativos do Kubernetes.
+
+image:fluentbit.png["Este é um diagrama conceitual de logs de eventos que vão do Astra para o Fluentd."]
+
+
+NOTE: Somente os logs de eventos de clusters gerenciados são encaminhados para o Fluentd.
+
+.Antes de começar
+* Uma conta do Centro de Controle Astra com *admin*/*owner* Privileges.
+* Astra Control Center instalado e executado em um cluster Kubernetes.
+
+
+
+IMPORTANT: O Astra Control Center não valida os detalhes inseridos para o seu servidor Fluentd. Certifique-se de que introduz os valores corretos.
+
+.Passos
+. Faça login no Astra Control Center usando uma conta com privilégio *admin*/*owner*.
+. Selecione *conta* > *conexões*.
+. Selecione *Connect* na lista suspensa onde mostra *Disconnected* para adicionar a conexão.
++
+image:connect-fluentd.png["Esta imagem mostra o ecrã da IU para ativar a ligação ao Fluentd."]
+
+. Insira o endereço IP do host, o número da porta e a chave compartilhada para o servidor Fluentd.
+. Selecione *Connect*.
+
+
+.Resultado
+Se os detalhes inseridos para o servidor Fluentd foram salvos, a seção *Fluentd* da página *Account* > *Connections* indica que ele está conetado. Agora você pode visitar o servidor Fluentd conetado e visualizar os logs de eventos.
+
+Se a conexão falhou por algum motivo, o status mostra *Failed*. Você pode encontrar o motivo da falha em *notificações* no lado superior direito da interface do usuário.
+
+Você também pode encontrar as mesmas informações em *conta* > *notificações*.
+
+
+IMPORTANT: Se você estiver tendo problemas com a coleta de logs, faça login no nó de trabalho e verifique se os logs estão disponíveis no `/var/log/containers/`.
+
+
+
+=== Edite a ligação Fluentd
+
+Você pode editar a conexão Fluentd para sua instância do Astra Control Center.
+
+.Passos
+. Faça login no Astra Control Center usando uma conta com privilégio *admin*/*owner*.
+. Selecione *conta* > *conexões*.
+. Selecione *Editar* na lista suspensa para editar a conexão.
+. Altere as definições de ponto final Fluentd.
+. Selecione *Guardar*.
+
+
+
+
+=== Desative a conexão Fluentd
+
+Você pode desativar a conexão Fluentd com sua instância do Astra Control Center.
+
+.Passos
+. Faça login no Astra Control Center usando uma conta com privilégio *admin*/*owner*.
+. Selecione *conta* > *conexões*.
+. Selecione *Disconnect* na lista pendente para desativar a ligação.
+. Na caixa de diálogo que se abre, confirme a operação.
+

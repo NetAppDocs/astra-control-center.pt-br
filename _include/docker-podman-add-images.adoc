@@ -1,0 +1,105 @@
+= 
+:allow-uri-read: 
+
+
+. Se você estiver planejando enviar o pacote Astra Control Center para o Registro local, conclua a sequência de etapas apropriada para o mecanismo de contêiner:
++
+[role="tabbed-block"]
+====
+.Docker
+--
+.. Mude para o diretório raiz do tarball. Você deve ver o `acc.manifest.bundle.yaml` arquivo e estes diretórios:
++
+`acc/`
+`kubectl-astra/`
+`acc.manifest.bundle.yaml`
+
+.. Envie as imagens do pacote no diretório de imagens do Astra Control Center para o Registro local. Faça as seguintes substituições antes de executar o `push-images` comando:
++
+*** Substitua o <BUNDLE_FILE> pelo nome do arquivo do pacote Astra Control (`acc.manifest.bundle.yaml`).
+*** Substitua o <MY_FULL_REGISTRY_PATH> pela URL do repositório Docker; por exemplo"https://<docker-registry>"[], .
+*** Substitua o <MY_REGISTRY_USER> pelo nome de usuário.
+*** Substitua o <MY_REGISTRY_TOKEN> por um token autorizado para o Registro.
++
+[source, console]
+----
+kubectl astra packages push-images -m <BUNDLE_FILE> -r <MY_FULL_REGISTRY_PATH> -u <MY_REGISTRY_USER> -p <MY_REGISTRY_TOKEN>
+----
+
+
+
+
+--
+.Podman
+--
+.. Mude para o diretório raiz do tarball. Você deve ver este arquivo e diretório:
++
+`acc/`
+`kubectl-astra/`
+`acc.manifest.bundle.yaml`
+
+.. Inicie sessão no seu registo:
++
+[source, console]
+----
+podman login <YOUR_REGISTRY>
+----
+.. Prepare e execute um dos seguintes scripts personalizados para a versão do Podman que você usa. Substitua o <MY_FULL_REGISTRY_PATH> pela URL do seu repositório que inclui quaisquer subdiretórios.
++
+[source, subs="specialcharacters,quotes"]
+----
+*Podman 4*
+----
++
+[source, console]
+----
+export REGISTRY=<MY_FULL_REGISTRY_PATH>
+export PACKAGENAME=acc
+export PACKAGEVERSION=24.02.0-69
+export DIRECTORYNAME=acc
+for astraImageFile in $(ls ${DIRECTORYNAME}/images/*.tar) ; do
+astraImage=$(podman load --input ${astraImageFile} | sed 's/Loaded image: //')
+astraImageNoPath=$(echo ${astraImage} | sed 's:.*/::')
+podman tag ${astraImageNoPath} ${REGISTRY}/netapp/astra/${PACKAGENAME}/${PACKAGEVERSION}/${astraImageNoPath}
+podman push ${REGISTRY}/netapp/astra/${PACKAGENAME}/${PACKAGEVERSION}/${astraImageNoPath}
+done
+----
++
+[source, subs="specialcharacters,quotes"]
+----
+*Podman 3*
+----
++
+[source, console]
+----
+export REGISTRY=<MY_FULL_REGISTRY_PATH>
+export PACKAGENAME=acc
+export PACKAGEVERSION=24.02.0-69
+export DIRECTORYNAME=acc
+for astraImageFile in $(ls ${DIRECTORYNAME}/images/*.tar) ; do
+astraImage=$(podman load --input ${astraImageFile} | sed 's/Loaded image: //')
+astraImageNoPath=$(echo ${astraImage} | sed 's:.*/::')
+podman tag ${astraImageNoPath} ${REGISTRY}/netapp/astra/${PACKAGENAME}/${PACKAGEVERSION}/${astraImageNoPath}
+podman push ${REGISTRY}/netapp/astra/${PACKAGENAME}/${PACKAGEVERSION}/${astraImageNoPath}
+done
+----
++
+
+NOTE: O caminho da imagem que o script cria deve ser semelhante ao seguinte, dependendo da configuração do Registro:
+
++
+[listing]
+----
+https://downloads.example.io/docker-astra-control-prod/netapp/astra/acc/24.02.0-69/image:version
+----
+
+
+--
+====
+. Altere o diretório:
++
+[source, console]
+----
+cd manifests
+----
+

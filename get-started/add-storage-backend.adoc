@@ -1,0 +1,43 @@
+---
+sidebar: sidebar 
+permalink: get-started/add-storage-backend.html 
+keywords: set up astra control, astra control license, add cluster, add storage backend, import storage, add bucket 
+summary: Depois de ativar a autenticação de back-end de armazenamento, você deve selecionar um back-end de armazenamento para gerenciar. 
+---
+= Adicionar um back-end de storage
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/get-started/
+
+
+[role="lead"]
+Depois de configurar as credenciais ou as informações de autenticação de certificado, você poderá adicionar um back-end de storage do ONTAP existente ao Astra Control Center para gerenciar seus recursos.
+
+O gerenciamento de clusters de storage no Astra Control como um back-end de storage permite que você tenha vínculos entre volumes persistentes (PVS) e o back-end de storage, bem como métricas de storage adicionais.
+
+Adicionar e gerenciar back-ends de storage do ONTAP no Astra Control Center é opcional ao usar a tecnologia NetApp SnapMirror se você tiver ativado o Astra Control Provisioner.
+
+.Passos
+. No Painel na área de navegação à esquerda, selecione *backends*.
+. Selecione *Adicionar*.
+. Na seção usar existente da página Adicionar storage backend, selecione *ONTAP*.
+. Selecione uma das seguintes opções:
++
+** *Use as credenciais de administrador*: Insira o endereço IP e as credenciais de administrador de gerenciamento de cluster do ONTAP. As credenciais devem ser credenciais de todo o cluster.
++
+
+NOTE: O usuário cujas credenciais você inserir aqui deve ter o `ontapi` método de acesso de login de usuário habilitado no Gerenciador de sistema do ONTAP no cluster do ONTAP. Se você planeja usar a replicação do SnapMirror, aplique credenciais de usuário com a função "admin", que tem os métodos de acesso `ontapi` e `http`, nos clusters ONTAP de origem e destino.  https://docs.netapp.com/us-en/ontap-sm-classic/online-help-96-97/concept_cluster_user_accounts.html#users-list["Gerenciar contas de usuário na documentação do ONTAP"^]Consulte para obter mais informações.
+
+** *Use um certificado*: Carregue o arquivo de certificado `.pem`, o arquivo de chave de certificado `.key` e, opcionalmente, o arquivo de autoridade de certificação.
+
+
+. Selecione *seguinte*.
+. Confirme os detalhes do backend e selecione *Manage*.
+
+
+.Resultado
+O backend aparece no `online` estado da lista com informações de resumo.
+
+
+NOTE: Talvez seja necessário atualizar a página para que o backend apareça.

@@ -1,0 +1,28 @@
+---
+sidebar: sidebar 
+permalink: use/manage-notifications.html 
+keywords: notifications, delete notifications, mark notifications as read 
+summary: O Astra notifica você quando as ações forem concluídas ou falhadas. Por exemplo, você verá uma notificação se um backup de um aplicativo for concluído com êxito. 
+---
+= Ver e gerir notificações
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/use/
+
+
+[role="lead"]
+O Astra notifica você quando as ações forem concluídas ou falhadas. Por exemplo, você verá uma notificação se um backup de um aplicativo for concluído com êxito.
+
+Você pode gerenciar essas notificações no canto superior direito da interface:
+
+image:screenshot-unread-notifications.png["Uma captura de tela que mostra a interface Astra, onde você pode ver o número de notificações não lidas."]
+
+.Passos
+. Selecione o número de notificações não lidas no canto superior direito.
+. Reveja as notificações e selecione *Marcar como lidas* ou *Mostrar todas as notificações*.
++
+Se você selecionou *Mostrar todas as notificações*, a página notificações será carregada.
+
+. Na página *notificações*, visualize as notificações, selecione as que deseja marcar como lidas, selecione *Ação* e selecione *Marcar como lidas*.
+

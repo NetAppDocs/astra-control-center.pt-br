@@ -1,0 +1,15 @@
+---
+layout: landing-page 
+sidebar: sidebar 
+permalink: index.html 
+summary: O software Astra Control Center fornece gerenciamento de dados com reconhecimento de aplicações de clusters Kubernetes em seu ambiente local. Faça backup fácil de aplicações Kubernetes, migre dados para um cluster diferente e crie imediatamente clones de aplicações em trabalho. Se você precisar gerenciar aplicações Kubernetes executadas em uma nuvem pública, acesse a documentação do Astra Control Service. 
+---
+= Documentação do Astra Control Center 24,02
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+

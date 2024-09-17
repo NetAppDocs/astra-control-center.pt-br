@@ -1,0 +1,244 @@
+---
+sidebar: sidebar 
+permalink: release-notes/known-limitations.html 
+keywords: astra, control center, limitations, known limitations, interoperability 
+summary: As limitações conhecidas identificam plataformas, dispositivos ou funções que não são suportadas por esta versão do produto ou que não interoperam corretamente com ele. Revise essas limitações com cuidado. 
+---
+= Limitações conhecidas
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/release-notes/
+
+
+[role="lead"]
+As limitações conhecidas identificam plataformas, dispositivos ou funções que não são suportadas por esta versão do produto ou que não interoperam corretamente com ele. Revise essas limitações com cuidado.
+
+.Limitações do gerenciamento de clusters
+* <<O mesmo cluster não pode ser gerenciado por duas instâncias do Astra Control Center>>
+* <<O Astra Control Center não pode gerenciar dois clusters com nomes idênticos>>
+
+
+.Limitações de controle de acesso baseado em função (RBAC)
+* <<Um usuário com restrições de namespace RBAC pode adicionar e desgerenciar um cluster>>
+* <<Um membro com restrições de namespace não pode acessar os aplicativos clonados ou restaurados até que o administrador adicione o namespace à restrição>>
+* <<Restrições restritivas de função podem ser ignoradas para recursos em clusters que não sejam conetores>>
+
+
+.Limitações de gerenciamento de aplicativos
+* <<Vários aplicativos em um único namespace não podem ser restaurados coletivamente para um namespace diferente>>
+* <<O Astra Control não é compatível com aplicações que usam várias classes de storage por namespace>>
+* <<O Astra Control não atribui automaticamente buckets padrão nas instâncias da nuvem>>
+* <<Clones de aplicativos instalados usando operadores pass-by-referência podem falhar>>
+* <<As operações de restauração no local de aplicativos que usam um gerenciador de certificados não são suportadas>>
+* <<O operador habilitado para OLM e com escopo de cluster implantaram aplicativos não suportados>>
+* <<As aplicações implementadas com o Helm 2 não são suportadas>>
+* <<Os snapshots podem falhar no Kubernetes 1,25 ou em clusters posteriores com certas versões de controladora de snapshot>>
+* <<Backups e snapshots podem não ser retidos durante a remoção de uma instância do Astra Control Center>>
+* <<As operações de restauração no local para as classes de storage de economia ONTAP nas falham>>
+
+
+.Limitações gerais
+* <<Limitações de usuário e grupo LDAP>>
+* <<Os buckets do S3 no Astra Control Center não relatam a capacidade disponível>>
+* <<O Astra Control Center não valida os detalhes inseridos para o servidor proxy>>
+* <<As conexões existentes com um pod Postgres causam falhas>>
+* <<A página atividade exibe até 100000 eventos>>
+* <<O SnapMirror não é compatível com aplicações que usam NVMe em TCP para back-ends de storage>>
+
+
+
+
+== O mesmo cluster não pode ser gerenciado por duas instâncias do Astra Control Center
+
+Se você quiser gerenciar um cluster em outra instância do Astra Control Center, primeiro você deve link:../use/unmanage.html#stop-managing-compute["desgerenciar o cluster"]usar a instância na qual ele é gerenciado antes de gerenciá-lo em outra instância. Depois de remover o cluster do gerenciamento, verifique se o cluster não é gerenciado executando este comando:
+
+[listing]
+----
+oc get pods n -netapp-monitoring
+----
+Não deve haver pods em execução nesse namespace ou o namespace não deve existir. Se qualquer um deles for verdadeiro, o cluster não será gerenciado.
+
+
+
+== O Astra Control Center não pode gerenciar dois clusters com nomes idênticos
+
+Se você tentar adicionar um cluster com o mesmo nome de um cluster que já existe, a operação falhará. Esse problema ocorre na maioria das vezes em um ambiente padrão do Kubernetes se você não tiver alterado o nome padrão do cluster nos arquivos de configuração do Kubernetes.
+
+Como solução alternativa, faça o seguinte:
+
+. Edite seu `kubeadm-config` ConfigMap:
++
+[listing]
+----
+kubectl edit configmaps -n kube-system kubeadm-config
+----
+. Altere o `clusterName` valor do campo `kubernetes` de (o nome padrão do Kubernetes) para um nome personalizado exclusivo.
+. Editar kubeconfig (`.kube/config`).
+. Atualizar nome do cluster de `kubernetes` para um nome personalizado exclusivo (`xyz-cluster`é usado nos exemplos abaixo). Faça a atualização em ambas `clusters` as seções e `contexts`, conforme mostrado neste exemplo:
++
+[listing, subs="+quotes"]
+----
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: ExAmPLERb2tCcjZ5K3E2Njk4eQotLExAMpLEORCBDRVJUSUZJQ0FURS0txxxxXX==
+    server: https://x.x.x.x:6443
+  *name: xyz-cluster*
+contexts:
+- context:
+    *cluster: xyz-cluster*
+    namespace: default
+    user: kubernetes-admin
+  name: kubernetes-admin@kubernetes
+current-context: kubernetes-admin@kubernetes
+----
+
+
+
+
+== Um usuário com restrições de namespace RBAC pode adicionar e desgerenciar um cluster
+
+Um usuário com restrições de namespace RBAC não deve ter permissão para adicionar ou desgerenciar clusters. Devido a uma limitação atual, o Astra não impede que tais usuários desgerenciem clusters.
+
+
+
+== Um membro com restrições de namespace não pode acessar os aplicativos clonados ou restaurados até que o administrador adicione o namespace à restrição
+
+Qualquer `member` usuário com restrições RBAC por nome/ID de namespace pode clonar ou restaurar um aplicativo para um novo namespace no mesmo cluster ou para qualquer outro cluster na conta da organização. No entanto, o mesmo usuário não pode acessar o aplicativo clonado ou restaurado no novo namespace. Após uma operação de clone ou restauração criar um novo namespace, o administrador/proprietário da conta pode editar a `member` conta de usuário e atualizar as restrições de função para o usuário afetado conceder acesso ao novo namespace.
+
+
+
+== Restrições restritivas de função podem ser ignoradas para recursos em clusters que não sejam conetores
+
+* *Se os recursos que estão sendo acessados pertencerem a clusters que têm o Astra Connector mais recente instalado*: Quando um usuário recebe várias funções por meio de associação a grupos LDAP, as restrições das funções são combinadas. Por exemplo, se um utilizador com uma função Visualizador local juntar três grupos que estão ligados à função Membro, o utilizador tem agora acesso à função Visualizador aos recursos originais, bem como acesso à função Membro aos recursos obtidos através da associação ao grupo.
+* *Se os recursos que estão sendo acessados pertencerem a clusters que não têm o Astra Connector instalado*: Quando um usuário recebe várias funções por meio de associação a grupos LDAP, as restrições da função mais permissiva são as únicas que entram em vigor.
+
+
+
+
+== Vários aplicativos em um único namespace não podem ser restaurados coletivamente para um namespace diferente
+
+Se você gerenciar várias aplicações em um único namespace (criando várias definições de aplicações no Astra Control), não poderá restaurar todas as aplicações para um namespace único diferente. Você precisa restaurar cada aplicativo para seu próprio namespace separado.
+
+
+
+== O Astra Control não é compatível com aplicações que usam várias classes de storage por namespace
+
+O Astra Control é compatível com aplicações que usam uma única classe de storage por namespace. Ao adicionar um aplicativo a um namespace, verifique se o aplicativo tem a mesma classe de armazenamento que outros aplicativos no namespace.
+
+
+
+== O Astra Control não atribui automaticamente buckets padrão nas instâncias da nuvem
+
+O Astra Control não atribui automaticamente um bucket padrão a nenhuma instância de nuvem. Você precisa definir manualmente um intervalo padrão para uma instância de nuvem. Se um bucket padrão não estiver definido, você não poderá executar operações de clone de aplicativo entre dois clusters.
+
+
+
+== Clones de aplicativos instalados usando operadores pass-by-referência podem falhar
+
+O Astra Control é compatível com aplicativos instalados com operadores com escopo de namespace. Esses operadores são geralmente projetados com uma arquitetura "pass-by-value" em vez de "pass-by-reference". A seguir estão alguns aplicativos de operador que seguem estes padrões:
+
+* https://github.com/k8ssandra/cass-operator["Apache K8ssandra"^]
++
+
+NOTE: Para K8ssandra, são suportadas as operações de restauração no local. Uma operação de restauração para um novo namespace ou cluster requer que a instância original do aplicativo seja removida. Isto destina-se a garantir que as informações do grupo de pares transportadas não conduzam à comunicação entre instâncias. A clonagem da aplicação não é suportada.
+
+* https://github.com/jenkinsci/kubernetes-operator["Jenkins CI"^]
+* https://github.com/percona/percona-xtradb-cluster-operator["Cluster Percona XtraDB"^]
+
+
+O Astra Control pode não ser capaz de clonar um operador projetado com uma arquitetura "pass-by-reference" (por exemplo, o operador CockroachDB). Durante esses tipos de operações de clonagem, o operador clonado tenta consultar os segredos do Kubernetes do operador de origem, apesar de ter seu próprio novo segredo como parte do processo de clonagem. A operação de clone pode falhar porque o Astra Control não conhece os segredos do Kubernetes no operador de origem.
+
+
+NOTE: Durante as operações de clone, os aplicativos que precisam de um recurso do IngressClass ou webhooks para funcionar corretamente não devem ter esses recursos já definidos no cluster de destino.
+
+
+
+== As operações de restauração no local de aplicativos que usam um gerenciador de certificados não são suportadas
+
+Esta versão do Astra Control Center não oferece suporte à restauração local de aplicativos com gerentes de certificados. Operações de restauração para um namespace diferente e operações de clone são compatíveis.
+
+
+
+== O operador habilitado para OLM e com escopo de cluster implantaram aplicativos não suportados
+
+O Astra Control Center não oferece suporte a atividades de gerenciamento de aplicações com operadores com escopo de cluster.
+
+
+
+== As aplicações implementadas com o Helm 2 não são suportadas
+
+Se você usar o Helm para implantar aplicativos, o Astra Control Center precisará do Helm versão 3. O gerenciamento e clonagem de aplicativos implantados com o Helm 3 (ou atualizados do Helm 2 para o Helm 3) é totalmente compatível. Para obter mais informações, link:../get-started/requirements.html["Requisitos do Astra Control Center"]consulte .
+
+
+
+== Os snapshots podem falhar no Kubernetes 1,25 ou em clusters posteriores com certas versões de controladora de snapshot
+
+Os snapshots para clusters do Kubernetes que executam a versão 1,25 ou posterior podem falhar se a versão v1beta1 das APIs do controlador de snapshot estiver instalada no cluster.
+
+Como solução alternativa, faça o seguinte ao atualizar instalações existentes do Kubernetes 1,25 ou posteriores:
+
+. Remova quaisquer CRDs de Snapshot existentes e qualquer controladora de snapshot existente.
+. https://docs.netapp.com/us-en/trident/trident-managing-k8s/uninstall-trident.html["Desinstale o Astra Trident"^].
+. https://docs.netapp.com/us-en/trident/trident-use/vol-snapshots.html#deploy-a-volume-snapshot-controller["Instale as CRDs de snapshot e o controlador de snapshot"^].
+. https://docs.netapp.com/us-en/trident/trident-get-started/kubernetes-deploy.html["Instale a versão mais recente do Astra Trident"^].
+. https://docs.netapp.com/us-en/trident/trident-use/vol-snapshots.html#step-1-create-a-volumesnapshotclass["Crie um VolumeSnapshotClass"^].
+
+
+
+
+== Backups e snapshots podem não ser retidos durante a remoção de uma instância do Astra Control Center
+
+Se você tiver uma licença de avaliação, certifique-se de armazenar o ID da conta para evitar perda de dados em caso de falha do Astra Control Center se você não estiver enviando ASUPs.
+
+
+
+== As operações de restauração no local para as classes de storage de economia ONTAP nas falham
+
+Se você executar uma restauração no local de um aplicativo (restaurar o aplicativo para seu namespace original) e a classe de armazenamento do aplicativo usar o `ontap-nas-economy` driver, a operação de restauração poderá falhar se o diretório instantâneo não estiver oculto. Antes de restaurar no local, siga as instruções em link:../use/protect-apps.html#enable-backup-and-restore-for-ontap-nas-economy-operations["Habilite o backup e a restauração de operações de economia de ONTAP nas"] para ocultar o diretório de instantâneos.
+
+
+
+== Limitações de usuário e grupo LDAP
+
+O Astra Control Center é compatível com até 5.000 grupos remotos e 10.000 usuários remotos.
+
+O Astra Control não suporta uma entidade LDAP (utilizador ou grupo) que tenha um DN contendo um RDN com um espaço de saída ou de saída.
+
+
+
+== Os buckets do S3 no Astra Control Center não relatam a capacidade disponível
+
+Antes de fazer backup ou clonar aplicativos gerenciados pelo Astra Control Center, verifique as informações do bucket no sistema de gerenciamento ONTAP ou StorageGRID.
+
+
+
+== O Astra Control Center não valida os detalhes inseridos para o servidor proxy
+
+Certifique-se de que você link:../use/monitor-protect.html#add-a-proxy-server["introduza os valores corretos"] ao estabelecer uma conexão.
+
+
+
+== As conexões existentes com um pod Postgres causam falhas
+
+Quando você executa operações nos pods Postgres, você não deve se conetar diretamente dentro do pod para usar o comando psql. O Astra Control requer acesso psql para congelar e descongelar os bancos de dados. Se houver uma conexão pré-existente, o snapshot, o backup ou o clone falhará.
+
+
+
+== A página atividade exibe até 100000 eventos
+
+A página atividade do Astra Control pode exibir até 100.000 eventos. Para ver todos os eventos registados, recupere os eventos utilizando o https://docs.netapp.com/us-en/astra-automation/index.html["API Astra Control"^].
+
+
+
+== O SnapMirror não é compatível com aplicações que usam NVMe em TCP para back-ends de storage
+
+O Astra Control Center não oferece suporte à replicação NetApp SnapMirror para back-ends de storage que usam o protocolo NVMe em TCP.
+
+
+
+== Encontre mais informações
+
+* link:../release-notes/known-issues.html["Problemas conhecidos"]
+

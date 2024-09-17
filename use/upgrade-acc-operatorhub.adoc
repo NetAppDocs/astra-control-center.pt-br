@@ -1,0 +1,198 @@
+---
+sidebar: sidebar 
+permalink: use/upgrade-acc-operatorhub.html 
+keywords: upgrade astra, upgrade operator, operatorhub, openshift, upgrade astra control center, service mesh 
+summary: Se você usar o Red Hat OpenShift, poderá atualizar o Astra Control Center usando o OperatorHub. 
+---
+= Atualize o Astra Control Center usando o OpenShift OperatorHub
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/get-started/
+
+
+[role="lead"]
+Se você instalou o Astra Control Center usando seu operador certificado pela Red Hat, poderá atualizar o Astra Control Center usando um operador atualizado do OperatorHub. Use este procedimento para atualizar o Astra Control Center a partir do https://catalog.redhat.com/software/operators/explore["Catálogo de ecossistemas da Red Hat"^] ou usando o Red Hat OpenShift Container Platform.
+
+.Antes de começar
+* * Cumprir pré-requisitos ambientais *: Antes de atualizar, certifique-se de que o seu ambiente ainda cumpre o link:../get-started/requirements.html["Requisitos mínimos para implantação do Astra Control Center"].
+* *Certifique-se de que você ativou link:../get-started/requirements.html#astra-control-provisioner["Previsão do Astra Control"] com o Astra Trident em execução*
++
+.. Determine a versão do Astra Trident que você está executando:
++
+[source, console]
+----
+kubectl get tridentversion -n trident
+----
++
+
+NOTE: Se você estiver executando o Astra Trident 23,01 ou anterior, use-os https://docs.netapp.com/us-en/trident/trident-managing-k8s/upgrade-trident.html["instruções"^] para atualizar para uma versão mais recente do Astra Trident antes de atualizar para o Astra Control Provisioner. Você pode fazer uma atualização direta para o Astra Control Provisioner 24,02 se o seu Astra Trident estiver dentro de uma janela de quatro versões da versão 24,02. Por exemplo, você pode fazer o upgrade diretamente do Astra Trident 23,04 para o Astra Control Provisioner 24,02.
+
+.. Verifique se o Astra Control Provisioner foi link:../get-started/faq.html#running-acp-check["ativado"]. O Astra Control Provisioner não funcionará com versões do Astra Control Center anteriores a 23,10. Atualize seu Astra Control Provisioner para que ele tenha a mesma versão do Astra Control Center que você está atualizando para acessar as funcionalidades mais recentes.
+
+
+* *Garanta operadores de cluster e serviços de API saudáveis*:
++
+** A partir do cluster OpenShift, certifique-se de que todos os operadores de cluster estão em um estado saudável:
++
+[source, console]
+----
+oc get clusteroperators
+----
+** A partir do cluster OpenShift, certifique-se de que todos os serviços de API estão em um estado saudável:
++
+[source, console]
+----
+oc get apiservices
+----
+
+
+* * Permissões OpenShift*: Você tem todas as permissões necessárias e acesso à Red Hat OpenShift Container Platform para executar as etapas de atualização descritas.
+* *(somente driver SAN ONTAP) Ativar multipath*: Se você estiver usando um driver SAN ONTAP, verifique se o multipath está habilitado em todos os clusters Kubernetes.
+
+
+Você também deve considerar o seguinte:
+
+* *Tenha acesso ao Registro de imagens do NetApp Astra Control*:
++
+Você tem a opção de obter imagens de instalação e melhorias de funcionalidade para o Astra Control, como o Astra Control Provisioner, a partir do Registro de imagens do NetApp.
+
++
+.. Registre seu ID de conta Astra Control que você precisará fazer login no Registro.
++
+Você pode ver o ID da conta na IU da Web do Astra Control Service. Selecione o ícone de figura no canto superior direito da página, selecione *Acesso à API* e anote o ID da sua conta.
+
+.. Na mesma página, selecione *Generate API token* e copie a cadeia de token da API para a área de transferência e salve-a no seu editor.
+.. Faça login no Registro do Astra Control:
++
+[source, console]
+----
+docker login cr.astra.netapp.io -u <account-id> -p <api-token>
+----
+
+
+
+
+.Passos
+* <<Aceda à página de instalação do operador>>
+* <<Desinstale o operador existente>>
+* <<Instale o operador mais recente>>
+* <<Atualizar o Astra Control Center>>
+
+
+
+
+== Aceda à página de instalação do operador
+
+. Conclua o procedimento correspondente para OpenShift Container Platform ou Ecosystem Catalog:
++
+[role="tabbed-block"]
+====
+.Red Hat OpenShift web console
+--
+.. Faça login na IU da OpenShift Container Platform.
+.. No menu lateral, selecione *operadores > OperatorHub*.
++
+
+NOTE: Você só pode fazer upgrade para a versão atual do Astra Control Center usando esse operador.
+
+.. Procure `netapp-acc` e selecione o operador do Centro de Controle NetApp Astra.
++
+image:../use/operatorhub-upgrade-uninstall.png["Esta imagem mostra a opção de desinstalação na página do operador"]
+
+
+
+--
+.Catálogo de ecossistemas da Red Hat
+--
+.. Selecione o Centro de Controle NetApp Astra https://catalog.redhat.com/software/operators/detail/611fd22aaf489b8bb1d0f274["operador"^] .
+.. Selecione *Deploy and use*.
++
+image:red_hat_catalog.png["Esta imagem mostra a página de visão geral do Astra Control Center que está disponível no catálogo de ecossistemas RedHat"]
+
+
+
+--
+====
+
+
+
+
+== Desinstale o operador existente
+
+. Na página *NetApp-acc-operator*, selecione *Desinstalar* para remover o operador existente.
++
+image:../use/operatorhub-upgrade-uninstall.png["Esta imagem mostra a opção de desinstalação na página do operador"]
+
+. Confirme a operação.
++
+
+NOTE: Esta operação exclui o operador NetApp-acc, mas preserva o namespace e os recursos associados originais, como segredos.
+
+
+
+
+
+== Instale o operador mais recente
+
+. Navegue novamente para a `netapp-acc` página do operador.
+. Preencha a página *Instalar Operador* e instale o operador mais recente:
++
+image:../use/operatorhub-upgrade-install-page.png["Esta imagem mostra a opção de desinstalação na página do operador"]
+
++
+
+NOTE: O operador estará disponível em todos os namespaces de cluster.
+
++
+.. Selecione o namespace do operador `netapp-acc-operator` (ou namespace personalizado) que permanece da instalação anterior do operador excluído.
+.. Selecione uma estratégia de aprovação manual ou automática.
++
+
+NOTE: Recomenda-se a aprovação manual. Você deve ter apenas uma única instância de operador em execução por cluster.
+
+.. Selecione *Instalar*.
++
+
+NOTE: Se selecionou uma estratégia de aprovação manual, ser-lhe-á pedido que aprove o plano de instalação manual para este operador.
+
+
+
+. No console, vá para o menu OperatorHub e confirme se o operador instalou com êxito.
+
+
+
+
+== Atualizar o Astra Control Center
+
+. Na guia operador do Centro de Controle Astra, selecione o Centro de Controle Astra que permanece da instalação anterior e selecione *Editar AstraControlCenter*. image:../use/operatorhub-upgrade-yaml-edit.png["Esta imagem mostra a opção de edição do Astra Control Center original"]
+. Atualize o `AstraControlCenter` YAML:
++
+.. Insira a versão mais recente do Astra Control Center; por exemplo, 24.02.0-69.
+.. No `imageRegistry.name`, atualize o caminho do registo de imagens conforme necessário:
++
+*** Se você estiver usando a opção de Registro Astra Control , altere o caminho para `cr.astra.netapp.io`.
+*** Se tiver configurado um registo local, altere ou guarde o caminho do registo de imagens local onde carregou as imagens numa etapa anterior.
++
+
+NOTE: Não introduza `http://` ou `https://` no campo de endereço.
+
+
+
+.. Atualize o `imageRegistry.secret` conforme necessário.
++
+
+NOTE: O processo de desinstalação do operador não remove os segredos existentes. Você só precisa atualizar este campo se você criar um novo segredo com um nome diferente do segredo existente.
+
+.. Adicione o seguinte à `crds` sua configuração:
++
+[source, console]
+----
+crds:
+  shouldUpgrade: true
+----
+
+
+. Salve suas alterações.
+. A IU confirma que a atualização foi bem-sucedida.
+

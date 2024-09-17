@@ -1,0 +1,51 @@
+= Faça download e extraia Astra Control Center
+:allow-uri-read: 
+
+
+
+
+== Faça download e extraia Astra Control Center
+
+Faça o download das imagens do Astra Control Center de um dos seguintes locais:
+
+* *Registro de imagem do Serviço de Controle Astra*: Use esta opção se você não usar um Registro local com as imagens do Centro de Controle Astra ou se preferir esse método para o download do pacote no site de suporte da NetApp.
+* *Site de suporte da NetApp*: Use essa opção se você usar um Registro local com as imagens do Centro de Controle Astra.
+
+
+[role="tabbed-block"]
+====
+.Registro de imagem Astra Control
+--
+. Faça login no Astra Control Service.
+. No Dashboard, selecione *Deploy a self-managed instance of Astra Control*.
+. Siga as instruções para fazer login no Registro de imagens do Astra Control, extrair a imagem de instalação do Astra Control Center e extrair a imagem.
+
+
+--
+.Site de suporte da NetApp
+--
+. Faça o download do pacote que contém o Astra Control Center (`astra-control-center-[version].tar.gz`) no https://mysupport.netapp.com/site/products/all/details/astra-control-center/downloads-tab["Página de downloads do Astra Control Center"^].
+. (Recomendado, mas opcional) Faça o download do pacote certificados e assinaturas para o Astra Control Center (`astra-control-center-certs-[version].tar.gz`) para verificar a assinatura do pacote.
++
+[source, console]
+----
+tar -vxzf astra-control-center-certs-[version].tar.gz
+----
++
+[source, console]
+----
+openssl dgst -sha256 -verify certs/AstraControlCenter-public.pub -signature certs/astra-control-center-[version].tar.gz.sig astra-control-center-[version].tar.gz
+----
++
+A saída será `Verified OK` exibida após a verificação bem-sucedida.
+
+. Extraia as imagens do pacote Astra Control Center:
++
+[source, console]
+----
+tar -vxzf astra-control-center-[version].tar.gz
+----
+
+
+--
+====

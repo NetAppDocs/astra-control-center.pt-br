@@ -1,0 +1,160 @@
+---
+sidebar: sidebar 
+permalink: use/manage-backend.html 
+keywords: how to use astra control, what is astra storage, how to set up astra storage backend, ontap storage in astra, backend storage in astra 
+summary: 'O gerenciamento de clusters de storage no Astra Control como um back-end de storage permite que você tenha vínculos entre volumes persistentes (PVS) e o back-end de storage, bem como métricas de storage adicionais. Você pode monitorar a capacidade de storage e os detalhes de integridade.' 
+---
+= Gerenciar o back-end de storage
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/use/
+
+
+[role="lead"]
+O gerenciamento de clusters de storage no Astra Control como um back-end de storage permite que você tenha vínculos entre volumes persistentes (PVS) e o back-end de storage, bem como métricas de storage adicionais.
+
+Para obter instruções sobre como gerenciar back-ends de storage usando a API Astra Control, consulte o link:https://docs.netapp.com/us-en/astra-automation/["Informações de API e automação do Astra"^].
+
+Você pode concluir as seguintes tarefas relacionadas ao gerenciamento de um back-end de storage:
+
+* link:../get-started/add-storage-backend.html["Adicionar um back-end de storage"]
+* <<Veja os detalhes do back-end de armazenamento>>
+* <<Editar detalhes de autenticação de back-end de armazenamento>>
+* <<Gerenciar um back-end de storage descoberto>>
+* <<Desgerenciar um back-end de storage>>
+* <<Remover um back-end de storage>>
+
+
+
+
+== Veja os detalhes do back-end de armazenamento
+
+Você pode exibir informações de back-end de armazenamento no Dashboard ou na opção backends.
+
+
+
+=== Veja os detalhes do back-end do storage no Dashboard
+
+.Passos
+. Na navegação à esquerda, selecione *Dashboard*.
+. Revise o painel de back-end do Storage do Dashboard que mostra o estado:
++
+** *Insalubre*: O armazenamento não está em um estado ideal. Isso pode ser devido a um problema de latência ou um aplicativo é degradado devido a um problema de contentor, por exemplo.
+** *Todos saudáveis*: O armazenamento foi gerenciado e está em um estado ideal.
+** *Descoberto*: O storage foi descoberto, mas não gerenciado pelo Astra Control.
+
+
+
+
+
+
+=== Veja os detalhes do back-end de armazenamento na opção backends
+
+Veja informações sobre a integridade, a capacidade e a performance do back-end (taxa de transferência de IOPS e/ou latência).
+
+Você pode ver os volumes que os aplicativos Kubernetes estão usando, que são armazenados em um back-end de storage selecionado.
+
+.Passos
+. Na área de navegação à esquerda, selecione *backends*.
+. Selecione o back-end de armazenamento.
+
+
+
+
+== Editar detalhes de autenticação de back-end de armazenamento
+
+O Astra Control Center oferece dois modos de autenticação de um back-end do ONTAP.
+
+* *Autenticação baseada em credenciais*: O nome de usuário e senha para um usuário do ONTAP com as permissões necessárias. Você deve usar uma função de login de segurança predefinida, como admin, para garantir a máxima compatibilidade com versões do ONTAP.
+* *Autenticação baseada em certificado*: O Astra Control Center também pode se comunicar com um cluster ONTAP usando um certificado instalado no back-end. Você deve usar o certificado de cliente, a chave e o certificado de CA confiável, se usado (recomendado).
+
+
+Você pode atualizar os backends existentes para passar de um tipo de autenticação para outro método. Apenas um método de autenticação é suportado de cada vez.
+
+Para obter detalhes sobre como ativar a autenticação baseada em certificado, link:../get-started/enable-auth-ontap-backend.html["Ativar a autenticação no back-end de storage do ONTAP"]consulte .
+
+.Passos
+. Na navegação à esquerda, selecione *backends*.
+. Selecione o back-end de armazenamento.
+. No campo credenciais, selecione o ícone *Editar*.
+. Na página Editar, selecione uma das seguintes opções.
++
+** *Use as credenciais de administrador*: Insira o endereço IP e as credenciais de administrador de gerenciamento de cluster do ONTAP. As credenciais devem ser credenciais de todo o cluster.
++
+
+NOTE: O usuário cujas credenciais você inserir aqui deve ter o `ontapi` método de acesso de login de usuário habilitado no Gerenciador de sistema do ONTAP no cluster do ONTAP. Se você planeja usar a replicação do SnapMirror, aplique credenciais de usuário com a função "admin", que tem os métodos de acesso `ontapi` e `http`, nos clusters ONTAP de origem e destino.  https://docs.netapp.com/us-en/ontap-sm-classic/online-help-96-97/concept_cluster_user_accounts.html#users-list["Gerenciar contas de usuário na documentação do ONTAP"^]Consulte para obter mais informações.
+
+** *Use um certificado*: Carregue o arquivo de certificado `.pem`, o arquivo de chave de certificado `.key` e, opcionalmente, o arquivo de autoridade de certificação.
+
+
+. Selecione *Guardar*.
+
+
+
+
+== Gerenciar um back-end de storage descoberto
+
+Você pode optar por gerenciar um back-end de storage não gerenciado, mas descoberto. Quando você gerencia um back-end de storage, o Astra Control indica se um certificado de autenticação expirou.
+
+.Passos
+. Na navegação à esquerda, selecione *backends*.
+. Selecione a opção *descoberto*.
+. Selecione o back-end de armazenamento.
+. No menu Opções na coluna *ações*, selecione *Gerenciar*.
+. Faça as alterações.
+. Selecione *Guardar*.
+
+
+
+
+== Desgerenciar um back-end de storage
+
+Você pode desgerenciar o backend.
+
+.Passos
+. Na navegação à esquerda, selecione *backends*.
+. Selecione o back-end de armazenamento.
+. No menu Opções na coluna *ações*, selecione *Desgerenciar*.
+. Digite "Unmanage" (Desgerenciar) para confirmar a ação.
+. Selecione *Sim, desgerencie o back-end de armazenamento*.
+
+
+
+
+== Remover um back-end de storage
+
+Você pode remover um back-end de storage que não está mais em uso. Você pode querer fazer isso para manter sua configuração simples e atualizada.
+
+.Antes de começar
+* Certifique-se de que o back-end de armazenamento não é gerenciado.
+* Certifique-se de que o back-end de storage não tenha nenhum volume associado ao cluster.
+
+
+.Passos
+. Na navegação à esquerda, selecione *backends*.
+. Se o back-end for gerenciado, desfaça-o.
++
+.. Selecione *Managed*.
+.. Selecione o back-end de armazenamento.
+.. Na opção *ações*, selecione *Desgerenciar*.
+.. Digite "Unmanage" (Desgerenciar) para confirmar a ação.
+.. Selecione *Sim, desgerencie o back-end de armazenamento*.
+
+
+. Selecione *descoberto*.
++
+.. Selecione o back-end de armazenamento.
+.. Na opção *ações*, selecione *Remover*.
+.. Digite "remove" para confirmar a ação.
+.. Selecione *Sim, remova o back-end de armazenamento*.
+
+
+
+
+
+
+== Encontre mais informações
+
+* https://docs.netapp.com/us-en/astra-automation["Use a API Astra Control"^]
+

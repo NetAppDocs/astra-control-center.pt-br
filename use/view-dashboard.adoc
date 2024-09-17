@@ -1,0 +1,50 @@
+---
+sidebar: sidebar 
+permalink: use/view-dashboard.html 
+keywords: dashboard, cluster health, unhealthy apps, protected apps, discovered apps 
+summary: Selecione Painel para ver uma visualização de alto nível dos seus aplicativos, computação e integridade deles. 
+---
+= Exibir um resumo da integridade do aplicativo e do cluster
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/use/
+
+
+[role="lead"]
+Selecione o *Dashboard* para ver uma visualização de alto nível de seus aplicativos, clusters, back-ends de armazenamento e sua integridade.
+
+Estes não são apenas números estáticos ou status - você pode detalhar de cada um. Por exemplo, se os aplicativos não estiverem totalmente protegidos, você pode passar o Mouse sobre o ícone para identificar quais aplicativos não estão totalmente protegidos, o que inclui um motivo.
+
+
+
+== Mosaico de aplicações
+
+O bloco *Applications* ajuda você a identificar o seguinte:
+
+* Quantas aplicações você está gerenciando atualmente com o Astra.
+* Se esses aplicativos gerenciados estão saudáveis.
+* Se os aplicativos estão totalmente protegidos (eles são protegidos se os backups recentes estiverem disponíveis).
+* O número de aplicativos que foram descobertos, mas ainda não são gerenciados.
++
+Idealmente, esse número seria zero porque você gerenciaria ou ignoraria aplicativos depois que eles forem descobertos. E então você monitoraria o número de aplicativos descobertos no Dashboard para identificar quando os desenvolvedores adicionam novos aplicativos a um cluster.
+
+
+
+
+
+== Blocos de clusters
+
+O bloco *clusters* fornece detalhes semelhantes sobre a integridade dos clusters que você está gerenciando usando o Astra Control Center, e você pode detalhar para obter mais detalhes da mesma forma que pode com um aplicativo.
+
+
+
+== Azulejo dos backends de armazenamento
+
+O bloco *Storage Backends* fornece informações para ajudá-lo a identificar a integridade dos backends de armazenamento, incluindo:
+
+* Quantos backends de armazenamento são gerenciados
+* Se esses backends gerenciados são saudáveis
+* Se os backends estão totalmente protegidos
+* O número de backends que são descobertos, mas ainda não são gerenciados.
+

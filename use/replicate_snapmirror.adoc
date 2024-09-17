@@ -1,0 +1,330 @@
+---
+sidebar: sidebar 
+permalink: use/replicate_snapmirror.html 
+keywords: replicate, replication, disaster, recovery 
+summary: O Astra pode restaurar a configuração da aplicação e o storage persistente a partir de um snapshot ou backup. Backups de storage persistentes são transferidos do seu armazenamento de objetos, portanto, a restauração a partir de um backup existente será a mais rápida. 
+---
+= Replique aplicativos entre back-ends de storage usando a tecnologia SnapMirror
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/use/
+
+
+[role="lead"]
+Com o Astra Control, você pode criar continuidade dos negócios para suas aplicações com RPO baixo (objetivo do ponto de recuperação) e rto baixo (objetivo do tempo de recuperação) usando funcionalidades de replicação assíncrona da tecnologia NetApp SnapMirror. Uma vez configurados, isso permite que as aplicações repliquem alterações de dados e aplicações de um back-end de storage para outro, no mesmo cluster ou entre clusters diferentes.
+
+Para obter uma comparação entre backups/restaurações e replicação, link:../concepts/data-protection.html["Conceitos de proteção de dados"]consulte .
+
+Você pode replicar aplicativos em diferentes cenários, como os seguintes cenários somente no local, híbridos e multicloud:
+
+* Local A para local A.
+* Local A para local B no local
+* On-premises para a nuvem com o Cloud Volumes ONTAP
+* Nuvem com Cloud Volumes ONTAP no local
+* Nuvem com Cloud Volumes ONTAP para nuvem (entre diferentes regiões no mesmo fornecedor de nuvem ou para diferentes fornecedores de nuvem)
+
+
+O Astra Control pode replicar aplicações entre clusters no local, no local para a nuvem (usando o Cloud Volumes ONTAP) ou entre nuvens (Cloud Volumes ONTAP para Cloud Volumes ONTAP).
+
+
+NOTE: Você pode replicar simultaneamente um aplicativo diferente na direção oposta. Por exemplo, os aplicativos A, B, C podem ser replicados do Datacenter 1 para o Datacenter 2; e os aplicativos X, Y, Z podem ser replicados do Datacenter 2 para o Datacenter 1.
+
+Com o Astra Control, você pode fazer as seguintes tarefas relacionadas a replicação de aplicações:
+
+* <<Configure uma relação de replicação>>
+* <<Colocar um aplicativo replicado on-line no cluster de destino (failover)>>
+* <<Ressincronizar uma falha na replicação>>
+* <<Replicação reversa da aplicação>>
+* <<Falha de aplicativos para o cluster de origem original>>
+* <<Excluir uma relação de replicação de aplicativos>>
+
+
+
+
+== Pré-requisitos de replicação
+
+A replicação de aplicações Astra Control requer que os seguintes pré-requisitos sejam atendidos antes de começar:
+
+.Clusters de ONTAP
+* * Astra Control Provisioner ou Astra Trident*: O Astra Control Provisioner ou o Astra Trident devem existir nos clusters de Kubernetes de origem e destino que utilizam o ONTAP como back-end. O Astra Control é compatível com replicação com tecnologia NetApp SnapMirror usando classes de storage com os seguintes drivers:
++
+** `ontap-nas`
+** `ontap-san`
+
+
+* *Licenças*: As licenças assíncronas do ONTAP SnapMirror usando o pacote proteção de dados devem estar ativadas nos clusters ONTAP de origem e destino.  https://docs.netapp.com/us-en/ontap/data-protection/snapmirror-licensing-concept.html["Visão geral do licenciamento do SnapMirror no ONTAP"^]Consulte para obter mais informações.
+
+
+.Peering
+* *Cluster e SVM*: Os backends de storage do ONTAP devem ser colocados em Contato.  https://docs.netapp.com/us-en/ontap-sm-classic/peering/index.html["Visão geral do peering de cluster e SVM"^]Consulte para obter mais informações.
++
+
+IMPORTANT: Certifique-se de que os nomes do SVM usados na relação de replicação entre dois clusters ONTAP sejam exclusivos.
+
+* *Astra Control Provisioner ou Astra Trident e SVM*: Os SVMs remotas em peering precisam estar disponíveis para o Astra Control Provisioner ou Astra Trident no cluster de destino.
+
+
+.Astra Control Center
+
+TIP: link:../get-started/install_acc.html["Implante o Astra Control Center"] em um domínio de terceira falha ou local secundário para recuperação de desastres otimizada.
+
+* *Backends gerenciados*: Você precisa adicionar e gerenciar backends de storage do ONTAP no Astra Control Center para criar uma relação de replicação.
++
+
+NOTE: Adicionar e gerenciar back-ends de storage do ONTAP no Astra Control Center é opcional se você ativou o Astra Control Provisioner.
+
+* *Clusters gerenciados*: Adicione e gerencie os seguintes clusters com o Astra Control, de preferência em diferentes domínios ou locais de falha:
++
+** Fonte do cluster do Kubernetes
+** Cluster de destino Kubernetes
+** Clusters associados do ONTAP
+
+
+* *Contas de usuário*: Quando você adiciona um back-end de storage do ONTAP ao Centro de Controle Astra, aplique credenciais de usuário com a função "admin". Essa função tem métodos de acesso `http` e `ontapi` é habilitada nos clusters de origem e destino do ONTAP.  https://docs.netapp.com/us-en/ontap-sm-classic/online-help-96-97/concept_cluster_user_accounts.html#users-list["Gerenciar contas de usuário na documentação do ONTAP"^]Consulte para obter mais informações.
++
+
+NOTE: Com a funcionalidade Astra Control Provisioner, você não precisa definir especificamente uma função de "administrador" para gerenciar clusters no Astra Control Center, pois essas credenciais não são exigidas pelo Astra Control Center.
+
+
+
+
+NOTE: O Astra Control Center não oferece suporte à replicação NetApp SnapMirror para back-ends de storage que usam o protocolo NVMe em TCP.
+
+.Configuração Astra Trident/ONTAP
+O Astra Control Center exige que você configure pelo menos um back-end de storage compatível com a replicação para os clusters de origem e destino. Se os clusters de origem e destino forem iguais, o aplicativo de destino deverá usar um back-end de storage diferente do aplicativo de origem para obter a melhor resiliência.
+
+
+IMPORTANT: A replicação do Astra Control é compatível com aplicações que usam uma única classe de storage. Ao adicionar um aplicativo a um namespace, verifique se o aplicativo tem a mesma classe de armazenamento que outros aplicativos no namespace. Ao adicionar um PVC a um aplicativo replicado, verifique se o novo PVC tem a mesma classe de armazenamento que outros PVCs no namespace.
+
+
+
+== Configure uma relação de replicação
+
+A configuração de uma relação de replicação envolve o seguinte:
+
+* Escolhendo com que frequência você deseja que o Astra Control tire um snapshot de aplicativo (que inclui os recursos do Kubernetes da aplicação, bem como os snapshots de volume de cada um dos volumes da aplicação)
+* Escolha do cronograma de replicação (incluindo recursos do Kubernetes e dados de volume persistente)
+* Definir o tempo para a captura instantânea
+
+
+.Passos
+. Na navegação à esquerda do Astra Control, selecione *Applications*.
+. Selecione a guia *proteção de dados* > *replicação*.
+. Selecione *Configurar política de replicação*. Ou, na caixa proteção do aplicativo, selecione a opção ações e selecione *Configurar política de replicação*.
+. Introduza ou selecione as seguintes informações:
++
+** *Cluster de destino*: Insira um cluster de destino (pode ser o mesmo que o cluster de origem).
+** *Classe de armazenamento de destino*: Selecione ou insira a classe de armazenamento que usa o SVM com ponteiro no cluster ONTAP de destino. Como prática recomendada, a classe de armazenamento de destino deve apontar para um back-end de storage diferente da classe de armazenamento de origem.
+** *Replication type*: `Asynchronous` É atualmente o único tipo de replicação disponível.
+** * Namespace de destino*: Insira namespaces de destino novos ou existentes para o cluster de destino.
+** (Opcional) Adicione namespaces adicionais selecionando *Add namespace* e escolhendo o namespace na lista suspensa.
+** *Frequência de replicação*: Defina com que frequência deseja que o Astra Control faça um snapshot e replique-o para o destino.
+** *Offset*: Defina o número de minutos a partir do topo da hora em que deseja que o Astra Control faça uma captura instantânea. Você pode querer usar um deslocamento para que ele não coincida com outras operações agendadas.
++
+
+TIP: Offset programações de backup e replicação para evitar sobreposições de agendamento. Por exemplo, execute backups no topo da hora a cada hora e programe a replicação para começar com um deslocamento de 5 minutos e um intervalo de 10 minutos.
+
+
+
+. Selecione *seguinte*, reveja o resumo e selecione *Guardar*.
++
+
+NOTE: No início, o status exibe "APP-mirror" antes que a primeira programação ocorra.
+
++
+O Astra Control cria um snapshot de aplicação usado para replicação.
+
+. Para ver o status do instantâneo do aplicativo, selecione a guia *aplicativos* > *instantâneos*.
++
+O nome do instantâneo usa o formato `replication-schedule-<string>` do . O Astra Control retém o último snapshot usado para replicação. Quaisquer instantâneos de replicação mais antigos são excluídos após a conclusão bem-sucedida da replicação.
+
+
+
+.Resultado
+Isso cria a relação de replicação.
+
+O Astra Control conclui as seguintes ações como resultado do estabelecimento do relacionamento:
+
+* Cria um namespace no destino (se ele não existir)
+* Cria um PVC no namespace de destino correspondente aos PVCs do aplicativo de origem.
+* Obtém um snapshot inicial consistente com o aplicativo.
+* Estabelece a relação do SnapMirror para volumes persistentes usando o snapshot inicial.
+
+
+A página *proteção de dados* mostra o estado e o estado da relação de replicação: <Health status> | estado do ciclo de vida da relação>
+
+Por exemplo: Normal | estabelecido
+
+Saiba mais sobre os estados de replicação e o status no final deste tópico.
+
+
+
+== Colocar um aplicativo replicado on-line no cluster de destino (failover)
+
+Com o Astra Control, você pode fazer failover de aplicações replicadas para um cluster de destino. Este procedimento interrompe a relação de replicação e coloca a aplicação online no cluster de destino. Este procedimento não pára a aplicação no cluster de origem se estiver operacional.
+
+.Passos
+. Na navegação à esquerda do Astra Control, selecione *Applications*.
+. Selecione a guia *proteção de dados* > *replicação*.
+. No menu ações, selecione *failover*.
+. Na página failover, revise as informações e selecione *failover*.
+
+
+.Resultado
+As seguintes ações ocorrem como resultado do procedimento de failover:
+
+* O aplicativo de destino é iniciado com base no instantâneo replicado mais recente.
+* O cluster de origem e a aplicação (se operacional) não são interrompidos e continuarão a ser executados.
+* O estado de replicação muda para "failover" e, em seguida, para "failover" quando ele for concluído.
+* A política de proteção do aplicativo de origem é copiada para o aplicativo de destino com base nas programações presentes no aplicativo de origem no momento do failover.
+* Se o aplicativo de origem tiver um ou mais ganchos de execução pós-restauração ativados, esses ganchos de execução serão executados para o aplicativo de destino.
+* O Astra Control mostra a aplicação nos clusters de origem e destino e sua respetiva integridade.
+
+
+
+
+== Ressincronizar uma falha na replicação
+
+A operação ressincronizada restabelece a relação de replicação. Você pode escolher a origem da relação para reter os dados no cluster de origem ou destino. Esta operação restabelece as relações SnapMirror para iniciar a replicação de volume na direção da escolha.
+
+O processo pára o aplicativo no novo cluster de destino antes de restabelecer a replicação.
+
+
+NOTE: Durante o processo de ressincronização, o estado do ciclo de vida mostra como "estabelecendo".
+
+.Passos
+. Na navegação à esquerda do Astra Control, selecione *Applications*.
+. Selecione a guia *proteção de dados* > *replicação*.
+. No menu ações, selecione *Resync*.
+. Na página Resync, selecione a instância do aplicativo de origem ou destino que contém os dados que você deseja preservar.
++
+
+CAUTION: Escolha a fonte ressincronizada cuidadosamente, pois os dados no destino serão sobrescritos.
+
+. Selecione *Resync* para continuar.
+. Digite "ressync" para confirmar.
+. Selecione *Sim, ressincronizar* para concluir.
+
+
+.Resultado
+* A página replicação mostra "estabelecer" como o status da replicação.
+* O Astra Control interrompe a aplicação no novo cluster de destino.
+* O Astra Control restabelece a replicação de volume persistente na direção selecionada usando o SnapMirror Resync.
+* A página replicação mostra a relação atualizada.
+
+
+
+
+== Replicação reversa da aplicação
+
+Esta é a operação planejada para mover o aplicativo para o back-end de storage de destino e continuar replicando de volta para o back-end de storage de origem original. O Astra Control interrompe a aplicação de origem e replica os dados para o destino antes de fazer failover para a aplicação de destino.
+
+Nesta situação, você está trocando a origem e o destino.
+
+.Passos
+. Na navegação à esquerda do Astra Control, selecione *Applications*.
+. Selecione a guia *proteção de dados* > *replicação*.
+. No menu ações, selecione *Reverse replication*.
+. Na página Reverse Replication (Reverse Replication), reveja as informações e selecione *Reverse replication* (Reverse replication) para continuar.
+
+
+.Resultado
+As seguintes ações ocorrem como resultado da replicação reversa:
+
+* Um snapshot é obtido dos recursos do Kubernetes do aplicativo de origem original.
+* Os pods do aplicativo de origem original são interrompidos graciosamente ao excluir os recursos do Kubernetes do aplicativo (deixando PVCs e PVS no lugar).
+* Depois que os pods são desativados, snapshots dos volumes do aplicativo são feitos e replicados.
+* As relações do SnapMirror são quebradas, tornando os volumes de destino prontos para leitura/gravação.
+* Os recursos do Kubernetes do aplicativo são restaurados a partir do snapshot de pré-encerramento, usando os dados de volume replicados após o desligamento do aplicativo de origem original.
+* A replicação é restabelecida na direção inversa.
+
+
+
+
+== Falha de aplicativos para o cluster de origem original
+
+Com o Astra Control, você pode obter "failback" após uma operação de failover usando a seguinte sequência de operações. Nesse fluxo de trabalho para restaurar a direção de replicação original, o Astra Control replica (ressincrones) qualquer aplicação muda de volta para a aplicação de origem original antes de reverter a direção de replicação.
+
+Esse processo começa a partir de um relacionamento que concluiu um failover para um destino e envolve as seguintes etapas:
+
+* Comece com um estado com falha em excesso.
+* Ressincronizar o relacionamento.
+* Inverta a replicação.
+
+
+.Passos
+. Na navegação à esquerda do Astra Control, selecione *Applications*.
+. Selecione a guia *proteção de dados* > *replicação*.
+. No menu ações, selecione *Resync*.
+. Para uma operação de failback, escolha o aplicativo failover com falha como a origem da operação ressincronizada (preservando qualquer failover pós-escrito de dados).
+. Digite "ressync" para confirmar.
+. Selecione *Sim, ressincronizar* para concluir.
+. Após a conclusão da ressincronização, na guia proteção de dados > replicação, no menu ações, selecione *Reverse replication*.
+. Na página Reverse Replication (Reverse Replication), reveja as informações e selecione *Reverse replication*.
+
+
+.Resultado
+Isso combina os resultados das operações "ressincronização" e "relação reversa" para colocar o aplicativo on-line no cluster de origem original com replicação retomada para o cluster de destino original.
+
+
+
+== Excluir uma relação de replicação de aplicativos
+
+A exclusão do relacionamento resulta em dois aplicativos separados sem relação entre eles.
+
+.Passos
+. Na navegação à esquerda do Astra Control, selecione *Applications*.
+. Selecione a guia *proteção de dados* > *replicação*.
+. Na caixa proteção do aplicativo ou no diagrama de relacionamento, selecione *Excluir relação de replicação*.
+
+
+.Resultado
+As seguintes ações ocorrem como resultado da exclusão de uma relação de replicação:
+
+* Se o relacionamento for estabelecido, mas o aplicativo ainda não tiver sido colocado on-line no cluster de destino (failover), o Astra Control manterá os PVCs criados durante a inicialização, deixará um aplicativo gerenciado "vazio" no cluster de destino e manterá o aplicativo de destino para manter todos os backups que possam ter sido criados.
+* Se o aplicativo for colocado on-line no cluster de destino (failover), o Astra Control manterá PVCs e aplicativos de destino. Os aplicativos de origem e destino agora são tratados como aplicativos independentes. As programações de backup permanecem em ambos os aplicativos, mas não estão associadas umas às outras. 
+
+
+
+
+== Estado de integridade da relação de replicação e estados do ciclo de vida da relação
+
+Astra Control exibe a integridade do relacionamento e os estados do ciclo de vida da relação de replicação.
+
+
+
+=== Estados de integridade da relação de replicação
+
+Os seguintes Estados indicam a integridade da relação de replicação:
+
+* *Normal*: O relacionamento está estabelecendo ou estabeleceu, e o snapshot mais recente foi transferido com sucesso.
+* *Aviso*: O relacionamento está falhando ou falhou (e, portanto, não está mais protegendo o aplicativo de origem).
+* *Crítica*
++
+** A relação está estabelecendo ou falhou e a última tentativa de reconciliar falhou.
+** A relação é estabelecida, e a última tentativa de reconciliar a adição de um novo PVC está falhando.
+** A relação é estabelecida (para que um snapshot bem-sucedido seja replicado e o failover seja possível), mas o snapshot mais recente falhou ou não conseguiu replicar.
+
+
+
+
+
+
+=== estados do ciclo de vida da replicação
+
+Os seguintes estados refletem as diferentes fases do ciclo de vida de replicação:
+
+* * Estabelecimento*: Uma nova relação de replicação está sendo criada. O Astra Control cria um namespace, se necessário, cria declarações de volume persistentes (PVCs) em novos volumes no cluster de destino e cria relações SnapMirror. Esse status também pode indicar que a replicação está ressincronizando ou invertendo a replicação.
+* *Estabelecido*: Existe uma relação de replicação. O Astra Control verifica periodicamente se os PVCs estão disponíveis, verifica o relacionamento de replicação, cria periodicamente snapshots do aplicativo e identifica quaisquer novos PVCs de origem no aplicativo. Nesse caso, o Astra Control cria os recursos para incluí-los na replicação.
+* * Com falha*: O Astra Control quebra os relacionamentos do SnapMirror e restaura os recursos do Kubernetes do aplicativo a partir do último snapshot do aplicativo replicado com sucesso.
+* * Failover*: O Astra Control pára de replicar a partir do cluster de origem, usa o snapshot do aplicativo replicado mais recente (bem-sucedido) no destino e restaura os recursos do Kubernetes.
+* *Ressincronização*: O Astra Control ressincroniza os novos dados na origem ressincronizada para o destino ressincronizado usando o SnapMirror Resync. Esta operação pode substituir alguns dos dados no destino com base na direção da sincronização. O Astra Control interrompe a execução da aplicação no namespace de destino e remove a aplicação Kubernetes. Durante o processo de ressincronização, o status mostra como "estabelecendo".
+* *Reversing*: A é a operação planejada para mover o aplicativo para o cluster de destino, continuando a replicar de volta para o cluster de origem original. O Astra Control interrompe a aplicação no cluster de origem, replica os dados para o destino antes de fazer failover da aplicação para o cluster de destino. Durante a replicação reversa, o status é exibido como "estabelecendo".
+* *Excluindo*:
++
+** Se a relação de replicação tiver sido estabelecida, mas ainda não tiver falha, o Astra Control removerá PVCs criados durante a replicação e excluirá o aplicativo gerenciado de destino.
+** Se a replicação já tiver falhado, o Astra Control manterá os PVCs e a aplicação de destino.
+
+
+

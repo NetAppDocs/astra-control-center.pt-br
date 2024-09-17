@@ -1,0 +1,52 @@
+= Componentes do Astra Control
+:allow-uri-read: 
+
+
+image:astra-architecture-diagram-v7.png["Uma imagem conceitual que descreve a arquitetura Astra Control e seus componentes"]
+
+
+
+== Componentes do Astra Control
+
+* *Clusters do Kubernetes*: O Kubernetes é uma plataforma portátil, extensível e de código aberto para gerenciar cargas de trabalho e serviços em contêineres, que facilita tanto a configuração declarativa quanto a automação. O Astra fornece serviços de gerenciamento para aplicações hospedadas em um cluster Kubernetes.
+* *Astra Control Provisioner*: Como um provisionador de storage e orquestrador totalmente compatível mantido pela NetApp que contém a funcionalidade Astra Trident CSI, juntamente com funcionalidades estendidas de gerenciamento de storage, o Astra Control Provisioner permite criar volumes de storage para aplicações em contêiner gerenciadas pelo Docker e Kubernetes. Quando implantado com o Astra Control Center, o Astra Control Provisioner inclui um back-end de storage ONTAP configurado.
+* *Backend de armazenamento*:
++
+** O Astra Control Service usa os seguintes back-ends de storage:
++
+*** https://www.netapp.com/cloud-services/cloud-volumes-service-for-google-cloud/["NetApp Cloud Volumes Service para Google Cloud"^] Ou Google Persistent Disk como o back-end de storage para clusters GKE
+*** https://www.netapp.com/cloud-services/azure-netapp-files/["Azure NetApp Files"^] Ou discos gerenciados do Azure como o back-end de storage para clusters AKS.
+*** https://docs.aws.amazon.com/ebs/["Amazon Elastic Block Store (EBS)"^] Ou https://docs.aws.amazon.com/fsx/["Amazon FSX para NetApp ONTAP"^] como opções de storage no back-end para clusters do EKS.
+
+
+** O Astra Control Center usa os seguintes back-ends de storage:
++
+*** ONTAP AFF, FAS e ASA. Como uma plataforma de software e hardware de storage, o ONTAP fornece serviços básicos de storage, suporte para vários protocolos de acesso ao storage e recursos de gerenciamento de storage, como snapshots e espelhamento.
+*** Cloud Volumes ONTAP
+
+
+
+
+
+
+
+
+== Interfaces Astra Control
+
+Você pode concluir tarefas usando diferentes interfaces:
+
+* * Interface de usuário da Web (UI)*: O Astra Control Service e o Astra Control Center usam a mesma interface de usuário baseada na Web onde você pode gerenciar, migrar e proteger aplicativos. Use a IU também para gerenciar contas de usuário e configurações.
+* *API*: O Astra Control Service e o Astra Control Center usam a mesma API Astra Control. Usando a API, você pode executar as mesmas tarefas que você usaria a IU.
+
+
+O Astra Control Center também permite gerenciar, migrar e proteger clusters de Kubernetes executados em ambientes de VM.
+
+
+
+== Para mais informações
+
+* https://docs.netapp.com/us-en/astra/index.html["Documentação do Astra Control Service"^]
+* https://docs.netapp.com/us-en/astra-control-center/index.html["Documentação do Astra Control Center"^]
+* https://docs.netapp.com/us-en/astra-automation["Use a API Astra Control"^]
+* https://docs.netapp.com/us-en/ontap/index.html["Documentação do ONTAP"^]
+

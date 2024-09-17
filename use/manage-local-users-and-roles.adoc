@@ -1,0 +1,181 @@
+---
+sidebar: sidebar 
+permalink: use/manage-local-users-and-roles.html 
+keywords: add users, edit users, remove users, delete users, manage roles 
+summary: Gerencie usuários e funções no seu sistema Astra Control Center. 
+---
+= Gerencie usuários e funções locais
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/use/
+
+
+[role="lead"]
+Você pode adicionar, remover e editar usuários da instalação do Astra Control Center usando a IU do Astra Control. Você pode usar a IU do Astra Control ou https://docs.netapp.com/us-en/astra-automation["API Astra Control"^] gerenciar usuários.
+
+Você também pode usar LDAP para executar a autenticação para usuários selecionados.
+
+
+
+== Utilize LDAP
+
+O LDAP é um protocolo padrão do setor para acessar informações de diretórios distribuídos e uma escolha popular para autenticação empresarial. Você pode conetar o Astra Control Center a um servidor LDAP para executar a autenticação para usuários selecionados do Astra Control. Em alto nível, a configuração envolve a integração do Astra com LDAP e a definição dos usuários e grupos do Astra Control correspondentes às definições LDAP. Você pode usar a API Astra Control ou a IU da Web para configurar a autenticação LDAP e usuários e grupos LDAP. Consulte a seguinte documentação para obter mais informações:
+
+* https://docs.netapp.com/us-en/astra-automation/workflows_infra/ldap_prepare.html["Use a API Astra Control para gerenciar usuários e autenticação remota"^]
+* link:manage-remote-users-groups.html["Use a IU do Astra Control para gerenciar usuários e grupos remotos"]
+* link:manage-remote-authentication.html["Use a IU do Astra Control para gerenciar a autenticação remota"]
+
+
+
+
+== Adicionar utilizadores
+
+Os proprietários e administradores de contas podem adicionar mais usuários à instalação do Astra Control Center.
+
+.Passos
+. Na área de navegação *Gerenciar sua conta*, selecione *conta*.
+. Selecione a guia *usuários*.
+. Selecione *Adicionar usuário*.
+. Introduza o nome do utilizador, o endereço de correio eletrónico e uma palavra-passe temporária.
++
+O utilizador terá de alterar a palavra-passe no primeiro início de sessão.
+
+. Selecione uma função de usuário com as permissões de sistema apropriadas.
++
+Cada função fornece as seguintes permissões:
+
++
+** Um *Viewer* pode visualizar recursos.
+** Um *Membro* tem permissões de função Visualizador e pode gerenciar aplicativos e clusters, desgerenciar aplicativos e excluir snapshots e backups.
+** Um *Admin* tem permissões de função de Membro e pode adicionar e remover quaisquer outros usuários, exceto o proprietário.
+** Um *proprietário* tem permissões de função Admin e pode adicionar e remover quaisquer contas de usuário.
+
+
+. Para adicionar restrições a um utilizador com uma função Membro ou Visualizador, ative a caixa de verificação *restringir função a restrições*.
++
+Para obter mais informações sobre como adicionar restrições, link:manage-local-users-and-roles.html["Gerencie usuários e funções locais"]consulte .
+
+. Selecione *Adicionar*.
+
+
+
+
+== Gerenciar senhas
+
+Você pode gerenciar senhas para contas de usuário no Astra Control Center.
+
+
+
+=== Altere a sua palavra-passe
+
+Você pode alterar a senha da sua conta de usuário a qualquer momento.
+
+.Passos
+. Selecione o ícone Utilizador no canto superior direito do ecrã.
+. Selecione *Perfil*.
+. No menu Opções na coluna *ações* e selecione *alterar senha*.
+. Introduza uma palavra-passe que esteja em conformidade com os requisitos de palavra-passe.
+. Introduza novamente a palavra-passe para confirmar.
+. Selecione *alterar palavra-passe*.
+
+
+
+
+=== Repor a palavra-passe de outro utilizador
+
+Se a sua conta tiver permissões de função de Administrador ou proprietário, você pode redefinir senhas para outras contas de usuário, bem como suas próprias. Ao redefinir uma senha, você atribui uma senha temporária que o usuário terá que alterar ao fazer login.
+
+.Passos
+. Na área de navegação *Gerenciar sua conta*, selecione *conta*.
+. Selecione a lista suspensa *ações*.
+. Selecione *Redefinir senha*.
+. Introduza uma palavra-passe temporária que esteja em conformidade com os requisitos de palavra-passe.
+. Introduza novamente a palavra-passe para confirmar.
++
+
+NOTE: Da próxima vez que o usuário fizer login, será solicitado que o usuário altere a senha.
+
+. Selecione *Redefinir senha*.
+
+
+
+
+== Remover usuários
+
+Os usuários com a função proprietário ou Admin podem remover outros usuários da conta a qualquer momento.
+
+.Passos
+. Na área de navegação *Gerenciar sua conta*, selecione *conta*.
+. Na guia *usuários*, marque a caixa de seleção na linha de cada usuário que você deseja remover.
+. No menu Opções na coluna *ações*, selecione *Remover usuário(s)*.
+. Quando for solicitado, confirme a exclusão digitando a palavra "remover" e selecione *Sim, Remover usuário*.
+
+
+.Resultado
+O Astra Control Center remove o usuário da conta.
+
+
+
+== Gerenciar funções
+
+Você pode gerenciar funções adicionando restrições de namespace e restringindo funções de usuário a essas restrições. Isso permite que você controle o acesso a recursos dentro de sua organização. Você pode usar a IU do Astra Control ou https://docs.netapp.com/us-en/astra-automation["API Astra Control"^] gerenciar funções.
+
+
+
+=== Adicione uma restrição de namespace a uma função
+
+Um usuário Admin ou proprietário pode adicionar restrições de namespace às funções Membro ou Visualizador.
+
+.Passos
+. Na área de navegação *Gerenciar sua conta*, selecione *conta*.
+. Selecione a guia *usuários*.
+. Na coluna *ações*, selecione o botão de menu para um usuário com a função Membro ou Visualizador.
+. Selecione *Editar função*.
+. Ative a caixa de verificação *restringir função a restrições*.
++
+A caixa de verificação só está disponível para funções Membro ou Visualizador. Você pode selecionar uma função diferente na lista suspensa *Role*.
+
+. Selecione *Adicionar restrição*.
++
+Você pode ver a lista de restrições disponíveis por namespace ou por rótulo de namespace.
+
+. Na lista suspensa *tipo de restrição*, selecione *namespace do Kubernetes* ou *rótulo do namespace do Kubernetes* dependendo de como seus namespaces são configurados.
+. Selecione um ou mais namespaces ou rótulos da lista para compor uma restrição que restrinja funções a esses namespaces.
+. Selecione *Confirm*.
++
+A página *Editar função* exibe a lista de restrições que você escolheu para essa função.
+
+. Selecione *Confirm*.
++
+Na página *conta*, você pode visualizar as restrições para qualquer função de Membro ou Visualizador na coluna *função*.
+
+
+
+
+NOTE: Se você habilitar restrições para uma função e selecionar *Confirm* sem adicionar nenhuma restrição, a função será considerada como tendo restrições completas (a função é negada acesso a quaisquer recursos atribuídos a namespaces).
+
+
+
+=== Remova uma restrição de namespace de uma função
+
+Um usuário Admin ou proprietário pode remover uma restrição de namespace de uma função.
+
+.Passos
+. Na área de navegação *Gerenciar sua conta*, selecione *conta*.
+. Selecione a guia *usuários*.
+. Na coluna *ações*, selecione o botão de menu para um usuário com a função Membro ou Visualizador que tem restrições ativas.
+. Selecione *Editar função*.
++
+A caixa de diálogo *Editar função* exibe as restrições ativas para a função.
+
+. Selecione *X* à direita da restrição que você precisa remover.
+. Selecione *Confirm*.
+
+
+
+
+== Para mais informações
+
+* link:../concepts/user-roles-namespaces.html["Funções de usuário e namespaces"]
+

@@ -1,0 +1,207 @@
+---
+sidebar: sidebar 
+permalink: use/uninstall_acc.html 
+keywords: astra, astra control center, uninstall, remove 
+summary: Descreve como remover o Centro de Controle Astra e o Operador do Centro de Controle Astra. 
+---
+= Desinstale o Astra Control Center
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/get-started/
+
+
+[role="lead"]
+Talvez seja necessário remover componentes do Astra Control Center se você estiver atualizando de uma versão de avaliação para uma versão completa do produto. Para remover o Centro de Controle Astra e o Operador do Centro de Controle Astra, execute os comandos descritos neste procedimento em sequência.
+
+Se tiver algum problema com a desinstalação, <<Solução de problemas de desinstalação>>consulte .
+
+.Antes de começar
+. link:../use/unmanage.html#unmanage-an-app["Desgerenciar todos os aplicativos"] nos clusters.
+. link:../use/unmanage.html#unmanage-a-cluster["Desgerenciar todos os clusters"].
+
+
+.Passos
+. Excluir Astra Control Center. O seguinte comando de exemplo é baseado em uma instalação padrão. Modifique o comando se você fez configurações personalizadas.
++
+[listing]
+----
+kubectl delete -f astra_control_center.yaml -n netapp-acc
+----
++
+Resultado:
+
++
+[listing]
+----
+astracontrolcenter.astra.netapp.io "astra" deleted
+----
+. Use o seguinte comando para excluir o `netapp-acc` namespace (ou nome personalizado):
++
+[listing]
+----
+kubectl delete ns [netapp-acc or custom namespace]
+----
++
+Resultado de exemplo:
+
++
+[listing]
+----
+namespace "netapp-acc" deleted
+----
+. Use o seguinte comando para excluir componentes do sistema do operador Astra Control Center:
++
+[listing]
+----
+kubectl delete -f astra_control_center_operator_deploy.yaml
+----
++
+Resultado:
+
++
+[listing]
+----
+namespace/netapp-acc-operator deleted
+customresourcedefinition.apiextensions.k8s.io/astracontrolcenters.astra.netapp.io deleted
+role.rbac.authorization.k8s.io/acc-operator-leader-election-role deleted
+clusterrole.rbac.authorization.k8s.io/acc-operator-manager-role deleted
+clusterrole.rbac.authorization.k8s.io/acc-operator-metrics-reader deleted
+clusterrole.rbac.authorization.k8s.io/acc-operator-proxy-role deleted
+rolebinding.rbac.authorization.k8s.io/acc-operator-leader-election-rolebinding deleted
+clusterrolebinding.rbac.authorization.k8s.io/acc-operator-manager-rolebinding deleted
+clusterrolebinding.rbac.authorization.k8s.io/acc-operator-proxy-rolebinding deleted
+configmap/acc-operator-manager-config deleted
+service/acc-operator-controller-manager-metrics-service deleted
+deployment.apps/acc-operator-controller-manager deleted
+----
+
+
+
+
+== Solução de problemas de desinstalação
+
+Use as soluções alternativas a seguir para resolver quaisquer problemas que você tenha com a desinstalação do Astra Control Center.
+
+
+
+=== A desinstalação do Astra Control Center não consegue limpar o pod do operador de monitoramento no cluster gerenciado
+
+Se você não desgerenciou os clusters antes de desinstalar o Astra Control Center, poderá excluir manualmente os pods no namespace NetApp-monitoring e no namespace com os seguintes comandos:
+
+.Passos
+. Eliminar `acc-monitoring` agente:
++
+[listing]
+----
+kubectl delete agents acc-monitoring -n netapp-monitoring
+----
++
+Resultado:
+
++
+[listing]
+----
+agent.monitoring.netapp.com "acc-monitoring" deleted
+----
+. Excluir o namespace:
++
+[listing]
+----
+kubectl delete ns netapp-monitoring
+----
++
+Resultado:
+
++
+[listing]
+----
+namespace "netapp-monitoring" deleted
+----
+. Confirmar recursos removidos:
++
+[listing]
+----
+kubectl get pods -n netapp-monitoring
+----
++
+Resultado:
+
++
+[listing]
+----
+No resources found in netapp-monitoring namespace.
+----
+. Confirmar o agente de monitoramento removido:
++
+[listing]
+----
+kubectl get crd|grep agent
+----
++
+Resultado da amostra:
+
++
+[listing]
+----
+agents.monitoring.netapp.com                     2021-07-21T06:08:13Z
+----
+. Excluir informações de definição de recursos personalizados (CRD):
++
+[listing]
+----
+kubectl delete crds agents.monitoring.netapp.com
+----
++
+Resultado:
+
++
+[listing]
+----
+customresourcedefinition.apiextensions.k8s.io "agents.monitoring.netapp.com" deleted
+----
+
+
+
+
+=== A desinstalação do Astra Control Center não consegue limpar CRDs do Traefik
+
+Você pode excluir manualmente as CRDs do Traefik. CRDs são recursos globais e excluí-los pode afetar outros aplicativos no cluster.
+
+.Passos
+. Listar CRDs Traefik instalados no cluster:
++
+[listing]
+----
+kubectl get crds |grep -E 'traefik'
+----
++
+Resposta
+
++
+[listing]
+----
+ingressroutes.traefik.containo.us             2021-06-23T23:29:11Z
+ingressroutetcps.traefik.containo.us          2021-06-23T23:29:11Z
+ingressrouteudps.traefik.containo.us          2021-06-23T23:29:12Z
+middlewares.traefik.containo.us               2021-06-23T23:29:12Z
+middlewaretcps.traefik.containo.us            2021-06-23T23:29:12Z
+serverstransports.traefik.containo.us         2021-06-23T23:29:13Z
+tlsoptions.traefik.containo.us                2021-06-23T23:29:13Z
+tlsstores.traefik.containo.us                 2021-06-23T23:29:14Z
+traefikservices.traefik.containo.us           2021-06-23T23:29:15Z
+----
+. Eliminar as CRDs:
++
+[listing]
+----
+kubectl delete crd ingressroutes.traefik.containo.us ingressroutetcps.traefik.containo.us ingressrouteudps.traefik.containo.us middlewares.traefik.containo.us serverstransports.traefik.containo.us tlsoptions.traefik.containo.us tlsstores.traefik.containo.us traefikservices.traefik.containo.us middlewaretcps.traefik.containo.us
+----
+
+
+
+
+== Encontre mais informações
+
+* link:../release-notes/known-issues.html["Problemas conhecidos para desinstalar"]
+

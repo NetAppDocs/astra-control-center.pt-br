@@ -1,0 +1,8 @@
+---
+permalink: use/define-custom-app.html 
+redirect: astra-control-center/use/manage-apps.html 
+---
+= 
+:allow-uri-read: 
+
+

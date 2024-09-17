@@ -1,0 +1,58 @@
+---
+sidebar: sidebar 
+permalink: use/view-clusters.html 
+keywords: view cluster, edit storage class, storage class, cluster storage, cluster overview 
+summary: Depois de adicionar clusters ao Astra Control Center, é possível exibir detalhes sobre o cluster, como localização, nós de trabalho, volumes persistentes e classes de storage. Você também pode alterar as classes de armazenamento padrão. 
+---
+= Visualize a integridade do cluster e gerencie classes de armazenamento
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/use/
+
+
+[role="lead"]
+Depois de adicionar clusters a serem gerenciados pelo Astra Control Center, é possível exibir detalhes sobre o cluster, como localização, nós de trabalho, volumes persistentes e classes de storage. Você também pode alterar a classe de storage padrão para clusters gerenciados.
+
+
+
+== Exibir integridade e detalhes do cluster
+
+É possível exibir detalhes sobre o cluster, como sua localização, os nós de trabalho, volumes persistentes e classes de storage.
+
+.Passos
+. Na IU do Astra Control Center, selecione *clusters*.
+. Na página *clusters*, selecione o cluster cujos detalhes deseja exibir.
++
+
+NOTE: Se um cluster ainda estiver `removed` no estado de cluster e a conetividade de rede parecer saudável (tentativas externas de acessar o cluster usando APIs do Kubernetes são bem-sucedidas), o kubeconfig que você forneceu ao Astra Control pode não ser mais válido. Isto pode dever-se à rotação ou expiração do certificado no cluster. Para corrigir esse problema, atualize as credenciais associadas ao cluster no Astra Control usando o https://docs.netapp.com/us-en/astra-automation["API Astra Control"].
+
+. Veja as informações nas guias *Visão geral*, *armazenamento* e *atividade* para encontrar as informações que você está procurando.
++
+** *Visão geral*: Detalhes sobre os nós de trabalho, incluindo seu estado.
+** *Storage*: Os volumes persistentes associados à computação, incluindo a classe de armazenamento e o estado.
+** *Atividade*: Mostra as atividades relacionadas ao cluster.
+
+
+
+
+
+NOTE: Você também pode exibir informações de cluster a partir do Astra Control Center *Dashboard*. Na guia *clusters* em *Resumo de recursos*, você pode selecionar os clusters gerenciados, que o levam à página *clusters*. Depois de acessar a página *clusters*, siga as etapas descritas acima.
+
+
+
+== Altere a classe de armazenamento padrão
+
+Você pode alterar a classe de armazenamento padrão para um cluster. Quando o Astra Control gerencia um cluster, ele controla a classe de storage padrão do cluster.
+
+
+NOTE: Não altere a classe de armazenamento usando comandos kubectl. Em vez disso, utilize este procedimento. O Astra Control reverterá as alterações se feitas usando kubectl.
+
+.Passos
+. Na IU da Web do Astra Control Center, selecione *clusters*.
+. Na página *clusters*, selecione o cluster que deseja alterar.
+. Selecione a guia *armazenamento*.
+. Selecione a categoria *Storage classes*.
+. Selecione o menu *ações* para a classe de armazenamento que você deseja definir como padrão.
+. Selecione *Definir como padrão*.
+

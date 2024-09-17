@@ -1,0 +1,49 @@
+---
+settings:
+  name: Astra Control Center
+  internal:
+    pdf_enabled: true
+  prod:
+    pdf_enabled: true
+    harmony_enabled: false
+  rss_page: release-notes/whats-new.html
+  versions:
+  - version-number: '24.02'
+    url: "/astra-control-center"
+  - version-number: '23.10'
+    url: "/astra-control-center-2310"
+  - version-number: '23.07'
+    url: "/astra-control-center-2307"
+  - version-number: '23.04'
+    url: "/astra-control-center-2304"
+  - version-number: '22.11'
+    url: "/astra-control-center-2211"
+  - version-number: '22.08'
+    url: "/astra-control-center-2208"
+  - version-number: '22.04'
+    url: "/astra-control-center-2204"
+  - version-number: '21.12'
+    url: "/astra-control-center-2112"
+  - version-number: '21.08'
+    url: "/astra-control-center-2108"
+  langs: pt-br,us-en,ja-jp,ko-kr,zh-cn,zh-tw,de-de,es-es,fr-fr,it-it
+sidebar:
+  entries:
+  - title: Documentos do Astra Control Center
+    url: "/index.html"
+  - section: release-notes
+  - section: get-started
+  - section: concepts
+  - section: use
+  - section: use-acp
+  - section: rest-api
+  - section: support
+  - title: Versões anteriores
+    url: "/acc-earlier-versions.html"
+  - title: FAQ
+    url: "/get-started/faq.html"
+  - title: Avisos legais
+    url: "/legal-notices.html"
+product-family:
+  name: Astra
+  repo: astra-family

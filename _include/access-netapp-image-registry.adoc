@@ -1,0 +1,18 @@
+= 
+:allow-uri-read: 
+
+
+Você tem a opção de obter imagens de instalação e melhorias de funcionalidade para o Astra Control, como o Astra Control Provisioner, a partir do Registro de imagens do NetApp.
+
+. Registre seu ID de conta Astra Control que você precisará fazer login no Registro.
++
+Você pode ver o ID da conta na IU da Web do Astra Control Service. Selecione o ícone de figura no canto superior direito da página, selecione *Acesso à API* e anote o ID da sua conta.
+
+. Na mesma página, selecione *Generate API token* e copie a cadeia de token da API para a área de transferência e salve-a no seu editor.
+. Faça login no Registro do Astra Control:
++
+[source, console]
+----
+docker login cr.astra.netapp.io -u <account-id> -p <api-token>
+----
+

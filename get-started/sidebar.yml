@@ -1,0 +1,43 @@
+---
+section: get-started
+title: Comece agora
+entries:
+- title: Saiba mais sobre o Astra Control Center
+  url: "/get-started/intro.html"
+- title: Requisitos do Astra Control Center
+  url: "/get-started/requirements.html"
+- title: Início rápido para Astra Control Center
+  url: "/get-started/quick-start.html"
+- title: Visão geral da instalação
+  url: "/get-started/install_overview.html"
+  entries:
+  - title: Instale o Astra Control Center
+    url: "/get-started/install_acc.html"
+    entries:
+    - title: Configurar um cert-manager externo
+      url: "/get-started/cert-manager-prereqs.html"
+  - title: Instale o Astra Control Center usando o OpenShift OperatorHub
+    url: "/get-started/acc_operatorhub_install.html"
+  - title: Instalar o Astra Control Center com um back-end de storage do Cloud Volumes
+      ONTAP
+    url: "/get-started/install_acc-cvo.html"
+  - title: Configure o Astra Control Center após a instalação
+    url: "/get-started/configure-after-install.html"
+- title: Configure o Astra Control Center
+  entries:
+  - title: Adicionar licença
+    url: "/get-started/add-license.html"
+  - title: Habilite o Astra Control Provisioner
+    url: "/get-started/enable-acp.html"
+  - title: Prepare-se para o gerenciamento de clusters com Astra Control
+    url: "/get-started/prep-for-cluster-management.html"
+  - title: Instalar o Astra Connector para clusters gerenciados
+    url: "/get-started/install-astra-connector.html"
+  - title: Adicione um cluster
+    url: "/get-started/add-cluster.html"
+  - title: Ativar a autenticação de back-end de storage
+    url: "/get-started/enable-auth-ontap-backend.html"
+  - title: Adicionar um back-end de storage
+    url: "/get-started/add-storage-backend.html"
+  - title: Adicione um balde
+    url: "/get-started/add-bucket.html"

@@ -1,0 +1,44 @@
+---
+sidebar: sidebar 
+permalink: get-started/add-license.html 
+keywords: set up astra control, astra control license 
+summary: Depois de instalar o Astra Control Center, faça login na IU e altere sua senha, você deseja configurar uma licença. 
+---
+= Adicione uma licença para o Astra Control Center
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/get-started/
+
+
+[role="lead"]
+Quando você instala o Astra Control Center, uma licença de avaliação incorporada já está instalada. Se você estiver avaliando o Astra Control Center, ignore esta etapa.
+
+Você pode adicionar uma nova licença usando a IU do Astra Control ou https://docs.netapp.com/us-en/astra-automation["API Astra Control"^]o .
+
+As licenças do Astra Control Center medem recursos de CPU usando unidades de CPU Kubernetes e contam os recursos de CPU atribuídos aos nós de trabalho de todos os clusters gerenciados do Kubernetes. As licenças são baseadas no uso do vCPU. Para obter mais informações sobre como as licenças são calculadas, link:../concepts/licensing.html["Licenciamento"]consulte .
+
+
+NOTE: Se a instalação aumentar para exceder o número licenciado de unidades de CPU, o Astra Control Center impedirá que você gerencie novas aplicações. É apresentado um alerta quando a capacidade é ultrapassada.
+
+
+NOTE: Para atualizar uma avaliação existente ou uma licença completa, link:../use/update-licenses.html["Atualizar uma licença existente"]consulte .
+
+.Antes de começar
+* Acesso a uma instância recém-instalada do Astra Control Center.
+* Permissões de função de administrador.
+* A link:../concepts/licensing.html["Ficheiro de licença do NetApp"] (NLF).
+
+
+.Passos
+. Faça login na IU do Astra Control Center.
+. Selecione *conta* > *Licença*.
+. Selecione *Adicionar licença*.
+. Navegue até o arquivo de licença (NLF) que você baixou.
+. Selecione *Adicionar licença*.
+
+
+A página *Account* > *License* exibe as informações da licença, data de validade, número de série da licença, ID da conta e unidades CPU usadas.
+
+
+NOTE: Se você tiver uma licença de avaliação e não estiver enviando dados para o AutoSupport, lembre-se de armazenar o ID da conta para evitar a perda de dados em caso de falha do Centro de Controle Astra.

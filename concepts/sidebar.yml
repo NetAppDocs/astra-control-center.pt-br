@@ -1,0 +1,16 @@
+---
+section: concepts
+title: Conceitos
+entries:
+- title: Arquitetura e componentes
+  url: "/concepts/architecture.html"
+- title: Proteção de dados
+  url: "/concepts/data-protection.html"
+- title: Licenciamento
+  url: "/concepts/licensing.html"
+- title: Gerenciamento de aplicativos
+  url: "/concepts/app-management.html"
+- title: Classes de armazenamento e tamanho PV
+  url: "/concepts/choose-class-and-size.html"
+- title: Funções de usuário e namespaces
+  url: "/concepts/user-roles-namespaces.html"
