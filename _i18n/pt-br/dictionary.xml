@@ -1033,7 +1033,6 @@
   <block id="6ffac32d322f5864924327003ba10101" category="doc">Instale o Astra Control Center usando o processo padrão</block>
   <block id="aa2295813a7f346a6931dea7ce4526f4" category="paragraph">Para instalar o Astra Control Center, baixe as imagens de instalação e execute as seguintes etapas. Você pode usar este procedimento para instalar o Astra Control Center em ambientes conetados à Internet ou com conexão via rede.</block>
   <block id="201e09e85ad81db8a19ef9f20c05d1a5" category="inline-link">este vídeo</block>
-  <block id="259f3be9b6c8eefb44e844c2b70333dc" category="paragraph">Para uma demonstração do processo de instalação do Astra Control Center,<block ref="cbbdec23221803dc148346abe5a297c0" category="inline-link-rx"></block> consulte .</block>
   <block id="4c6af79913263c3d336738d84e09cdce" category="list-text">* Garantir serviços saudáveis*: Verifique se todos os serviços de API estão em um estado saudável e disponíveis:</block>
   <block id="f755a64b28405981d4a9e4ece0b5f9e0" category="list-text">*Configure cert Manager*: Se um gerenciador de cert já existir no cluster, você precisará executar alguns <block ref="1787bdbf8a8938a728c4bed68c77105f" category="inline-link-macro-rx"></block> para que o Astra Control Center não tente instalar seu próprio gerenciador de cert. Por padrão, o Astra Control Center instala seu próprio gerenciador de cert durante a instalação.</block>
   <block id="d304ba20e96d87411588eeabac850e34" category="inline-xref">etiqueta</block>
@@ -3683,4 +3682,5 @@
   <block id="226b9aac696d5ad0f6503e9fb58d7225" category="sidebar">Gerenciar aplicativos Astra Control usando CRS</block>
   <block id="5004aa31f19b42c8cf616689c157a0ee" category="sidebar">Monitore a infraestrutura com Prometheus e Fluentd</block>
   <block id="03281739854e4951c0f98529e54a24f2" category="sidebar">Use o Astra Control Provisioner</block>
+  <block id="285c7fb54a928cf8e9ca78a83740ce60" category="paragraph">Para uma demonstração do processo de instalação do Astra Control Center,<block ref="d97427b76746d487a682c110ed41c817" category="inline-link-rx"></block> consulte .</block>
 </blocks>
