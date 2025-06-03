@@ -96,7 +96,6 @@
   <block id="5fcc148c8f806ba543381ba56de1d39b" category="list-text">&lt;SELECTORS&gt;: _(Opcional)_ string de seletor de rótulos no campo Kubernetes metadata.name do recurso conforme definido em<block ref="d4ce3da8407a7d8e148bb1287288e778" category="inline-link-rx"></block>. exemplo: .<block ref="6ea45baf659f1f35e51c8dc9005eac03" prefix=" " category="inline-code"></block></block>
   <block id="81eeab9506186e2dca8faefa78d54067" category="paragraph">Exemplo:</block>
   <block id="82ec2cd6fda87713f588da75c3b1d0ed" category="doc">Recursos</block>
-  <block id="9323549177620e1dd794512ee7cc0748" category="paragraph">O Astra Control é uma solução de gerenciamento de ciclo de vida de dados da aplicação Kubernetes que simplifica as operações de aplicações com monitoramento de estado e ajuda você a armazenar, proteger e mover seus workloads Kubernetes em ambientes híbridos e multicloud.</block>
   <block id="c66fd3d61ca9e5331b05a6bd70d4a1df" category="paragraph">O Astra Control oferece funcionalidades essenciais para o gerenciamento do ciclo de vida dos dados da aplicação Kubernetes:</block>
   <block id="953ad711b5d812e3876fb8a28266ba3e" category="paragraph">*Loja*:</block>
   <block id="1cc20f69146066d58ea30c167da06503" category="list-text">Provisionamento de storage dinâmico para workloads em contêineres</block>
@@ -113,11 +112,7 @@
   <block id="2d242bb36ec91b32005f9296ff03a912" category="section-title">Arquitetura</block>
   <block id="56da5995454440513c0c0a111bb3b132" category="paragraph">A arquitetura do Astra Control permite que a TI forneça recursos avançados de gerenciamento de dados que aprimoram o recurso e a disponibilidade das aplicações Kubernetes, simplifica o gerenciamento, a proteção e a movimentação de workloads em contêineres entre nuvens públicas e ambientes locais, além de fornecer recursos de automação por meio de sua API REST e SDK, permitindo acesso programático para integração aprimorada com workflows existentes.</block>
   <block id="f0f6f0fb4331084912739b8873eea074" category="paragraph">O Astra Control é nativo em Kubernetes, permitindo workflows de proteção de dados que utilizam recursos personalizados e, ao mesmo tempo, permanecem compatíveis com a API e o SDK existentes. A proteção de dados nativa do Kubernetes oferece vantagens significativas. Ao integrar de forma otimizada às APIs e aos recursos do Kubernetes, a proteção de dados pode se tornar uma parte inerente do ciclo de vida do aplicativo por meio das ferramentas existentes de CI/CD e/ou GitOps de uma organização.</block>
-  <block id="3e9fd553c2a72f2fea1001b682208a54" category="inline-image-macro">Arquitetura Astra Control</block>
-  <block id="28a0c6c94cda259516d07dedb9c854ef" category="paragraph"><block ref="28a0c6c94cda259516d07dedb9c854ef" category="inline-image-macro-rx" type="image"></block></block>
   <block id="8103c53d603644d4ee7cc959e53cf3a4" category="paragraph">O Astra Control foi desenvolvido com base em quatro componentes complementares:</block>
-  <block id="4f16f53fe0ab96995516c186edf87fe6" category="list-text">*Astra Control*: O Astra Control é o serviço de gerenciamento centralizado para todos os clusters gerenciados, fornecendo workloads orquestrados para proteção e mobilidade de aplicações na nuvem e no local, bem como os seguintes recursos:</block>
-  <block id="51fed4624a5a53152693a41ce5efa15a" category="list-text">Visualização combinada de vários clusters e nuvens</block>
   <block id="e046b9c3be3479bde3b3259db738a78f" category="list-text">Proteção de fluxos de trabalho orquestrados</block>
   <block id="8dc1680125686fe1458b22e1961b1899" category="list-text">Visualização e seleção granular de recursos</block>
   <block id="4568e5d7e97ee5d6e4866ccd0c1dc770" category="list-text">*Astra Connector*: O Astra Connector combina com o Astra Control para fornecer uma conexão segura a cada cluster gerenciado, oferecendo execução local de operações agendadas independentemente do status da conexão, bem como as seguintes funcionalidades:</block>
@@ -132,10 +127,6 @@
   <block id="427ee8760fb4e2d4c8d849fa36bab15b" category="list-text">Workflows de automação e integração direta de ferramentas de ecossistema</block>
   <block id="c7349a414c37176e5941afbe8fd1bf31" category="list-text">Primitivas de nível inferior que permitem fluxos de trabalho personalizados</block>
   <block id="6762973af9b127d271f0d2b2aea0bc96" category="section-title">Modelos de implantação</block>
-  <block id="15bdafd183c9dcdccccb2ef960342018" category="paragraph">O Astra Control está disponível em dois modelos de implantação.</block>
-  <block id="e2a57f6b4c1a4fc07e57320580de76c4" category="inline-image-macro">Modelos de implantação do Astra</block>
-  <block id="ed910480be660ce44964d26abfc6a0d8" category="paragraph"><block ref="ed910480be660ce44964d26abfc6a0d8" category="inline-image-macro-rx" type="image"></block></block>
-  <block id="b7372905cd310308af0541e07ef5175f" category="list-text">*Astra Control Service*: Um serviço gerenciado pelo NetApp que fornece gerenciamento de dados com reconhecimento de aplicações dos clusters do Kubernetes em vários ambientes de fornecedores de nuvem e clusters do Kubernetes autogerenciados.</block>
   <block id="ef22ff17624b3faeed227ce5c717eb5f" category="inline-link">Documentação do Astra Control Service</block>
   <block id="6762180adf48075df77efbf264e982ec" category="paragraph"><block ref="6762180adf48075df77efbf264e982ec" category="inline-link-rx"></block></block>
   <block id="db7cdbe16748f17a4795bd3e96b798a0" category="list-text">*Astra Control Center*: Software autogerenciado que oferece gerenciamento de dados com reconhecimento de aplicações dos clusters Kubernetes executados em seu ambiente local. O Astra Control Center também pode ser instalado em vários ambientes de fornecedor de nuvem com um back-end de storage da NetApp Cloud Volumes ONTAP.</block>
@@ -3643,10 +3634,6 @@
   <block id="76970df80a59418e6dbfba63fb53174b" category="sidebar">Comece a usar a API Astra Control</block>
   <block id="19ec08da81a826d919d64ab860845c04" category="sidebar">Referência da API</block>
   <block id="a8cdd583ea359a6ef025304a7be14aeb" category="sidebar">Workflows de API</block>
-  <block id="e8390eba9a3848bb461210a9a06f9684" category="sidebar">Use o Astra Control Service</block>
-  <block id="13c01a54604c3f7049eaa9f3390e1622" category="sidebar">Saiba mais sobre o Astra Control Service</block>
-  <block id="3df43a986689c71190e7e91a132b254a" category="sidebar">Novidades do Astra Control Service</block>
-  <block id="4b73996cc1da59c5ea313bcccd18304b" category="sidebar">Início rápido para Astra Control Service</block>
   <block id="a862000507b324693be75565a4728c6e" category="sidebar">Briefings de solução</block>
   <block id="6c982e1027a895243c2e2e4e1675fa74" category="sidebar">PostgreSQL DBaaS com Astra Control</block>
   <block id="b1cb177a36a717434db632021b6d91bc" category="sidebar">MySQL DBaaS com Astra Control</block>
@@ -3683,4 +3670,8 @@
   <block id="5004aa31f19b42c8cf616689c157a0ee" category="sidebar">Monitore a infraestrutura com Prometheus e Fluentd</block>
   <block id="03281739854e4951c0f98529e54a24f2" category="sidebar">Use o Astra Control Provisioner</block>
   <block id="285c7fb54a928cf8e9ca78a83740ce60" category="paragraph">Para uma demonstração do processo de instalação do Astra Control Center,<block ref="d97427b76746d487a682c110ed41c817" category="inline-link-rx"></block> consulte .</block>
+  <block id="3a6992502160bd45057c4cab983caf0b" category="paragraph">O Astra Control é uma solução de gerenciamento do ciclo de vida de dados de aplicativos Kubernetes que simplifica as operações para aplicativos com estado e ajuda você a armazenar, proteger e mover suas cargas de trabalho do Kubernetes entre ambientes híbridos.</block>
+  <block id="ee598b6d30a6fff85e10ec4aa00fb486" category="list-text">*Astra Control*: O Astra Control é o serviço de gerenciamento centralizado para todos os clusters gerenciados, fornecendo cargas de trabalho orquestradas para proteção e mobilidade de aplicativos locais, bem como os seguintes recursos:</block>
+  <block id="301a1bce6ec5e89d3e225cc1c7d88bb6" category="list-text">Visão combinada de vários clusters</block>
+  <block id="00b221fbcaad3eecdab529046865c432" category="paragraph">O Astra Control está disponível em um único modelo de implantação.</block>
 </blocks>
