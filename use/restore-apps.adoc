@@ -45,6 +45,7 @@ Execute as etapas a seguir, dependendo do tipo de arquivo que você deseja resta
 
 
 
+[[restore-data-from-backup-or-snapshot-using-the-web-ui]]
 == Restaure dados do backup ou do snapshot usando a IU da Web
 
 Você pode restaurar os dados usando a IU da Web Astra Control.
@@ -112,6 +113,7 @@ NOTE: Para saber mais sobre como configurar regras de inclusão e exclusão, <<F
 
 
 
+[[tech-preview-restore-from-backup-using-a-custom-resource-cr]]
 == [Visualização técnica] Restaurar a partir da cópia de segurança utilizando um recurso personalizado (CR)
 
 Você pode restaurar dados de um backup usando um arquivo de recurso personalizado (CR) para um namespace diferente ou para o namespace de origem original.
@@ -258,6 +260,7 @@ kubectl apply -f astra-control-backup-ipr-cr.yaml
 ====
 
 
+[[tech-preview-restore-from-snapshot-using-a-custom-resource-cr]]
 == [Visualização técnica] Restaurar a partir de instantâneos utilizando um recurso personalizado (CR)
 
 É possível restaurar dados de um snapshot usando um arquivo de recurso personalizado (CR) para um namespace diferente ou namespace de origem original.
@@ -413,6 +416,7 @@ IMPORTANT: Qualquer usuário membro com restrições de namespace por nome/ID de
 
 
 
+[[filter-resources-during-an-application-restore]]
 == Filtre recursos durante uma restauração de aplicativos
 
 Você pode adicionar uma regra de filtro a uma link:../use/restore-apps.html["restaurar"] operação que especificará os recursos existentes do aplicativo a serem incluídos ou excluídos do aplicativo restaurado. Você pode incluir ou excluir recursos com base em um namespace, rótulo ou GVK (GroupVersionKind) especificado.
@@ -471,6 +475,7 @@ TIP: Você pode criar quantos recursos incluir e excluir regras quiser. As regra
 
 
 
+[[in-place-restore-complications-for-an-app-that-shares-resources-with-another-app]]
 == Complicações de restauração no local para um aplicativo que compartilha recursos com outro aplicativo
 
 Você pode executar uma operação de restauração no local em um aplicativo que compartilhe recursos com outro aplicativo e produza resultados não intencionais. Todos os recursos compartilhados entre os aplicativos são substituídos quando uma restauração no local é executada em um dos aplicativos.

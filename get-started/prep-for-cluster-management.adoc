@@ -72,6 +72,7 @@ insecure-skip-tls-verify: true
 
 
 
+[[run-eligibility-checks]]
 == Execute verificações de qualificação
 
 Execute as seguintes verificações de qualificação para garantir que o cluster esteja pronto para ser adicionado ao Astra Control Center.
@@ -131,6 +132,7 @@ ontap-gold (default)  csi.trident.netapp.io  Delete         Immediate          t
 
 
 
+[[create-a-cluster-role-kubeconfig]]
 == Crie uma função de cluster kubeconfig
 
 Para clusters gerenciados usando o kubeconfig, você pode, opcionalmente, criar uma função de administrador de permissão limitada ou expandida para o Astra Control Center. Este não é um procedimento necessário para a configuração do Astra Control Center, uma vez que já configurou um kubeconfig como parte do link:../get-started/install_acc.html#set-up-namespace-and-secret-for-registries-with-auth-requirements["processo de instalação"].

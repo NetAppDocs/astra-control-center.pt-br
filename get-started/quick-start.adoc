@@ -74,6 +74,7 @@ Depois de concluir a configuração do Astra Control Center, use a IU do Astra C
 
 
 
+[[for-more-information]]
 == Para mais informações
 
 * https://docs.netapp.com/us-en/astra-automation["Use a API Astra Control"^]

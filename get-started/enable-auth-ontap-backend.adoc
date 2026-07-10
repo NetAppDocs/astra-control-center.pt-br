@@ -22,6 +22,7 @@ Você pode atualizar posteriormente os backends existentes para passar de um tip
 
 
 
+[[enable-credential-based-authentication]]
 === Ative a autenticação baseada em credenciais
 
 O Astra Control Center requer as credenciais para um cluster com escopo `admin` para se comunicar com o back-end do ONTAP. Você deve usar funções padrão e predefinidas, `admin` como . Isso garante compatibilidade direta com futuras versões do ONTAP que podem expor APIs de recursos a serem usadas por futuras versões do Astra Control Center.
@@ -48,6 +49,7 @@ A definição de back-end é o único lugar onde as credenciais são armazenadas
 
 
 
+[[enable-certificate-based-authentication]]
 === Ativar autenticação baseada em certificado
 
 O Centro de Controle Astra pode usar certificados para se comunicar com backends ONTAP novos e existentes. Você deve inserir as seguintes informações na definição de back-end.

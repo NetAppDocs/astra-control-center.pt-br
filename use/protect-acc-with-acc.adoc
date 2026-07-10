@@ -69,6 +69,7 @@ Não representado no diagrama:
 
 
 
+[[step-1-option-backup-and-restore-astra-control-center]]
 == Etapa 1 opção: Faça backup e restauração do Astra Control Center
 
 Este procedimento descreve as etapas necessárias para restaurar o Astra Control Center para um novo cluster usando backup e restauração.
@@ -182,6 +183,7 @@ kubectl get acc -n netapp-acc
 
 
 
+[[step-1-option-protect-astra-control-center-using-replication]]
 == Etapa 1 opção: Proteger o Astra Control Center usando a replicação
 
 Este procedimento descreve as etapas necessárias para configurar link:../use/replicate_snapmirror.html["Replicação do Astra Control Center"] para proteger a instância primária do Astra Control Center.
@@ -328,6 +330,7 @@ kubectl get pods -n netapp-acc | grep -e "traefik" | awk '{print $1}' | xargs ku
 
 
 
+[[step-2-restore-the-astra-control-center-operator]]
 == Etapa 2: Restaure o Operador do Centro de Controle Astra
 
 Usando o Astra Control Center secundário, restaure o operador principal do Astra Control Center a partir do backup. O namespace de destino deve ser o mesmo que o namespace de origem. No caso em que o Astra Control Center foi excluído do cluster de origem principal, ainda haverá backups para executar as mesmas etapas de restauração.
@@ -352,6 +355,7 @@ O Astra Control Center, seus clusters registrados e aplicações gerenciadas com
 
 
 
+[[troubleshooting]]
 == Solução de problemas
 
 Determine a integridade do sistema e se os processos de proteção foram bem-sucedidos.

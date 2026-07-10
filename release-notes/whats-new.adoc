@@ -16,6 +16,7 @@ Temos o prazer de anunciar a última versão do Astra Control Center.
 
 
 
+[[15-march-2024-24-02-0]]
 == 15 de março de 2024 (24.02.0)
 
 .Novos recursos e suporte
@@ -44,6 +45,7 @@ Depois de instalar o link:../get-started/install-astra-connector.html["Conetor A
 
 
 
+[[7-november-2023-23-10-0]]
 == 7 de novembro de 2023 (23.10.0)
 
 [[nas-eco-backup-restore]]
@@ -80,6 +82,7 @@ Os seguintes recursos estão disponíveis com o lançamento do Astra Control Pro
 
 
 
+[[31-july-2023-23-07-0]]
 == 31 de julho de 2023 (23.07.0)
 
 .Novos recursos e suporte
@@ -98,6 +101,7 @@ Os seguintes recursos estão disponíveis com o lançamento do Astra Control Pro
 
 
 
+[[18-may-2023-23-04-2]]
 == 18 de maio de 2023 (23.04.2)
 
 Esta versão de patch (23.04.2) para Astra Control Center (23.04.0) fornece suporte https://newreleases.io/project/github/kubernetes-csi/external-snapshotter/release/v6.1.0["Snapshotter externo do Kubernetes v6,1.0"^] e corrige o seguinte:
@@ -108,6 +112,7 @@ Esta versão de patch (23.04.2) para Astra Control Center (23.04.0) fornece supo
 
 
 
+[[25-april-2023-23-04-0]]
 == 25 de abril de 2023 (23.04.0)
 
 .Novos recursos e suporte
@@ -126,6 +131,7 @@ Esta versão de patch (23.04.2) para Astra Control Center (23.04.0) fornece supo
 
 
 
+[[22-november-2022-22-11-0]]
 == 22 de novembro de 2022 (22.11.0)
 
 .Novos recursos e suporte
@@ -143,12 +149,14 @@ Esta versão de patch (23.04.2) para Astra Control Center (23.04.0) fornece supo
 
 
 
+[[8-september-2022-22-08-1]]
 == 8 de setembro de 2022 (22.08.1)
 
 Esta versão de patch (22.08.1) para o Centro de Controle Astra (22.08.0) corrige pequenos bugs na replicação de aplicativos usando o NetApp SnapMirror.
 
 
 
+[[10-august-2022-22-08-0]]
 == 10 de agosto de 2022 (22.08.0)
 
 .Novos recursos e suporte
@@ -171,6 +179,7 @@ NOTE: O NetApp forneceu ganchos de execução pré e pós-snapshot padrão para 
 
 
 
+[[26-april-2022-22-04-0]]
 == 26 de abril de 2022 (22.04.0)
 
 .Novos recursos e suporte
@@ -188,6 +197,7 @@ NOTE: O NetApp forneceu ganchos de execução pré e pós-snapshot padrão para 
 
 
 
+[[14-december-2021-21-12]]
 == 14 de dezembro de 2021 (21,12)
 
 .Novos recursos e suporte
@@ -210,6 +220,7 @@ NOTE: O NetApp forneceu ganchos de execução pré e pós-snapshot padrão para 
 
 
 
+[[5-august-2021-21-08]]
 == 5 de agosto de 2021 (21,08)
 
 Lançamento inicial do Astra Control Center.
@@ -226,6 +237,7 @@ Lançamento inicial do Astra Control Center.
 
 
 
+[[find-more-information]]
 == Encontre mais informações
 
 * link:../release-notes/known-issues.html["Problemas conhecidos para esta versão"]

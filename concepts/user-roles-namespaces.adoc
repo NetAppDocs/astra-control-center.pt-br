@@ -16,6 +16,7 @@ Saiba mais sobre funções de usuário e namespaces no Astra Control e como usá
 
 
 
+[[user-roles]]
 == Funções de utilizador
 
 Você pode usar funções para controlar o acesso que os usuários têm a recursos ou funcionalidades do Astra Control. Veja a seguir as funções de usuário no Astra Control:
@@ -30,12 +31,14 @@ Pode adicionar restrições a um utilizador Membro ou Visualizador para restring
 
 
 
+[[namespaces]]
 == Namespaces
 
 Um namespace é um escopo que você pode atribuir a recursos específicos em um cluster gerenciado pelo Astra Control. O Astra Control descobre os namespaces de um cluster quando você adiciona o cluster ao Astra Control. Uma vez descoberto, os namespaces estão disponíveis para atribuir como restrições aos usuários. Somente os membros que têm acesso a esse namespace podem usar esse recurso. Você pode usar namespaces para controlar o acesso a recursos usando um paradigma que faz sentido para sua organização; por exemplo, por regiões físicas ou divisões dentro de uma empresa. Quando você adiciona restrições a um usuário, você pode configurar esse usuário para ter acesso a todos os namespaces ou apenas um conjunto específico de namespaces. Você também pode atribuir restrições de namespace usando rótulos de namespace.
 
 
 
+[[find-more-information]]
 == Encontre mais informações
 
 link:../use/manage-local-users-and-roles.html["Gerencie usuários e funções locais"]

@@ -37,7 +37,6 @@
   <block id="e05ea496750d85fb7d63c1d2952dc33e" category="list-text">Extraia as imagens do pacote Astra Control Center:</block>
   <block id="df0a28182823b029a1d84bec05a7726e" category="open-title">Operador do Astra Trident</block>
   <block id="b88c081e2a4b249f94292c6f7bf16bdc" category="inline-link">Baixe o instalador do Astra Trident e extraia-o.</block>
-  <block id="f1f44f407a364d092b4a3b446d6593b5" category="list-text"><block ref="5512264baa78f7d10bb082092407833c" category="inline-link-rx"></block>.</block>
   <block id="b53ea1f6729ee2c1c5dc303c5e9bb360" category="list-text">Siga estas etapas se você ainda não tiver instalado o Astra Trident ou se tiver removido o operador da sua implantação original do Astra Trident:</block>
   <block id="1802fc07d2de18110ae52621540f337e" category="list-text">Crie o CRD:</block>
   <block id="b19df824e7baecb971d0fdd39542c6d6" category="list-text">Crie o namespace Trident <block ref="a40796e67d7096bdb1a461d9369987ae" prefix="(" category="inline-code"></block>) ou confirme se o namespace Trident ainda existe <block ref="929ac53a7aaa18d0ab7bfd29e3b89c45" prefix="(" category="inline-code"></block>). Se o namespace tiver sido removido, crie-o novamente.</block>
@@ -222,8 +221,6 @@
   <block id="972dbc054c14df6a8a668ad2c71b9afa" category="paragraph">O Astra Control Service é um serviço de nuvem gerenciado pela NetApp que está sempre ativo e atualizado com as funcionalidades mais recentes. Ele utiliza vários componentes para habilitar o gerenciamento do ciclo de vida dos dados das aplicações.</block>
   <block id="29346571353a36c4c8e378195149db77" category="paragraph">Em um alto nível, o Astra Control Service funciona assim:</block>
   <block id="5e44a260fc47d95ab78eb0e97efe4e7d" category="list-text">Você começa a usar o Astra Control Service configurando seu fornecedor de nuvem e registrando-se em uma conta Astra.</block>
-  <block id="052766753c4902f7b4dda44f55923c85" category="list-text">Para clusters GKE, o Astra Control Service usa<block ref="33441d63a8e7ace6860eab2024320819" category="inline-link-rx"></block> ou discos persistentes do Google como back-end de storage para volumes persistentes.</block>
-  <block id="450dcc356e2c75be5bfea7bc913558bb" category="list-text">Para clusters AKS, o Astra Control Service usa<block ref="16e1ab965c1d673c5cb3b5a28e77c1c1" category="inline-link-rx"></block> ou discos gerenciados do Azure como o back-end de storage para seus volumes persistentes.</block>
   <block id="4b6ccd94421822eaaf7bd027992018af" category="inline-link">Amazon Elastic Block Store</block>
   <block id="7a3f533a65a34319a327318673651449" category="list-text">Para clusters do Amazon EKS, o Astra Control Service usa<block ref="a65cb6c91d35e755c3763fe01aedac72" category="inline-link-rx"></block> ou<block ref="554e81ff0c0b44a91e38efe479d6c57c" category="inline-link-rx"></block> como back-end de storage para volumes persistentes.</block>
   <block id="1ae8e0ca715d9854cf1c69ead32e4931" category="list-text">Você adiciona sua primeira computação do Kubernetes ao Astra Control Service. Em seguida, o Astra Control Service faz o seguinte:</block>
@@ -745,7 +742,6 @@
   <block id="cdb2726825d8ca6b1fbc495e1769be38" category="inline-link-macro">Desgerenciar as aplicações do Astra Control</block>
   <block id="bfde4228559e1dc730ccb3f1710371f6" category="list-text"><block ref="819731d94d9a0720df36a3fc1b85d024" category="inline-link-macro-rx"></block>.</block>
   <block id="e63154c624567c5cf9bd389230c703ee" category="inline-link-macro">Desgerenciar o cluster a partir do Astra Control</block>
-  <block id="532f06fc1e312d6659de4b8386cc2689" category="list-text"><block ref="fee7c2b0377fd57e3be010ddfbcf91f6" category="inline-link-macro-rx"></block>.</block>
   <block id="b2367a0a07b25f3a049fbc1ea89a3636" category="paragraph-title">O que acontece com minhas aplicações e dados após a remoção do cluster Kubernetes do Astra Control?</block>
   <block id="8ce424856922443bb79c34a944daacaf" category="paragraph">A remoção de um cluster do Astra Control não fará alterações na configuração do cluster (aplicações e storage persistente). Todos os snapshots ou backups do Astra Control feitos de aplicações nesse cluster não estarão disponíveis para restauração. Os backups de storage persistente criados pelo Astra Control permanecem no Astra Control, mas não estão disponíveis para restauração.</block>
   <block id="03d32d7daecae8d532e26e0c040b4ff0" category="admonition">Sempre remova um cluster do Astra Control antes de excluí-lo por meio de outros métodos. A exclusão de um cluster usando outra ferramenta enquanto ele ainda está sendo gerenciado pelo Astra Control pode causar problemas para sua conta Astra Control.</block>
@@ -918,7 +914,6 @@
   <block id="7c5a7b7621ba103d2f073201a81e462a" category="paragraph">A primeira etapa é instalar um cluster do RedHat OpenShift no GCP.</block>
   <block id="4a3ec74d604704b9803df28451c8fc6b" category="paragraph">Para obter instruções de instalação, consulte o seguinte:</block>
   <block id="d1442006ea024cc45950b650da58fcb9" category="inline-link">Instalação de um cluster OpenShift no GCP</block>
-  <block id="3d03421efd2f3d3214e202f7d8c4c27c" category="list-text"><block ref="3d03421efd2f3d3214e202f7d8c4c27c" category="inline-link-rx"></block></block>
   <block id="cb61f975c18dbe1fc8e8d6c8d8486d7e" category="inline-link">Criando uma conta de serviço do GCP</block>
   <block id="83e04df6a72ee17f24d691755368e8d5" category="list-text"><block ref="83e04df6a72ee17f24d691755368e8d5" category="inline-link-rx"></block></block>
   <block id="87d185607b5b3fa9b106856512932ac9" category="section-title">Crie um projeto do GCP e uma nuvem privada virtual</block>
@@ -1403,8 +1398,6 @@
   <block id="0b145934590b9ed05cf63a628294d371" category="list-text">* Extensões de CPU*: As CPUs em todos os nós do ambiente de hospedagem devem ter extensões AVX ativadas.</block>
   <block id="47303824eafa22af5698d5f414ed3e9c" category="list-text">*Worker Nodes*: Pelo menos 3 worker node total, com 4 núcleos de CPU e 12GB GB de RAM cada</block>
   <block id="dfee63492fa418d45012f44e9efcecf3" category="list-text">*Requisitos de cluster do VMware Tanzu Kubernetes Grid*: Ao hospedar o Astra Control Center em um cluster do VMware Tanzu Kubernetes Grid (TKG) ou Tanzu Kubernetes Grid Integrated Edition (TKGI), tenha em mente as seguintes considerações.</block>
-  <block id="1c48088dc1732bdac3e27be1a94c191a" category="inline-link">Documentação do produto do data center VMware NSX-T.</block>
-  <block id="6f2e84a8cc83bea678c051eedf03eda5" category="list-text">O token de arquivo de configuração padrão do VMware TKG e TKGI expira dez horas após a implantação. Se você usa produtos do portfólio Tanzu, precisará gerar um arquivo de configuração de cluster do Kubernetes da Tanzu com um token sem expiração para evitar problemas de conexão entre o Astra Control Center e os clusters de aplicativos gerenciados. Para obter instruções, visite<block ref="8b2a2640d5e94aaf0de3bd3373313f4b" category="inline-link-rx"></block></block>
   <block id="71aeb6f089406bc5a9abfec5efe995cc" category="list-text">Use o<block ref="3b7e746f7178ae60c65fc979bda0c36b" prefix=" " category="inline-code"></block> comando para ver se você já tem um monitor de serviço configurado para aceitar o tráfego de entrada. Se existir um, não deve instalar o MetalLB, porque o monitor de serviço existente substituirá qualquer nova configuração do balanceador de carga.</block>
   <block id="883a74644c0071959dda599b0318b7ca" category="list-text">Desative a aplicação da classe de armazenamento padrão TKG ou TKGI em qualquer cluster de aplicativos que seja gerenciado pelo Astra Control. Você pode fazer isso editando o<block ref="ce7ec6c8eb08d64132a760a081faa0d0" prefix=" " category="inline-code"></block> recurso no cluster do namespace.</block>
   <block id="e4e9cfee47b4a36e70e53160ea57c27e" category="list-text">Esteja ciente dos requisitos específicos do Astra Control Provisioner quando você implantar o Astra Control Center em um ambiente TKG ou TKGI:</block>
@@ -1530,8 +1523,6 @@
   <block id="9b73989307c1975dfa4d5e1581e4afe8" category="paragraph">Os arquivos de aviso fornecem informações sobre direitos autorais de terceiros e licenças usadas no software NetApp.</block>
   <block id="cae4ab898e0de6e692eb3d10b6a95dbf" category="inline-link-macro">Aviso para Astra Control Center</block>
   <block id="a08183fe921264cd79249faa9d9abf93" category="list-text"><block ref="a08183fe921264cd79249faa9d9abf93" category="inline-link-macro-rx"></block></block>
-  <block id="e81b0f8fae224ca0c3d3258b75a989dd" category="section-title">Licença de API Astra Control</block>
-  <block id="f7c79ca7f13fd9da78390d5a97db7042" category="paragraph"><block ref="f7c79ca7f13fd9da78390d5a97db7042" category="inline-link-rx"></block></block>
   <block id="34515f1d88b10d0db0a78eba6c533394" category="summary">Problemas conhecidos identificam problemas que podem impedi-lo de usar esta versão do produto com sucesso.</block>
   <block id="95dc0391ce7b396d7dd5622284e8fc3e" category="doc">Problemas conhecidos</block>
   <block id="825cc355a6b503245e0d84d26f0e16d1" category="paragraph">Os seguintes problemas conhecidos afetam a versão atual:</block>
@@ -1583,7 +1574,6 @@
   <block id="ea2fceff50f4da6547e74c358cea946b" category="list-text"><block ref="e73e27972fe54a303c266b27f12a5b25" category="inline-xref-macro-rx"></block></block>
   <block id="733442372849ffb7318ed29ca9c55aaa" category="section-title">O mesmo cluster não pode ser gerenciado por duas instâncias do Astra Control Center</block>
   <block id="1bca7607e51d744e7281a7c4772adc9f" category="inline-link-macro">desgerenciar o cluster</block>
-  <block id="1f7a30a87f1e03ae9b4e5a75054aea44" category="paragraph">Se você quiser gerenciar um cluster em outra instância do Astra Control Center, primeiro você deve <block ref="db506b8ca3f9d6b67f586ae44373200f" category="inline-link-macro-rx"></block>usar a instância na qual ele é gerenciado antes de gerenciá-lo em outra instância. Depois de remover o cluster do gerenciamento, verifique se o cluster não é gerenciado executando este comando:</block>
   <block id="df968f82e7fe0ad4aa9c7e7fa3f7746b" category="paragraph">Não deve haver pods em execução nesse namespace ou o namespace não deve existir. Se qualquer um deles for verdadeiro, o cluster não será gerenciado.</block>
   <block id="a0874f32a1010f0ad9545fec43505eb8" category="section-title">O Astra Control Center não pode gerenciar dois clusters com nomes idênticos</block>
   <block id="7a74863a3e751df4941db2bd87309f5f" category="paragraph">Se você tentar adicionar um cluster com o mesmo nome de um cluster que já existe, a operação falhará. Esse problema ocorre na maioria das vezes em um ambiente padrão do Kubernetes se você não tiver alterado o nome padrão do cluster nos arquivos de configuração do Kubernetes.</block>
@@ -1646,7 +1636,6 @@
   <block id="0e218bfe2b5ff044cdd9f49b84c26315" category="paragraph">Antes de fazer backup ou clonar aplicativos gerenciados pelo Astra Control Center, verifique as informações do bucket no sistema de gerenciamento ONTAP ou StorageGRID.</block>
   <block id="58d79c3b7603eb5b1b4326c3aa1454a6" category="section-title">O Astra Control Center não valida os detalhes inseridos para o servidor proxy</block>
   <block id="cfefd1cb11182407b9ad42fef18d6118" category="inline-link-macro">introduza os valores corretos</block>
-  <block id="f99f038781fc48aada5865fc36b1d518" category="paragraph">Certifique-se de que você <block ref="18fbb20c2dec7dc2c270711d5671f275" category="inline-link-macro-rx"></block> ao estabelecer uma conexão.</block>
   <block id="52613a0e2a34040faff2fa3713d61414" category="section-title">As conexões existentes com um pod Postgres causam falhas</block>
   <block id="a3e438b957ae4a8b4731d63d2e88365f" category="paragraph">Quando você executa operações nos pods Postgres, você não deve se conetar diretamente dentro do pod para usar o comando psql. O Astra Control requer acesso psql para congelar e descongelar os bancos de dados. Se houver uma conexão pré-existente, o snapshot, o backup ou o clone falhará.</block>
   <block id="1cb08cc65f3cc745b6fb702c0b15365e" category="section-title">A página atividade exibe até 100000 eventos</block>
@@ -1969,9 +1958,7 @@
   <block id="7247d7030b66ad4ed4eaa523ed6676b0" category="doc">[Visualização técnica] Gerencie aplicativos Astra Control usando CRS</block>
   <block id="da13393683a8a904dc50249c70da287d" category="paragraph">Gerencie suas aplicações Astra Control usando os recursos personalizados (CR) do Kubernetes. Estão disponíveis as seguintes opções:</block>
   <block id="fe3d899243edced10a1ad187416682d1" category="inline-link-macro">Definir uma aplicação usando um recurso personalizado do Kubernetes</block>
-  <block id="548367b13fdfb71bd127422bd31f4a23" category="list-text"><block ref="548367b13fdfb71bd127422bd31f4a23" category="inline-link-macro-rx"></block></block>
   <block id="b8e79ddd9fc269248031679199dbd254" category="inline-link-macro">Gerencie um bucket usando um recurso personalizado</block>
-  <block id="627279ce1f2550c02809339fdab89000" category="list-text"><block ref="627279ce1f2550c02809339fdab89000" category="inline-link-macro-rx"></block></block>
   <block id="9d8f2c43275b418d0a8bb43287edc93a" category="summary">Um gancho de execução é um script personalizado que você pode executar antes ou depois de um instantâneo de um aplicativo gerenciado.</block>
   <block id="372ba25517e6092baf2e0abc0ae2ef65" category="doc">Gerenciar ganchos de execução de aplicativos</block>
   <block id="ccd62d676165e34c2e9c6d088c06e70f" category="paragraph">Um gancho de execução é uma ação personalizada que você pode configurar para ser executada em conjunto com uma operação de proteção de dados de um aplicativo gerenciado. Por exemplo, se você tiver um aplicativo de banco de dados, poderá usar um gancho de execução para pausar todas as transações de banco de dados antes de um snapshot e retomar as transações após a conclusão do snapshot. Isso garante snapshots consistentes com aplicativos.</block>
@@ -2212,7 +2199,6 @@
   <block id="c3443c90c9a8c8ae70d0708cc778b7b2" category="list-text">Um ou mais aplicativos instalados no cluster. <block ref="9a14b35f09704dd5c457f47f10cb55d6" category="inline-xref-macro-rx"></block>.</block>
   <block id="f336f8b0ae53675b065c0d6186baab21" category="list-text">Namespaces existentes no cluster do Kubernetes que você adicionou ao Astra Control.</block>
   <block id="6f2886ca9812fade1ff2d6197498a80b" category="inline-link-macro">Recursos do Kubernetes compatíveis</block>
-  <block id="44e843a0117ca07fcd81196eb3d8ccca" category="list-text">(Opcional) Um rótulo do Kubernetes em qualquer <block ref="35cac6ae488aa1ef0053c9b9d6c5461a" category="inline-link-macro-rx"></block>.</block>
   <block id="a24daf3d2d584a2ee6adcd097ffde406" category="inline-link">Consulte a documentação oficial do Kubernetes</block>
   <block id="0de4b069ef42dc2162b352a8d0c79120" category="admonition">Um rótulo é um par de chave/valor que você pode atribuir a objetos Kubernetes para identificação. Os rótulos facilitam a ordenação, organização e localização de objetos do Kubernetes. Para saber mais sobre rótulos do Kubernetes,<block ref="52425cbbdd8e653f3efe28de3861375f" category="inline-link-rx"></block>.</block>
   <block id="a7d4d20683a8972d07170d4ce5f3329b" category="inline-link-macro">gerenciamento de namespaces padrão e do sistema</block>
@@ -2387,7 +2373,6 @@
   <block id="00d6e8bbad1611d4dccac7fead48f1ec" category="section-title">Edite um balde</block>
   <block id="049863f89bf64849544e3290929262b3" category="paragraph">Você pode alterar as informações de credenciais de acesso para um bucket e alterar se um bucket selecionado é o bucket padrão.</block>
   <block id="5dd03e8d039863e563e049be198c3fd3" category="inline-link-macro">Notas de versão</block>
-  <block id="9d51fe0409675ba8d719678581de46d5" category="admonition">Quando você adiciona um bucket, selecione o provedor de bucket correto e forneça as credenciais certas para esse provedor. Por exemplo, a IU aceita o NetApp ONTAP S3 como o tipo e aceita credenciais StorageGRID; no entanto, isso fará com que todos os backups e restaurações futuros de aplicativos que usam esse bucket falhem. Consulte <block ref="6635cf1f59c228488d619bdcf0b3bc55" category="inline-link-macro-rx"></block>.</block>
   <block id="9c20c9fb8510a54316336dea236e5317" category="list-text">Na navegação à esquerda, selecione *Buckets*.</block>
   <block id="e30e39b95a482f5610b5d2f5cc3088bb" category="list-text">No menu da coluna *ações*, selecione *Editar*.</block>
   <block id="a1528454842cc7ec985b647f82dba9ab" category="list-text">Altere qualquer informação que não seja o tipo de balde.</block>
@@ -2437,7 +2422,6 @@
   <block id="d1b4714eb6d54919b20d4d6f82d1acb4" category="list-text">*Name*: _(obrigatório se valueFromSecret for usado)_ Nome do segredo contendo o valor para este campo. Deve estar no mesmo namespace.</block>
   <block id="9c20f9a97f5024f7f0cbeebb01127512" category="list-text">*spec.providerType*: _(obrigatório)_ determina o que fornece o backup; por exemplo, o NetApp ONTAP S3 ou o Microsoft Azure.</block>
   <block id="a7f829a367be9439add4237b61a50388" category="list-text">Depois de preencher o<block ref="056c513f9078872b92d07c3cc704b909" prefix=" " category="inline-code"></block> ficheiro com os valores corretos, aplique o CR:</block>
-  <block id="70c54cfcee3c9263e59ee7de13eaba8a" category="admonition">Quando você adiciona um balde, o Astra Control marca um balde com o indicador de balde padrão. O primeiro bucket que você criar se torna o bucket padrão. À medida que você adiciona buckets, você pode decidir mais tarde <block ref="f83337d9020c8fbb1074e1310043d277" category="inline-link-macro-rx"></block>.</block>
   <block id="30c08f9dd052f3fd7ecaf2ee02014f26" category="summary">Adicione e remova as credenciais do provedor de nuvem da sua conta a qualquer momento. O Astra usa essas credenciais para provisionar recursos em seu nome.</block>
   <block id="d031c428f3040bac9819fa764663397d" category="doc">Adicione e remova credenciais</block>
   <block id="3124787bbc60291c35f7e6e0907a1275" category="paragraph">Adicione e remova credenciais de fornecedores de nuvem privada locais, como o ONTAP S3, clusters do Kubernetes gerenciados com o OpenShift ou clusters do Kubernetes não gerenciados da sua conta a qualquer momento. O Astra Control Center usa essas credenciais para descobrir clusters de Kubernetes e as aplicações nos clusters e para provisionar recursos em seu nome.</block>
@@ -3674,4 +3658,17 @@
   <block id="ee598b6d30a6fff85e10ec4aa00fb486" category="list-text">*Astra Control*: O Astra Control é o serviço de gerenciamento centralizado para todos os clusters gerenciados, fornecendo cargas de trabalho orquestradas para proteção e mobilidade de aplicativos locais, bem como os seguintes recursos:</block>
   <block id="301a1bce6ec5e89d3e225cc1c7d88bb6" category="list-text">Visão combinada de vários clusters</block>
   <block id="00b221fbcaad3eecdab529046865c432" category="paragraph">O Astra Control está disponível em um único modelo de implantação.</block>
+  <block id="c30252f2d0066b5068c0018598caa179" category="list-text"><block ref="9dd8c260676cdbe799894b1bfaa380f3" category="inline-link-rx"></block>.</block>
+  <block id="b0fd08b16e7b7c94a3bf8b7445bca6fe" category="list-text">Para clusters GKE, Astra Control Service usa <block ref="8665cd3a57554cfca2cb7457cb655a04" category="inline-link-rx"></block> ou Google Persistent Disks como backend de armazenamento para seus volumes persistentes.</block>
+  <block id="319c3fec493c64a65148bf0f94ddf14a" category="list-text">Para clusters AKS, Astra Control Service usa <block ref="c8cef11c8f82391ff314149403153759" category="inline-link-rx"></block> ou discos gerenciados pelo Azure como backend de armazenamento para seus volumes persistentes.</block>
+  <block id="1e2b1bc63405a140a4387b2e8739eb16" category="list-text"><block ref="2e95ec519b9fe9bcf5a4be85aaffa8d6" category="inline-link-macro-rx"></block>.</block>
+  <block id="7493ebd270b68257f24f8ed58dae67e0" category="list-text"><block ref="7493ebd270b68257f24f8ed58dae67e0" category="inline-link-rx"></block></block>
+  <block id="ddeb3e05aed45d50e7f48754751c93b3" category="inline-link">Documentação do produto VMware NSX-T Data Center</block>
+  <block id="639460c11b1a38b37de388e6094e4e9e" category="list-text">O token do arquivo de configuração padrão do VMware TKG e TKGi expira dez horas após a implantação. Se você usa produtos do portfólio Tanzu, é necessário gerar um arquivo de configuração do Tanzu Kubernetes Cluster com um token que não expira para evitar problemas de conexão entre Astra Control Center e os clusters de aplicativos gerenciados. Para obter instruções, visite <block ref="38e49605ed0ee8802727916ae2015530" category="inline-link-rx"></block>.</block>
+  <block id="c090e26e12d996a63ebdc9443b1a24bd" category="paragraph">Se você deseja gerenciar um cluster em outra instância do Astra Control Center, primeiro <block ref="10a3ec7ef23f0eeeb87bbd373b7d1bae" category="inline-link-macro-rx"></block> remova-o da instância na qual ele está gerenciado antes de gerenciá-lo em outra instância. Após remover o cluster do gerenciamento, verifique se o cluster está desgerenciado executando este comando:</block>
+  <block id="9baf06bed4e0958aca8a391da521f183" category="paragraph">Certifique-se de <block ref="f332842401aa508212d4f5a688ca86ce" category="inline-link-macro-rx"></block> ao estabelecer uma conexão.</block>
+  <block id="c58281350ba073d90fe63e63b3f80e34" category="list-text"><block ref="c58281350ba073d90fe63e63b3f80e34" category="inline-link-macro-rx"></block></block>
+  <block id="e7b4bce844330e3c5aefb46f8d12db1d" category="list-text"><block ref="e7b4bce844330e3c5aefb46f8d12db1d" category="inline-link-macro-rx"></block></block>
+  <block id="398950e2648d28eed29b2b7bd0952ad5" category="list-text">(Opcional) Um rótulo do Kubernetes em qualquer <block ref="3b1c56fea11b428a3060d7568229534a" category="inline-link-macro-rx"></block>.</block>
+  <block id="eef3fedf7d4e668662e435160c3c5c87" category="admonition">Ao adicionar um bucket, selecione o provedor de bucket correto e forneça as credenciais adequadas para esse provedor. Por exemplo, a interface do usuário aceita NetApp ONTAP S3 como tipo e aceita credenciais do StorageGRID; no entanto, isso fará com que todos os futuros backups e restaurações de aplicativos usando esse bucket falhem. Consulte o <block ref="2fa2057c95f20298aba02cf1be9ec7d5" category="inline-link-macro-rx"></block>.</block>
 </blocks>

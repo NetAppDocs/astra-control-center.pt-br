@@ -16,6 +16,7 @@ Um gancho de execução é uma ação personalizada que você pode configurar pa
 
 
 
+[[types-of-execution-hooks]]
 == Tipos de ganchos de execução
 
 O Astra Control Center dá suporte aos seguintes tipos de ganchos de execução, com base em quando eles podem ser executados:
@@ -30,6 +31,7 @@ O Astra Control Center dá suporte aos seguintes tipos de ganchos de execução,
 
 
 
+[[execution-hook-filters]]
 == Filtros de gancho de execução
 
 Quando você adiciona ou edita um gancho de execução a um aplicativo, você pode adicionar filtros a um gancho de execução para gerenciar quais contentores o gancho corresponderá. Os filtros são úteis para aplicativos que usam a mesma imagem de contentor em todos os contentores, mas podem usar cada imagem para um propósito diferente (como o Elasticsearch). Os filtros permitem criar cenários onde os ganchos de execução são executados em alguns, mas não necessariamente em todos os contentores idênticos. Se você criar vários filtros para um único gancho de execução, eles serão combinados com um operador LÓGICO E. Você pode ter até 10 filtros ativos por gancho de execução.
@@ -41,6 +43,7 @@ NOTE: Se você adicionar um filtro de namespace a um gancho de execução que é
 
 
 
+[[important-notes-about-custom-execution-hooks]]
 == Notas importantes sobre ganchos de execução personalizados
 
 Considere o seguinte ao Planejar ganchos de execução para seus aplicativos.
@@ -74,6 +77,7 @@ NOTE: Se você tiver executado ganchos pós-restauração com Astra Control Cent
 
 
 
+[[order-of-execution]]
 === Ordem de execução
 
 Quando uma operação de proteção de dados é executada, os eventos de gancho de execução ocorrem na seguinte ordem:
@@ -99,6 +103,7 @@ NOTE: Você deve sempre testar seus scripts de gancho de execução antes de hab
 
 
 
+[[determine-whether-a-hook-will-run]]
 === Determine se um gancho vai funcionar
 
 Use a tabela a seguir para ajudar a determinar se um gancho de execução personalizado será executado para seu aplicativo.
@@ -161,12 +166,14 @@ Se você iniciar, mas cancelar um backup que inclua um snapshot e houver ganchos
 |===
 
 
+[[execution-hook-examples]]
 == Exemplos de gancho de execução
 
 Visite o https://github.com/NetApp/Verda["Projeto NetApp Verda GitHub"] para baixar ganchos de execução reais para aplicativos populares, como Apache Cassandra e Elasticsearch. Você também pode ver exemplos e obter ideias para estruturar seus próprios ganchos de execução personalizados.
 
 
 
+[[enable-the-execution-hooks-feature]]
 == Ative o recurso ganchos de execução
 
 Se você é um usuário proprietário ou administrador, você pode ativar o recurso ganchos de execução. Quando você ativa o recurso, todos os usuários definidos nesta conta do Astra Control podem usar ganchos de execução e exibir ganchos de execução e scripts de gancho existentes.
@@ -186,6 +193,7 @@ A guia *Account* > *Feature settings* é exibida.
 
 
 
+[[disable-the-execution-hooks-feature]]
 == Desative o recurso ganchos de execução
 
 Se você é um usuário proprietário ou administrador, você pode desativar o recurso ganchos de execução para todos os usuários definidos nesta conta Astra Control. Você deve excluir todos os ganchos de execução existentes antes de desativar o recurso ganchos de execução. <<Excluir um gancho de execução>>Consulte para obter instruções sobre como excluir um gancho de execução existente.
@@ -202,6 +210,7 @@ Se você é um usuário proprietário ou administrador, você pode desativar o r
 
 
 
+[[view-existing-execution-hooks]]
 == Ver ganchos de execução existentes
 
 Você pode exibir ganchos de execução personalizados existentes para um aplicativo.
@@ -216,6 +225,7 @@ Pode visualizar todos os ganchos de execução ativados ou desativados na lista 
 
 
 
+[[view-existing-scripts]]
 == Exibir scripts existentes
 
 Você pode visualizar os scripts carregados existentes. Você também pode ver quais scripts estão em uso, e quais ganchos estão usando, nesta página.
@@ -230,6 +240,7 @@ Você pode ver uma lista de scripts carregados existentes nesta página. A colun
 
 
 
+[[add-a-script]]
 == Adicione um script
 
 Cada gancho de execução deve usar um script para executar ações. Você pode adicionar um ou mais scripts que os ganchos de execução podem referenciar. Muitos ganchos de execução podem referenciar o mesmo script; isso permite que você atualize muitos ganchos de execução alterando apenas um script.
@@ -268,6 +279,7 @@ O novo script aparece na lista na guia *Scripts*.
 
 
 
+[[delete-a-script]]
 == Excluir um script
 
 Você pode remover um script do sistema se ele não for mais necessário e não for usado por nenhum hooks de execução.
@@ -284,6 +296,7 @@ NOTE: Se o script estiver associado a um ou mais ganchos de execução, a ação
 
 
 
+[[create-a-custom-execution-hook]]
 == Crie um gancho de execução personalizado
 
 Você pode criar um gancho de execução personalizado para um aplicativo e adicioná-lo ao Astra Control. <<Exemplos de gancho de execução>>Consulte para obter exemplos de gancho. Você precisa ter permissões de proprietário, administrador ou membro para criar ganchos de execução.
@@ -361,6 +374,7 @@ Isso instrui o gancho de execução a usar este script.
 
 
 
+[[check-the-state-of-an-execution-hook]]
 == Verifique o estado de um gancho de execução
 
 Depois que uma operação de snapshot, backup ou restauração terminar de ser executada, você pode verificar o estado dos ganchos de execução executados como parte da operação. Você pode usar essas informações de status para determinar se deseja manter o gancho de execução, modificá-lo ou excluí-lo.
@@ -376,6 +390,7 @@ O estado *Hook* mostra o status da execução do hook run após a conclusão da 
 
 
 
+[[view-script-usage]]
 == Exibir o uso do script
 
 Você pode ver quais ganchos de execução usam um script específico na IU da Web do Astra Control.
@@ -394,6 +409,7 @@ Uma lista mais detalhada é exibida, com os nomes de ganchos que estão usando o
 
 
 
+[[edit-an-execution-hook]]
 == Edite um gancho de execução
 
 Você pode editar um gancho de execução se quiser alterar seus atributos, filtros ou o script que ele usa. Você precisa ter permissões de proprietário, administrador ou membro para editar ganchos de execução.
@@ -409,6 +425,7 @@ Você pode editar um gancho de execução se quiser alterar seus atributos, filt
 
 
 
+[[disable-an-execution-hook]]
 == Desativar um gancho de execução
 
 Você pode desativar um gancho de execução se quiser impedir temporariamente que ele seja executado antes ou depois de um instantâneo de um aplicativo. Você precisa ter permissões de proprietário, Administrador ou Membro para desativar os ganchos de execução.
@@ -422,6 +439,7 @@ Você pode desativar um gancho de execução se quiser impedir temporariamente q
 
 
 
+[[delete-an-execution-hook]]
 == Excluir um gancho de execução
 
 Você pode remover um gancho de execução inteiramente se você não precisar mais dele. Você precisa ter permissões de proprietário, administrador ou membro para excluir ganchos de execução.
@@ -437,6 +455,7 @@ Você pode remover um gancho de execução inteiramente se você não precisar m
 
 
 
+[[for-more-information]]
 == Para mais informações
 
 * https://github.com/NetApp/Verda["Projeto NetApp Verda GitHub"]

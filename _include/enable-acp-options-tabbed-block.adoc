@@ -6,7 +6,7 @@
 ====
 .Operador do Astra Trident
 --
-. https://docs.netapp.com/us-en/trident/trident-get-started/kubernetes-deploy-operator.html#step-1-download-the-trident-installer-package["Baixe o instalador do Astra Trident e extraia-o."^].
+. https://docs.netapp.com/us-en/trident/trident-install/kubernetes-deploy-operator.html#step-1-download-the-trident-installer-package["Baixe o instalador do Astra Trident e extraia-o."^].
 . Siga estas etapas se você ainda não tiver instalado o Astra Trident ou se tiver removido o operador da sua implantação original do Astra Trident:
 +
 .. Crie o CRD:

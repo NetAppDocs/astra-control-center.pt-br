@@ -56,12 +56,13 @@ NOTE: Os buckets do S3 no Astra Control Center não relatam a capacidade dispon�
 
 
 
+[[edit-a-bucket]]
 == Edite um balde
 
 Você pode alterar as informações de credenciais de acesso para um bucket e alterar se um bucket selecionado é o bucket padrão.
 
 
-NOTE: Quando você adiciona um bucket, selecione o provedor de bucket correto e forneça as credenciais certas para esse provedor. Por exemplo, a IU aceita o NetApp ONTAP S3 como o tipo e aceita credenciais StorageGRID; no entanto, isso fará com que todos os backups e restaurações futuros de aplicativos que usam esse bucket falhem. Consulte link:../release-notes/known-issues.html#selecting-a-bucket-provider-type-with-credentials-for-another-type-causes-data-protection-failures["Notas de versão"].
+NOTE: Ao adicionar um bucket, selecione o provedor de bucket correto e forneça as credenciais adequadas para esse provedor. Por exemplo, a interface do usuário aceita NetApp ONTAP S3 como tipo e aceita credenciais do StorageGRID; no entanto, isso fará com que todos os futuros backups e restaurações de aplicativos usando esse bucket falhem. Consulte o link:../release-notes/known-issues.html["Notas de versão"].
 
 .Passos
 . Na navegação à esquerda, selecione *Buckets*.
@@ -76,6 +77,7 @@ TIP: Não é possível modificar o tipo de bucket.
 
 
 
+[[set-the-default-bucket]]
 == Defina o intervalo predefinido
 
 Quando você executa um clone nos clusters, o Astra Control requer um bucket padrão. Siga estas etapas para definir um bucket padrão para todos os clusters.
@@ -90,12 +92,14 @@ Quando você executa um clone nos clusters, o Astra Control requer um bucket pad
 
 
 
+[[rotate-or-remove-bucket-credentials]]
 == Gire ou remova as credenciais do bucket
 
 O Astra Control usa credenciais de bucket para obter acesso e fornecer chaves secretas para um bucket do S3, para que o Astra Control Center possa se comunicar com o bucket.
 
 
 
+[[rotate-bucket-credentials]]
 === Gire as credenciais do bucket
 
 Se você girar credenciais, gire-as durante uma janela de manutenção quando nenhum backup estiver em andamento (agendado ou sob demanda).
@@ -109,6 +113,7 @@ Se você girar credenciais, gire-as durante uma janela de manutenção quando ne
 
 
 
+[[remove-bucket-credentials]]
 === Remova as credenciais do bucket
 
 Você só deve remover credenciais de bucket se novas credenciais tiverem sido aplicadas a um bucket ou se o bucket não for mais usado ativamente.
@@ -123,6 +128,7 @@ Para obter instruções sobre como remover credenciais do S3 usando a API Astra 
 
 
 
+[[remove-a-bucket]]
 == Retire um balde
 
 Você pode remover um balde que não está mais em uso ou não está saudável. Você pode querer fazer isso para manter a configuração do armazenamento de objetos simples e atualizada.
@@ -157,6 +163,7 @@ NOTE: O Astra Control garante primeiro que não haja políticas de agendamento u
 
 
 
+[[tech-preview-manage-a-bucket-using-a-custom-resource]]
 == [Tech Preview] Gerencie um bucket usando um recurso personalizado
 
 Você pode adicionar um bucket usando um recurso personalizado Astra Control (CR) no cluster de aplicações. Adicionar fornecedores de bucket do armazenamento de objetos é essencial para fazer backup das aplicações e do storage persistente ou clonar aplicações entre clusters. O Astra Control armazena os backups ou clones nos buckets do armazenamento de objetos que você define. Se você estiver usando o método de recurso personalizado, a funcionalidade de snapshots de aplicativo requer um intervalo.
@@ -239,12 +246,13 @@ kubectl apply -f astra-appvault.yaml -n astra-connector
 ----
 +
 
-NOTE: Quando você adiciona um balde, o Astra Control marca um balde com o indicador de balde padrão. O primeiro bucket que você criar se torna o bucket padrão. À medida que você adiciona buckets, você pode decidir mais tarde link:../use/manage-buckets.html#set-the-default-bucket["defina outro intervalo padrão"^].
+NOTE: Quando você adiciona um balde, o Astra Control marca um balde com o indicador de balde padrão. O primeiro bucket que você criar se torna o bucket padrão. À medida que você adiciona buckets, você pode decidir mais tarde link:../use/manage-buckets.html#set-the-default-bucket["defina outro intervalo padrão"].
 
 
 
 
 
+[[find-more-information]]
 == Encontre mais informações
 
 * https://docs.netapp.com/us-en/astra-automation["Use a API Astra Control"^]

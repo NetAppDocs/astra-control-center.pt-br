@@ -21,6 +21,7 @@ IMPORTANT: O Astra Control Center usa o atributo de login do usuário, configura
 
 
 
+[[add-a-certificate-for-ldaps-authentication]]
 == Adicione um certificado para autenticação LDAPS
 
 Adicione o certificado TLS privado para o servidor LDAP para que o Astra Control Center possa se autenticar com o servidor LDAP quando você usa uma conexão LDAPS. Você só precisa fazer isso uma vez, ou quando o certificado que você instalou expirar.
@@ -36,6 +37,7 @@ Adicione o certificado TLS privado para o servidor LDAP para que o Astra Control
 
 
 
+[[enable-remote-authentication]]
 == Ativar autenticação remota
 
 Você pode ativar a autenticação LDAP e configurar a conexão entre o Astra Control e o servidor LDAP remoto.
@@ -72,6 +74,7 @@ O status do painel *Autenticação remota* é movido para *pendente* e depois pa
 
 
 
+[[disable-remote-authentication]]
 == Desativar a autenticação remota
 
 Pode desativar temporariamente uma ligação ativa ao servidor LDAP.
@@ -90,6 +93,7 @@ O status do painel *Autenticação remota* é movido para *Desativado*. Todas as
 
 
 
+[[edit-remote-authentication-settings]]
 == Editar definições de autenticação remota
 
 Se tiver desativado a ligação ao servidor LDAP ou se o painel *Autenticação remota* estiver no estado "erro de ligação", pode editar as definições de configuração.
@@ -106,6 +110,7 @@ NOTE: Não é possível editar o URL ou o endereço IP do servidor LDAP quando o
 
 
 
+[[disconnect-remote-authentication]]
 == Desconete a autenticação remota
 
 Você pode se desconetar de um servidor LDAP e remover as configurações do Astra Control.

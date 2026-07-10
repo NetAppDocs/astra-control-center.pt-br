@@ -16,6 +16,7 @@ O Centro de Controle Astra é compatível com NetApp ONTAP e Longhorn como back-
 
 
 
+[[overview]]
 == Visão geral
 
 O Astra Control Center é compatível com o seguinte:
@@ -29,6 +30,7 @@ NOTE: As classes de storage devem estar https://docs.netapp.com/us-en/trident/tr
 
 
 
+[[storage-classes]]
 == Classes de armazenamento
 
 Quando você adiciona um cluster ao Astra Control Center, será solicitado que você selecione uma classe de storage configurada anteriormente nesse cluster como a classe de storage padrão. Essa classe de armazenamento será usada quando nenhuma classe de armazenamento for especificada em uma reivindicação de volume persistente (PVC). A classe de armazenamento padrão pode ser alterada a qualquer momento no Astra Control Center e qualquer classe de armazenamento pode ser usada a qualquer momento especificando o nome da classe de armazenamento dentro do gráfico PVC ou Helm. Certifique-se de que você tenha apenas uma única classe de storage padrão definida para o cluster do Kubernetes.

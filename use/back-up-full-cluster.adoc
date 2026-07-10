@@ -16,6 +16,7 @@ Você pode criar um backup automático e agendado de qualquer um ou todos os nam
 
 
 
+[[how-it-works]]
 == Como funciona
 
 Quando você configura e instala o fluxo de trabalho de backup de cluster completo, uma tarefa cron é executada periodicamente e protege qualquer namespace que ainda não seja gerenciado, criando automaticamente políticas de proteção com base nos horários escolhidos durante a instalação.
@@ -32,6 +33,7 @@ Para obter mais granularidade, você pode usar o fluxo de trabalho baseado em r�
 
 
 
+[[create-a-scheduled-backup-of-all-namespaces]]
 == Crie um backup programado de todos os namespaces
 
 Você pode criar um backup agendado de todos os namespaces em um cluster usando o fluxo de trabalho completo de backup do cluster.
@@ -48,6 +50,7 @@ Você pode criar um backup agendado de todos os namespaces em um cluster usando 
 
 
 
+[[create-a-scheduled-backup-of-specific-namespaces]]
 == Crie um backup programado de namespaces específicos
 
 Você pode criar um backup agendado de namespaces específicos por seus rótulos usando o fluxo de trabalho de backup baseado em rótulos.

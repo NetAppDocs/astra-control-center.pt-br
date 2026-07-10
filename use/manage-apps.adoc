@@ -18,6 +18,7 @@ Você pode definir e gerenciar aplicativos que incluem recursos de storage com p
 
 
 
+[[application-management-requirements]]
 == Requisitos de gerenciamento de aplicativos
 
 O Astra Control tem os seguintes requisitos de gerenciamento de aplicações:
@@ -61,6 +62,7 @@ O Astra Control tem os seguintes requisitos de gerenciamento de aplicações:
 
 
 
+[[supported-app-installation-methods]]
 == Métodos de instalação de aplicativos suportados
 
 O Astra Control é compatível com os seguintes métodos de instalação de aplicações:
@@ -93,12 +95,14 @@ O Astra Control pode não ser capaz de clonar um operador projetado com uma arqu
 
 
 
+[[install-apps-on-your-cluster]]
 == Instale aplicativos no cluster
 
 Depois de link:../get-started/add-cluster.html["adicionado o cluster"] acessar o Astra Control, você poderá instalar aplicações ou gerenciar aplicações existentes no cluster. Qualquer aplicativo com escopo para um ou mais namespaces pode ser gerenciado.
 
 
 
+[[define-apps]]
 == Definir aplicações
 
 Depois que o Astra Control descobrir namespaces em seus clusters, você pode definir as aplicações que deseja gerenciar. Você pode escolher para <<Definir recursos para gerenciar como um aplicativo,gerencie um aplicativo abrangendo um ou mais namespaces>> ou <<Defina um namespace para gerenciar como um aplicativo,gerencie um namespace inteiro como uma única aplicação>>. Tudo se resume ao nível de granularidade de que você precisa para operações de proteção de dados.
@@ -112,7 +116,7 @@ TIP: Como exemplo, você pode querer definir uma política de backup para "maria
 * Um cluster de Kubernetes adicionado ao Astra Control.
 * Um ou mais aplicativos instalados no cluster. <<Métodos de instalação de aplicativos suportados,Leia mais sobre os métodos de instalação de aplicativos suportados>>.
 * Namespaces existentes no cluster do Kubernetes que você adicionou ao Astra Control.
-* (Opcional) Um rótulo do Kubernetes em qualquer link:../use/manage-apps.html#app-management-requirements["Recursos do Kubernetes compatíveis"].
+* (Opcional) Um rótulo do Kubernetes em qualquer link:../use/manage-apps.html#application-management-requirements["Recursos do Kubernetes compatíveis"].
 +
 
 TIP: Um rótulo é um par de chave/valor que você pode atribuir a objetos Kubernetes para identificação. Os rótulos facilitam a ordenação, organização e localização de objetos do Kubernetes. Para saber mais sobre rótulos do Kubernetes, https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/["Consulte a documentação oficial do Kubernetes"^].
@@ -133,6 +137,7 @@ TIP: Um rótulo é um par de chave/valor que você pode atribuir a objetos Kuber
 
 
 
+[[define-resources-to-manage-as-an-app]]
 === Definir recursos para gerenciar como um aplicativo
 
 Você pode especificar o link:../concepts/app-management.html["Recursos do Kubernetes que compõem uma aplicação"] que deseja gerenciar com o Astra Control. A definição de um aplicativo permite agrupar elementos do cluster do Kubernetes em um único aplicativo. Essa coleção de recursos do Kubernetes é organizada por critérios de seleção de namespace e rótulo.
@@ -221,6 +226,7 @@ Para ver os recursos adicionados a este aplicativo, selecione a guia *recursos*.
 
 
 
+[[define-a-namespace-to-manage-as-an-app]]
 === Defina um namespace para gerenciar como um aplicativo
 
 É possível adicionar todos os recursos do Kubernetes em um namespace ao gerenciamento do Astra Control definindo os recursos desse namespace como uma aplicação. Esse método é preferível à definição de aplicativos individualmente se você pretende gerenciar e proteger todos os recursos em um namespace específico de uma maneira semelhante e em intervalos comuns.
@@ -243,6 +249,7 @@ Após a conclusão do processo, os aplicativos associados ao namespace aparecem 
 
 
 
+[[tech-preview-define-an-application-using-a-kubernetes-custom-resource]]
 === [Visualização técnica] defina uma aplicação usando um recurso personalizado do Kubernetes
 
 Você pode especificar os recursos do Kubernetes que deseja gerenciar com o Astra Control definindo-os como uma aplicação usando um recurso personalizado (CR). Você pode adicionar recursos com escopo de cluster se quiser gerenciar esses recursos individualmente ou todos os recursos do Kubernetes em um namespace se, por exemplo, você pretende gerenciar e proteger todos os recursos em um namespace específico de maneira semelhante e em intervalos comuns.
@@ -343,6 +350,7 @@ kubectl apply -f astra_mysql_app.yaml -n astra-connector
 
 
 
+[[what-about-system-namespaces]]
 == E quanto aos namespaces do sistema?
 
 O Astra Control também descobre namespaces do sistema em um cluster do Kubernetes. Nós não mostramos esses namespaces do sistema por padrão, porque é raro que você precise fazer backup dos recursos do aplicativo do sistema.
@@ -356,6 +364,7 @@ TIP: O Astra Control Center não é mostrado por padrão como uma aplicação qu
 
 
 
+[[example-separate-protection-policy-for-different-releases]]
 == Exemplo: Política de proteção separada para versões diferentes
 
 Neste exemplo, a equipe de devops está gerenciando uma implantação de versão "canário". O cluster da equipe tem três pods executando o nginx. Dois dos pods são dedicados à liberação estável. O terceiro pod é para o lançamento canário.
@@ -368,6 +377,7 @@ Para evitar possíveis conflitos de dados, o administrador criará dois aplicati
 
 
 
+[[find-more-information]]
 == Encontre mais informações
 
 * https://docs.netapp.com/us-en/astra-automation["Use a API Astra Control"^]

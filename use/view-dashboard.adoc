@@ -18,6 +18,7 @@ Estes não são apenas números estáticos ou status - você pode detalhar de ca
 
 
 
+[[applications-tile]]
 == Mosaico de aplicações
 
 O bloco *Applications* ajuda você a identificar o seguinte:
@@ -33,12 +34,14 @@ Idealmente, esse número seria zero porque você gerenciaria ou ignoraria aplica
 
 
 
+[[clusters-tile]]
 == Blocos de clusters
 
 O bloco *clusters* fornece detalhes semelhantes sobre a integridade dos clusters que você está gerenciando usando o Astra Control Center, e você pode detalhar para obter mais detalhes da mesma forma que pode com um aplicativo.
 
 
 
+[[storage-backends-tile]]
 == Azulejo dos backends de armazenamento
 
 O bloco *Storage Backends* fornece informações para ajudá-lo a identificar a integridade dos backends de armazenamento, incluindo:

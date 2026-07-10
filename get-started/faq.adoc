@@ -16,12 +16,14 @@ Este FAQ pode ajudar se você está apenas procurando uma resposta rápida para 
 
 
 
+[[overview]]
 == Visão geral
 
 As seções a seguir fornecem respostas a algumas perguntas adicionais que você pode encontrar ao usar o Astra Control Center. Para esclarecimentos adicionais, entre em Contato com o NetApp.com
 
 
 
+[[access-to-astra-control-center]]
 == Acesso ao Astra Control Center
 
 .Qual é a URL do Astra Control?
@@ -31,6 +33,7 @@ Para o URL, em um navegador, digite o nome de domínio totalmente qualificado (F
 
 
 
+[[licensing]]
 == Licenciamento
 
 .Estou usando uma licença de avaliação. Como faço para mudar para a licença completa?
@@ -49,6 +52,7 @@ Sim, você pode testar a funcionalidade de gerenciamento de aplicativos com uma 
 
 
 
+[[registering-kubernetes-clusters]]
 == Registrando clusters do Kubernetes
 
 .Eu preciso adicionar nós de trabalho ao meu cluster do Kubernetes depois de adicionar ao Astra Control. O que devo fazer?
@@ -56,7 +60,7 @@ Novos nós de trabalho podem ser adicionados a pools existentes. Eles serão des
 
 .Como faço para desgerenciar corretamente um cluster?
 . link:../use/unmanage.html["Desgerenciar as aplicações do Astra Control"].
-. link:../use/unmanage.html#stop-managing-compute["Desgerenciar o cluster a partir do Astra Control"].
+. link:../use/unmanage.html#unmanage-a-cluster["Desgerenciar o cluster a partir do Astra Control"].
 
 
 .O que acontece com minhas aplicações e dados após a remoção do cluster Kubernetes do Astra Control?
@@ -70,6 +74,7 @@ Quando você desgerencia um cluster do Astra Control Center, o Astra Control Pro
 
 
 
+[[managing-applications]]
 == Gerenciamento de aplicações
 
 .O Astra Control pode implantar uma aplicação?
@@ -89,6 +94,7 @@ Não, a integridade dos pods não afeta o gerenciamento de aplicativos.
 
 
 
+[[data-management-operations]]
 == Operações de gerenciamento de dados
 
 .Meu aplicativo usa vários PVS. O Astra Control fará snapshots e backups desses PVS?
@@ -99,6 +105,7 @@ Não. Os snapshots e backups feitos pelo Astra Control só podem ser gerenciados
 
 
 
+[[astra-control-provisioner]]
 == Previsão do Astra Control
 
 .Como os recursos de provisionamento de storage do Astra Control Provisioner são diferentes dos do Astra Trident?
@@ -116,6 +123,7 @@ Sim, você pode fazer upgrade para o Astra Control Provisioner e usar suas funci
 .Como posso fazer a transição de ser um usuário já existente do Astra Trident para o Astra Control para usar o recurso avançado de provisionamento e gerenciamento de storage?
 Se você já é um usuário do Astra Trident (incluindo usuários do Astra Trident na nuvem pública), você precisa adquirir uma licença do Astra Control primeiro. Depois disso, você poderá fazer o download do pacote Astra Control Provisioner, atualizar o Astra Trident e link:../get-started/enable-acp.html["Ative a funcionalidade Astra Control Provisioner"]o .
 
+[[running-acp-check]]
 .Como saber se o Astra Control Provisioner substituiu o Astra Trident no meu cluster?
 Depois que o Astra Control Provisioner for instalado, o cluster de host na IU do Astra Control mostrará um `ACP version` número de versão instalada em vez `Trident version` de campo e atual.
 

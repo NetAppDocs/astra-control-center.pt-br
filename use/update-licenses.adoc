@@ -28,6 +28,7 @@ A página *Account* > *Licenses* exibe as informações da licença, data de val
 
 
 
+[[for-more-information]]
 == Para mais informações
 
 * link:../concepts/licensing.html["Licenciamento do Astra Control Center"]

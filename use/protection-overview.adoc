@@ -18,12 +18,14 @@ Além disso, é possível replicar aplicações para um cluster remoto para se p
 
 
 
+[[app-protection-workflow]]
 == Fluxo de trabalho de proteção de aplicações
 
 Você pode usar o fluxo de trabalho de exemplo a seguir para começar a proteger seus aplicativos.
 
 
 
+[[imagehttpsraw-githubusercontent-comnetappdocscommonmainmedianumber-1-pngone-protect-all-apps]]
 === image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Um"] Proteja todas as aplicações
 
 [role="quick-margin-para"]
@@ -31,6 +33,7 @@ Para garantir que seus aplicativos estejam protegidos imediatamentelink:protect-
 
 
 
+[[imagehttpsraw-githubusercontent-comnetappdocscommonmainmedianumber-2-pngtwo-configure-a-protection-policy-for-each-app]]
 === image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Dois"] Configure uma política de proteção para cada aplicativo
 
 [role="quick-margin-para"]
@@ -38,6 +41,7 @@ Para automatizar backups e snapshots futuros, link:protect-apps.html#configure-a
 
 
 
+[[imagehttpsraw-githubusercontent-comnetappdocscommonmainmedianumber-3-pngthree-adjust-the-protection-policies]]
 === image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Três"] Ajustar as políticas de proteção
 
 [role="quick-margin-para"]
@@ -45,6 +49,7 @@ Para automatizar backups e snapshots futuros, link:protect-apps.html#configure-a
 
 
 
+[[imagehttpsraw-githubusercontent-comnetappdocscommonmainmedianumber-4-pngfour-replicate-apps-to-a-remote-cluster]]
 === image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Quatro"] Replique aplicações para um cluster remoto
 
 [role="quick-margin-para"]
@@ -52,6 +57,7 @@ link:replicate_snapmirror.html["Replicar aplicações"] Para um cluster remoto u
 
 
 
+[[imagehttpsraw-githubusercontent-comnetappdocscommonmainmedianumber-5-pngfive-in-case-of-a-disaster-restore-your-apps-with-the-latest-backup-or-replication-to-remote-system]]
 === image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png["Cinco"] Em caso de desastre, restaure seus aplicativos com o backup ou replicação mais recente para o sistema remoto
 
 [role="quick-margin-para"]

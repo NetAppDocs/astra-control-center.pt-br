@@ -16,6 +16,7 @@ Depois de adicionar clusters a serem gerenciados pelo Astra Control Center, é p
 
 
 
+[[view-cluster-health-and-details]]
 == Exibir integridade e detalhes do cluster
 
 É possível exibir detalhes sobre o cluster, como sua localização, os nós de trabalho, volumes persistentes e classes de storage.
@@ -41,6 +42,7 @@ NOTE: Você também pode exibir informações de cluster a partir do Astra Contr
 
 
 
+[[change-the-default-storage-class]]
 == Altere a classe de armazenamento padrão
 
 Você pode alterar a classe de armazenamento padrão para um cluster. Quando o Astra Control gerencia um cluster, ele controla a classe de storage padrão do cluster.

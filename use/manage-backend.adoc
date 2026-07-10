@@ -28,12 +28,14 @@ Você pode concluir as seguintes tarefas relacionadas ao gerenciamento de um bac
 
 
 
+[[view-storage-backend-details]]
 == Veja os detalhes do back-end de armazenamento
 
 Você pode exibir informações de back-end de armazenamento no Dashboard ou na opção backends.
 
 
 
+[[view-storage-backend-details-from-the-dashboard]]
 === Veja os detalhes do back-end do storage no Dashboard
 
 .Passos
@@ -49,6 +51,7 @@ Você pode exibir informações de back-end de armazenamento no Dashboard ou na 
 
 
 
+[[view-storage-backend-details-from-the-backends-option]]
 === Veja os detalhes do back-end de armazenamento na opção backends
 
 Veja informações sobre a integridade, a capacidade e a performance do back-end (taxa de transferência de IOPS e/ou latência).
@@ -62,6 +65,7 @@ Você pode ver os volumes que os aplicativos Kubernetes estão usando, que são 
 
 
 
+[[edit-storage-backend-authentication-details]]
 == Editar detalhes de autenticação de back-end de armazenamento
 
 O Astra Control Center oferece dois modos de autenticação de um back-end do ONTAP.
@@ -93,6 +97,7 @@ NOTE: O usuário cujas credenciais você inserir aqui deve ter o `ontapi` métod
 
 
 
+[[manage-a-discovered-storage-backend]]
 == Gerenciar um back-end de storage descoberto
 
 Você pode optar por gerenciar um back-end de storage não gerenciado, mas descoberto. Quando você gerencia um back-end de storage, o Astra Control indica se um certificado de autenticação expirou.
@@ -108,6 +113,7 @@ Você pode optar por gerenciar um back-end de storage não gerenciado, mas desco
 
 
 
+[[unmanage-a-storage-backend]]
 == Desgerenciar um back-end de storage
 
 Você pode desgerenciar o backend.
@@ -122,6 +128,7 @@ Você pode desgerenciar o backend.
 
 
 
+[[remove-a-storage-backend]]
 == Remover um back-end de storage
 
 Você pode remover um back-end de storage que não está mais em uso. Você pode querer fazer isso para manter sua configuração simples e atualizada.
@@ -154,6 +161,7 @@ Você pode remover um back-end de storage que não está mais em uso. Você pode
 
 
 
+[[find-more-information]]
 == Encontre mais informações
 
 * https://docs.netapp.com/us-en/astra-automation["Use a API Astra Control"^]

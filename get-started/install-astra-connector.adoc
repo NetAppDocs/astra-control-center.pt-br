@@ -16,6 +16,7 @@ Os clusters gerenciados pelo Astra Control Center usam o Astra Connector para pe
 
 
 
+[[install-astra-connector]]
 == Instale o conetor Astra
 
 Você instala o Astra Connector usando comandos Kubernetes e arquivos de recursos personalizados (CR).

@@ -16,6 +16,7 @@ Remova todas as aplicações ou clusters que você não deseja mais gerenciar do
 
 
 
+[[unmanage-an-app]]
 == Desgerenciar um aplicativo
 
 Pare de gerenciar aplicações que não deseja mais fazer backup, snapshot ou clonar a partir do Astra Control Center.
@@ -40,6 +41,7 @@ O Astra Control Center deixa de gerenciar a aplicação.
 
 
 
+[[unmanage-a-cluster]]
 == Desgerenciar um cluster
 
 Pare de gerenciar o cluster que não deseja mais gerenciar a partir do Astra Control Center.

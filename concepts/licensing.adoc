@@ -27,12 +27,14 @@ NOTE: Certifique-se de que sua licença ativa pelo menos quantas unidades de CPU
 
 
 
+[[evaluation-licenses-and-full-licenses]]
 == Licenças de avaliação e licenças completas
 
 Uma licença de avaliação incorporada é fornecida com uma nova instalação do Astra Control Center. Uma licença de avaliação permite os mesmos recursos e recursos que uma licença completa por um período limitado (90 dias). Após o período de avaliação, é necessária uma licença completa para continuar com a funcionalidade completa.
 
 
 
+[[license-expiration]]
 == Expiração da licença
 
 Se a licença ativa do Astra Control Center expirar, a funcionalidade de IU e API dos seguintes recursos não estará disponível:
@@ -47,6 +49,7 @@ Se a licença ativa do Astra Control Center expirar, a funcionalidade de IU e AP
 
 
 
+[[how-license-consumption-is-calculated]]
 == Como o consumo de licença é calculado
 
 Quando você adiciona um novo cluster ao Astra Control Center, ele não conta para licenças consumidas até que pelo menos uma aplicação executada no cluster seja gerenciada pelo Astra Control Center.
@@ -58,6 +61,7 @@ NOTE: Os nós de infraestrutura do Red Hat OpenShift não consomem licenças no 
 
 
 
+[[find-more-information]]
 == Encontre mais informações
 
 * link:../get-started/add-license.html["Adicione uma licença ao configurar o Astra Control Center pela primeira vez"]

@@ -45,6 +45,7 @@ Se você estiver habilitando o Astra Control Provisioner, faça o seguinte prime
 ====
 
 
+[[step-1-get-the-astra-control-provisioner-image]]
 == (Passo 1) Obtenha a imagem Astra Control Provisioner
 
 Os usuários do Astra Control Center podem obter a imagem do Astra Control Provisioner usando o método do Registro Astra Control ou do site de suporte da NetApp. Os usuários do Astra Trident que desejam usar o Astra Control Provisioner sem o Astra Control devem usar o método de Registro.
@@ -162,6 +163,7 @@ docker push <my_custom_registry>/trident-acp:24.02.0
 ====
 
 
+[[step-2-enable-astra-control-provisioner-in-astra-trident]]
 == (Etapa 2) ative o Astra Control Provisioner no Astra Trident
 
 Determine se o método de instalação original usou um https://docs.netapp.com/us-en/trident/trident-managing-k8s/uninstall-trident.html#determine-the-original-installation-method["Operador (manualmente ou com Helm) ou tridentctl"^] e conclua as etapas apropriadas de acordo com o método original.
@@ -170,7 +172,7 @@ Determine se o método de instalação original usou um https://docs.netapp.com/
 ====
 .Operador do Astra Trident
 --
-. https://docs.netapp.com/us-en/trident/trident-get-started/kubernetes-deploy-operator.html#step-1-download-the-trident-installer-package["Baixe o instalador do Astra Trident e extraia-o."^].
+. https://docs.netapp.com/us-en/trident/trident-install/kubernetes-deploy-operator.html#step-1-download-the-trident-installer-package["Baixe o instalador do Astra Trident e extraia-o."^].
 . Siga estas etapas se você ainda não tiver instalado o Astra Trident ou se tiver removido o operador da sua implantação original do Astra Trident:
 +
 .. Crie o CRD:
@@ -416,6 +418,7 @@ Se você tiver algum problema na implantação do Trident usando o Helm, execute
 ====
 
 
+[[result]]
 == Resultado
 
 A funcionalidade Astra Control Provisioner está ativada e você pode usar todos os recursos disponíveis para a versão em execução.
