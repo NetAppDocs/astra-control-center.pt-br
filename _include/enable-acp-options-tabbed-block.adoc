@@ -116,7 +116,7 @@ status:
 --
 .tridentctl
 --
-. https://docs.netapp.com/us-en/trident/trident-get-started/kubernetes-deploy-tridentctl.html#step-1-download-the-trident-installer-package["Baixe o instalador do Astra Trident e extraia-o."^].
+. https://docs.netapp.com/us-en/trident/trident-install/kubernetes-deploy-tridentctl.html#step-1-download-the-trident-installer-package["Baixe o instalador do Astra Trident e extraia-o."^].
 . https://docs.netapp.com/us-en/trident/trident-managing-k8s/upgrade-tridentctl.html["Se você tiver um Astra Trident existente, desinstale-o do cluster que o hospeda"^].
 . Instalar o Astra Trident com a previsão de controle Astra ativada (`--enable-acp=true`):
 +

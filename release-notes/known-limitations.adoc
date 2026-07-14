@@ -195,7 +195,7 @@ Como solução alternativa, faça o seguinte ao atualizar instalações existent
 . Remova quaisquer CRDs de Snapshot existentes e qualquer controladora de snapshot existente.
 . https://docs.netapp.com/us-en/trident/trident-managing-k8s/uninstall-trident.html["Desinstale o Astra Trident"^].
 . https://docs.netapp.com/us-en/trident/trident-use/vol-snapshots.html#deploy-a-volume-snapshot-controller["Instale as CRDs de snapshot e o controlador de snapshot"^].
-. https://docs.netapp.com/us-en/trident/trident-get-started/kubernetes-deploy.html["Instale a versão mais recente do Astra Trident"^].
+. https://docs.netapp.com/us-en/trident/trident-install/kubernetes-deploy.html["Instale a versão mais recente do Astra Trident"^].
 . https://docs.netapp.com/us-en/trident/trident-use/vol-snapshots.html#step-1-create-a-volumesnapshotclass["Crie um VolumeSnapshotClass"^].
 
 

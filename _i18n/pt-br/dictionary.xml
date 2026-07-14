@@ -56,7 +56,6 @@
   <block id="6849b59104c35075b063cf35570fde13" category="admonition">Deve haver apenas *uma instância* do operador em um cluster do Kubernetes. Não crie várias implantações do operador Astra Trident.</block>
   <block id="faba39ec34eed502aea6d805d792a9ea" category="list-text">Verifique se o<block ref="49c9f6c98d04c8c76aee7448fd9136ed" prefix=" " category="inline-code"></block> contentor está em execução e se<block ref="507c6bbca2ad57c69e89a97ee8714536" prefix=" " category="inline-code"></block> está<block ref="50ce33a86e6915635518e9752cf0a12f" prefix=" " category="inline-code"></block> com um status de<block ref="98dd43dfae05b11befe1f140e0ec787a" prefix=" " category="inline-code"></block>:</block>
   <block id="c67fd1b99934afa248dfeb285a9a4191" category="open-title">tridentctl</block>
-  <block id="6942401e8cfb1a0fc7b82ec1dcda7d32" category="list-text"><block ref="b0e92e3807bd982cc8fd58230062a04f" category="inline-link-rx"></block>.</block>
   <block id="a65211330b142f51904ccfb3741cc124" category="inline-link">Se você tiver um Astra Trident existente, desinstale-o do cluster que o hospeda</block>
   <block id="00c4331aab8ed2101088511f96b6af8e" category="list-text"><block ref="f21e19b64d79b0da0ff48729d1b28669" category="inline-link-rx"></block>.</block>
   <block id="005a56f182fe268e9f6977b39114eab8" category="list-text">Instalar o Astra Trident com a previsão de controle Astra ativada <block ref="87d6b9737ff6f9e44e3dd25c182cf495" prefix="(" category="inline-code"></block>):</block>
@@ -1621,7 +1620,6 @@
   <block id="a9b10c3e99be35f3f8a9c7dc7fadd754" category="inline-link">Instale as CRDs de snapshot e o controlador de snapshot</block>
   <block id="b13f49c3645a7a864544e5ba028ddf46" category="list-text"><block ref="fe976099507f0433932bc4deb8637ad3" category="inline-link-rx"></block>.</block>
   <block id="e5b001692c70f874108d4c3517741181" category="inline-link">Instale a versão mais recente do Astra Trident</block>
-  <block id="a303c00b0d0d4a1b4adf9ac86b7be2cc" category="list-text"><block ref="6b04d2c2cadce52e000fe64978797f65" category="inline-link-rx"></block>.</block>
   <block id="48d0b044dd9368b2691ff16393a31d86" category="inline-link">Crie um VolumeSnapshotClass</block>
   <block id="0fa487fe8680011a1e8590273692a729" category="list-text"><block ref="7780c580e1dcefaf97af849cafb81d68" category="inline-link-rx"></block>.</block>
   <block id="c62766292d642e4d3c2f78cc22c7d571" category="section-title">Backups e snapshots podem não ser retidos durante a remoção de uma instância do Astra Control Center</block>
@@ -3671,4 +3669,6 @@
   <block id="e7b4bce844330e3c5aefb46f8d12db1d" category="list-text"><block ref="e7b4bce844330e3c5aefb46f8d12db1d" category="inline-link-macro-rx"></block></block>
   <block id="398950e2648d28eed29b2b7bd0952ad5" category="list-text">(Opcional) Um rótulo do Kubernetes em qualquer <block ref="3b1c56fea11b428a3060d7568229534a" category="inline-link-macro-rx"></block>.</block>
   <block id="eef3fedf7d4e668662e435160c3c5c87" category="admonition">Ao adicionar um bucket, selecione o provedor de bucket correto e forneça as credenciais adequadas para esse provedor. Por exemplo, a interface do usuário aceita NetApp ONTAP S3 como tipo e aceita credenciais do StorageGRID; no entanto, isso fará com que todos os futuros backups e restaurações de aplicativos usando esse bucket falhem. Consulte o <block ref="2fa2057c95f20298aba02cf1be9ec7d5" category="inline-link-macro-rx"></block>.</block>
+  <block id="5b1ab0fe5df34787bb6e83e783c2d46f" category="list-text"><block ref="299939be75f9a3e7d44493947c6b6dbe" category="inline-link-rx"></block>.</block>
+  <block id="079f04a542e1f643fc541d9607a55d47" category="list-text"><block ref="1a55a38d49368309956301956beb2671" category="inline-link-rx"></block>.</block>
 </blocks>
